@@ -1,11 +1,11 @@
 #include "Floor.h"
 
 
-void Floor::drawFloor()
+void Floor::drawFloor() const
 {
-	gotoxy(this->xStart, this->y);
-	for (size_t i = this->xStart; i < this->xEnd; i++)
+	gotoxy(xStart, y);
+	for (size_t i = xStart; i < xEnd; i++)
 	{
-		std::cout << this->dir;
+		std::cout << dir;
 	}
 }

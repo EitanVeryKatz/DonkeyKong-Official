@@ -3,6 +3,8 @@
 #include <iostream>
 #include "gameConfig.h"
 #include "Floor.h"
+#include "boardGame.h"
+
 
 class player
 {
@@ -30,7 +32,8 @@ public:
 		draw(' ');
 	}
 	void keyPressed(char key);
-	void move();
-	void moveWithFloor(Floor f);
+	void moveInBoard(boardGame& board);
+	bool onFloor(int* floorIndex, boardGame& board);
+	void moveWithFloor(const Floor& f, boardGame& board, int floorIndex);
 };
 

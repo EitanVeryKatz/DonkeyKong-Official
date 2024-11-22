@@ -4,6 +4,7 @@
 #include "gameConfig.h"
 #include "player.h"
 #include "Floor.h"
+#include "boardGame.h"
 
 
 
@@ -13,9 +14,9 @@ int main()
 {
 	showCurserOnConsole(false);
 	player mario;
-
-	Floor f;
-	f.drawFloor();
+	boardGame board;
+	board.initFloors();
+	board.drawBoard();
 
 	while (true)
 	{
@@ -30,6 +31,6 @@ int main()
 
 		Sleep(100);
 		mario.erase();
-		mario.moveWithFloor(f);
+		mario.moveInBoard(board);
 	}
 }

@@ -6,12 +6,11 @@
 
 class Floor
 {
-	char dir = '<';
-	
 	
 public:
-	int xStart = 3, xEnd = 75, y = 10, sizeOfFloor;
-	void drawFloor();
+	int xStart, xEnd, y, sizeOfFloor;
+	char dir;
+	void drawFloor() const;
 };
 
 

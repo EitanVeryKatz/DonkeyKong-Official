@@ -182,16 +182,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boardGame.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boardGame.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="gameConfig.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DonkeyKong Official.rc" />
