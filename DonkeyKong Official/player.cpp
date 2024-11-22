@@ -75,52 +75,17 @@ bool player::onFloor(int* floorIndex, boardGame& board)
 
 
 
-/*
-long function with help from ai
-we need to split it to smaller function
-*/
+
 void player::moveWithFloor(const Floor& f, boardGame& board, int floorIndex)
 {
-	// Horizontal movement: unrestricted
-	x += dir.x;
-
-	// Vertical movement
-	if (dir.y == -1) // Moving upwards
-	{
-		// Check if the player is trying to move up
-		if (floorIndex == 0) // Top floor
-		{
-			y += dir.y; // Allow moving up off the top floor
-		}
-		else // Check collision with the floor above
-		{
-			const Floor& aboveFloor = board.getFloor(floorIndex - 1);
-			if (y + dir.y >= aboveFloor.y + 1) // +1 to allow standing on the floor
-			{
-				y = aboveFloor.y + 1; // Place player just below the above floor
-				dir.y = 0; // Stop upward movement
-			}
-			else
-			{
-				y += dir.y; // Move upwards if no collision
-			}
-		}
-	}
-	else if (dir.y == 1) // Moving downwards
-	{
-		// Check collision with the current floor or falling off it
-		if (y + dir.y <= f.y - 1) // Allow moving down until reaching the floor
-		{
-			y += dir.y; // Move downwards if no collision
-		}
-		else
-		{
-			y = f.y - 1; // Place player on the current floor
-			dir.y = 0; // Stop downward movement
-		}
-	}
-	// If dir.y == 0, no vertical movement occurs
+	
 }
+
+
+
+
+
+
 
 
 
