@@ -1,9 +1,13 @@
 #include "player.h"
 #include "utils.h"
+class Floor;
 
 
 void player::keyPressed(char key)
 {
+	if (key == ' ') {
+		midjump = true;
+	}
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
 			dir = directions[i];
@@ -39,16 +43,23 @@ void player::moveInBoard(boardGame& board)
 		x = newX; // Update player's X position
 	}
 	// Check if the player is currently on a floor
-	else if (onFloor(&floorNum, board))
-	{
-		const Floor& f = board.getFloor(floorNum); // Get reference to the current floor
-		moveWithFloor(f, board, floorNum); // Move player according to floor rules
-	}
+	
 	else
 	{
 		// If not on a floor, update both X and Y positions based on direction
 		int newX = x + dir.x; // Calculate new horizontal position
 		int newY = y + dir.y; // Calculate new vertical position
+		if (onFloor(&floorNum, board)) {//if on floor
+			if (midjump) {//if jump pressed
+				newY--;//update Y to be one higher
+				midjump = false;//reset jump checker
+			}
+		}
+		else {//if not on floor
+			newY++;//continue to fall
+		}
+		
+		
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
 	}
@@ -83,8 +94,9 @@ void player::moveWithFloor(const Floor& f, boardGame& board, int floorIndex)
 
 
 
-
-
+void player::updatePlatformArr(Floor** newPlatformArr) {
+	platformArr = newPlatformArr;
+}
 
 
 
