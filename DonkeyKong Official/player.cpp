@@ -92,16 +92,6 @@ bool player::onFloor(int* floorIndex, boardGame& board)
 }
 
 
-
-
-
-void player::moveWithFloor(const Floor& f, boardGame& board, int floorIndex)
-{
-	
-}
-
-
-
 void player::updatePlatformArr(Floor** newPlatformArr) {
 	platformArr = newPlatformArr;
 }

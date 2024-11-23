@@ -1,5 +1,11 @@
 #include "Floor.h"
+#include <cstdlib>
 
+void Floor::randDir()
+{
+	int ranNum = rand() % 3; // random number between 0 - 2
+	dir = FLOOR_DIR[ranNum];
+}
 
 void Floor::drawFloor() const
 {

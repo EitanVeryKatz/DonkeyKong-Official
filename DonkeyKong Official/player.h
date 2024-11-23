@@ -38,6 +38,5 @@ public:
 	bool onFloor(int* floorIndex, boardGame& board);
 	void moveWithFloor(const Floor& f, boardGame& board, int floorIndex);
 	void updatePlatformArr(Floor** newPlatformArr);
-	bool isOnFloor();
 };
 
