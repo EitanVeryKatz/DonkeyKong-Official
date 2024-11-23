@@ -1,6 +1,6 @@
 #pragma once
 
-#include "boardGame.h"
+
 #include "gameConfig.h"
 class Ladder
 {

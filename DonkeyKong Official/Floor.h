@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Ladder.h"
 
+class Ladder;
+
 class Floor
 {
 	static constexpr int RIGHT = 0;
@@ -12,14 +14,14 @@ class Floor
 	static constexpr int SAME = 2;
 	static constexpr char FLOOR_DIR[] = {'>','<','='};
 	int numOfLadders = 3;
-	Ladder LadderArr[3];
+	
 public:
 	int xStart, xEnd, y, sizeOfFloor;
 	char dir;
 	void randDir();
 	void drawFloor() const;
 	void initLadders();
-	void setNumOfLadders() { rand() % 3; } // set random number of ladders between 1-3
+	// set random number of ladders between 1-3
 	int  getNumOfLadders() { return numOfLadders; }
 };
 
