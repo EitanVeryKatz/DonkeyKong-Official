@@ -1,4 +1,6 @@
 #include "boardGame.h"
+#include "Ladder.h"
+class Ladder;
 
 void boardGame::initFloors()
 {
@@ -39,4 +41,11 @@ void boardGame::drawBoard()
     {
         f.drawFloor();
     }
+}
+
+void boardGame::initLadders(){
+    
+   //function to initialize ladders
+    
+
 }

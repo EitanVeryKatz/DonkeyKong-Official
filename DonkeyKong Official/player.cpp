@@ -10,8 +10,14 @@ void player::keyPressed(char key)
 	}
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
-			dir = directions[i];//update dir to coresponding key
-			return;
+			if (!onLadder && (keys[i] == 'a' || keys[i] == 'd')) {//if not on ladder and dir is x axis
+				dir = directions[i];//update dir to coresponding key
+				return;
+			}
+			else {//if is in ladder move to any direction
+				dir = directions[i];//update dir to coresponding key
+				return;
+			}
 		}
 	}
 }
@@ -47,8 +53,10 @@ void player::moveInBoard(boardGame& board)
 	else
 	{
 		// If not on a floor, update both X and Y positions based on direction
-		int newX = x + dir.x; // Calculate new horizontal position
-		int newY = y + dir.y; // Calculate new vertical position
+		int newX;
+		int newY;
+		newX = x + dir.x; // Calculate new horizontal position
+		newY = y + dir.y; // Calculate new vertical position
 		if (onFloor(&floorNum, board)) {//if on floor
 			if (midjump) {//if jump pressed
 				newY--;//update Y to be one higher

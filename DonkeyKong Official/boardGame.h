@@ -13,7 +13,9 @@ class boardGame
 	int floorCount = 4;
 	Ladder LadderArr[3];
 
+
 public :
+	void initLadders();
 	int getWidth() {return BOARD_WIDTH;}
 	int getHeight() {return BOARD_HEIGHT;}
 	int getFloorCount() {return floorCount;}
