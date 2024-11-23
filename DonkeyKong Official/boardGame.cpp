@@ -47,7 +47,4 @@ void boardGame::drawBoard()
 void boardGame::initLadders()
 {
     
-   //function to initialize ladders
-    
-
 }

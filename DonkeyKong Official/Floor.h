@@ -10,11 +10,14 @@ class Floor
 	static constexpr int LEFT = 1;
 	static constexpr int SAME = 2;
 	static constexpr char FLOOR_DIR[] = {'>','<','='};
+	int numOfLadders;
 public:
 	int xStart, xEnd, y, sizeOfFloor;
 	char dir;
 	void randDir();
 	void drawFloor() const;
+	void setNumOfLadders() { rand() % 3; } // set random number of ladders between 1-3
+	int getNumOfLadders() { return numOfLadders; }
 };
 
 
