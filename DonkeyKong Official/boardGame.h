@@ -11,7 +11,7 @@ class boardGame
 	static constexpr int BOARD_WIDTH = 80;
 	static constexpr int BOARD_HEIGHT = 25;
 	Floor boardFloors[NUM_OF_FLOORS];
-	Ladder LadderArr[3];
+
 
 
 public :

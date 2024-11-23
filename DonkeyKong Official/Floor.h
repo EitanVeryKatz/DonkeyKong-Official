@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "gameConfig.h"
 #include <iostream>
+#include "Ladder.h"
 
 class Floor
 {
@@ -10,14 +11,16 @@ class Floor
 	static constexpr int LEFT = 1;
 	static constexpr int SAME = 2;
 	static constexpr char FLOOR_DIR[] = {'>','<','='};
-	int numOfLadders;
+	int numOfLadders = 3;
+	Ladder LadderArr[3];
 public:
 	int xStart, xEnd, y, sizeOfFloor;
 	char dir;
 	void randDir();
 	void drawFloor() const;
+	void initLadders();
 	void setNumOfLadders() { rand() % 3; } // set random number of ladders between 1-3
-	int getNumOfLadders() { return numOfLadders; }
+	int  getNumOfLadders() { return numOfLadders; }
 };
 
 

@@ -15,3 +15,8 @@ void Floor::drawFloor() const
 		std::cout << dir;
 	}
 }
+
+void Floor::initLadders()
+{
+
+}

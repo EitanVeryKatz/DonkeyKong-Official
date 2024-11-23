@@ -44,7 +44,3 @@ void boardGame::drawBoard()
     }
 }
 
-void boardGame::initLadders()
-{
-    
-}
