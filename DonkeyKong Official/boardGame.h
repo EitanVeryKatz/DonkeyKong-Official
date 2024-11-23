@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Floor.h"
-
+#include "Ladder.h"
 
 class Floor;
 
@@ -11,6 +11,7 @@ class boardGame
 	static constexpr int BOARD_HEIGHT = 25;
 	Floor boardFloors[4];
 	int floorCount = 4;
+	Ladder LadderArr[3];
 
 public :
 	int getWidth() {return BOARD_WIDTH;}

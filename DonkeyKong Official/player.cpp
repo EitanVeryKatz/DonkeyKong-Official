@@ -10,7 +10,7 @@ void player::keyPressed(char key)
 	}
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
-			dir = directions[i];
+			dir = directions[i];//update dir to coresponding key
 			return;
 		}
 	}

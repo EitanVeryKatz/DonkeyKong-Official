@@ -17,7 +17,6 @@ class player
 	char icon = '@';
 	Floor** platformArr;
 	bool midjump = false;
-
 	void draw(char c) const
 	{
 		gotoxy(x, y);
