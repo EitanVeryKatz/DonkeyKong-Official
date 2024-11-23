@@ -11,7 +11,7 @@ void player::keyPressed(char key)
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
 			if (!onLadder){
-				if (keys[i] == 'a' || keys[i] == 'd') {
+				if (keys[i] == 'a' || keys[i] == 'd'|| keys[i] == 's') {
 					dir = directions[i];//update dir to coresponding key
 				}
 				return;
