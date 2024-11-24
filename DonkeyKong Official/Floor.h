@@ -4,23 +4,27 @@
 #include "gameConfig.h"
 #include <iostream>
 #include "Ladder.h"
+#include "utils.h"
+
+class Ladder;
 
 class Floor
 {
 	static constexpr int RIGHT = 0;
 	static constexpr int LEFT = 1;
-	static constexpr int SAME = 2;
-	static constexpr char FLOOR_DIR[] = {'>','<','='};
-	int numOfLadders = 3;
-	Ladder LadderArr[3];
+    static constexpr char FLOOR_DIR[] = {'>','<'};
+	static constexpr char FLOOR_ICON = '=';
+	static constexpr int numOfLadders = 1;
+	Ladder LadderArr[numOfLadders];
+	char dir;
 public:
 	int xStart, xEnd, y, sizeOfFloor;
-	char dir;
 	void randDir();
 	void drawFloor() const;
 	void initLadders();
-	void setNumOfLadders() { rand() % 3; } // set random number of ladders between 1-3
-	int  getNumOfLadders() { return numOfLadders; }
+	int getNumOfLadders() { return numOfLadders; }
+	char getDir() const { return dir; }
+	Ladder& getLadderAtIndex(int index) { return LadderArr[index]; }
 };
 
 

@@ -1,15 +1,17 @@
 #pragma once
 
-#include "boardGame.h"
 #include "gameConfig.h"
+
 class Ladder
 {
 	static constexpr char LADDER_ICON = 'H';
-	int minY,maxY,X;//ladder location on screen
+	int minY,maxY,X = 20;//ladder location on screen
 	
 
 public:
-	void drawLadder();
-	void setX(); // random function to determine the x of the ladder in a floor (needs to be implemented)
+	void drawLadder(int mY, int MY);
+	int getX() { return X; }
+	int getMinY() { return minY; }
+	int getMaxY() { return maxY; }
 };
 

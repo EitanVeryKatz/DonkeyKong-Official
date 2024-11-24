@@ -1,7 +1,7 @@
 #include "boardGame.h"
 #include "Ladder.h"
 
-class Ladder;
+
 
 void boardGame::initFloors()
 {
@@ -9,8 +9,8 @@ void boardGame::initFloors()
     for (Floor& f : boardFloors)
     {
         f.randDir();
-        f.xStart = 4;
-        f.xEnd = 75;
+        f.xStart = 7;
+        f.xEnd = 72;
         f.y = y;
         y += 3;
     }
@@ -38,9 +38,11 @@ void boardGame::drawBoard()
         std::cout << "Q";
     }
 
-    for (const Floor& f : boardFloors)
+    for (size_t i = 0; i < NUM_OF_FLOORS; i++)
     {
-        f.drawFloor();
+        boardFloors[i].drawFloor();
+        if (i != 0)
+            boardFloors[i].initLadders();
     }
 }
 

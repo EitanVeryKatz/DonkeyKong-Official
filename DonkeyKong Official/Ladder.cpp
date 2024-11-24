@@ -1,11 +1,15 @@
 #include "Ladder.h"
 #include <iostream>
 
-void Ladder::drawLadder()
+void Ladder::drawLadder(int mY, int MY) // sets the y values of ladders and drwa it on board
 {
-	for (size_t i = minY; i < maxY; i++)
+	minY = mY;
+	maxY = MY;
+	for (int i = minY; i <= maxY; i++)
 	{
 		gotoxy(X, i);
 		std::cout << LADDER_ICON;
 	}
 }
+
+

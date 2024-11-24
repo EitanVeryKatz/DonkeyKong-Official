@@ -3,20 +3,35 @@
 
 void Floor::randDir()
 {
-	int ranNum = rand() % 3; // random number between 0 - 2
+	int ranNum = randomBit(); // random number between 0 - 1
 	dir = FLOOR_DIR[ranNum];
 }
 
 void Floor::drawFloor() const
 {
 	gotoxy(xStart, y);
-	for (size_t i = xStart; i < xEnd; i++)
+	if (dir == FLOOR_DIR[LEFT]) // if is left draw first the arrow then the =
 	{
-		std::cout << dir;
+		std::cout << getDir();
+		for (size_t i = xStart + 1; i <= xEnd; i++)
+		{
+			gotoxy(i, y);
+			std::cout << FLOOR_ICON;
+		}
+	}
+	else // else draw at first = and at the end >
+	{
+		for (size_t i = xStart; i < xEnd; i++)
+		{
+			gotoxy(i, y);
+			std::cout << FLOOR_ICON;
+		}
+		gotoxy(xEnd, y);
+		std::cout << getDir();
 	}
 }
 
-void Floor::initLadders()
+void Floor::initLadders() 
 {
-
+	LadderArr[0].drawLadder(y - 2, y - 1);
 }
