@@ -98,7 +98,7 @@ void player::isOnLadder(const Floor& f)
 	for (size_t i = 0; i < numOfLadders; i++)
 	{
 		const Ladder& l = f.getLadderAtIndex(i); // get a ref to the floor
-		if (x == l.getX() && y >= l.getMinY() - 1 && y <= l.getMaxY() + 1) // checks if on floor
+		if (x == l.getX() && y >= l.getMinY() - 1 && y <= l.getMaxY() + 1) // checks if on ladder
 		{
 			onLadder = true;
 			break; // exits the loop if on ladder
