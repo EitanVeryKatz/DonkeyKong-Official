@@ -10,8 +10,8 @@ class Ladder
 
 public:
 	void drawLadder(int mY, int MY);
-	int getX() { return X; }
-	int getMinY() { return minY; }
-	int getMaxY() { return maxY; }
+	int getX() const { return X; }
+	int getMinY() const { return minY; }
+	int getMaxY() const { return maxY; }
 };
 

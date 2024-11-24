@@ -68,8 +68,6 @@ void player::moveInBoard(boardGame& board)
 		else {//if not on floor
 			newY++;//continue to fall
 		}
-		
-		
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
 	}
@@ -93,13 +91,13 @@ bool player::onFloor(int* floorIndex, boardGame& board)
 	return false;
 }
 
-void player::isOnLadder(Floor& f)
+void player::isOnLadder(const Floor& f)
 {
 	int numOfLadders = f.getNumOfLadders(); // get the number of ladders in the floor the player is in
 	onLadder = false; // init to false
 	for (size_t i = 0; i < numOfLadders; i++)
 	{
-		Ladder& l = f.getLadderAtIndex(i); // get a ref to the floor
+		const Ladder& l = f.getLadderAtIndex(i); // get a ref to the floor
 		if (x == l.getX() && y >= l.getMinY() - 1 && y <= l.getMaxY() + 1) // checks if on floor
 		{
 			onLadder = true;

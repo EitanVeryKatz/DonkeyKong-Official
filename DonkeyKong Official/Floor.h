@@ -22,9 +22,9 @@ public:
 	void randDir();
 	void drawFloor() const;
 	void initLadders();
-	int getNumOfLadders() { return numOfLadders; }
+	int getNumOfLadders() const  { return numOfLadders; }
 	char getDir() const { return dir; }
-	Ladder& getLadderAtIndex(int index) { return LadderArr[index]; }
+	const Ladder& getLadderAtIndex(int index) const { return LadderArr[index]; }
 };
 
 
