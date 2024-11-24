@@ -1,4 +1,5 @@
 #include "Floor.h"
+#include "Ladder.h"
 #include <cstdlib>
 
 void Floor::randDir()

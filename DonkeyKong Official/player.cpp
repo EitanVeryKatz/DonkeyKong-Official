@@ -10,8 +10,10 @@ void player::keyPressed(char key)
 	}
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
-			if (!onLadder && (keys[i] == 'a' || keys[i] == 'd')) {//if not on ladder and dir is x axis
-				dir = directions[i];//update dir to coresponding key
+			if (!onLadder){
+				if (keys[i] == 'a' || keys[i] == 'd'|| keys[i] == 's') {
+					dir = directions[i];//update dir to coresponding key
+				}
 				return;
 			}
 			else {//if is in ladder move to any direction
