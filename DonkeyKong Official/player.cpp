@@ -26,55 +26,60 @@ void player::keyPressed(char key)
 
 void player::moveInBoard(boardGame& board)
 {
-	/*
-	This function handles the player's movement within the game board.
-	It checks for boundary conditions to prevent the player from moving outside
-	the defined game area and manages vertical and horizontal movement based on
-	the player's current position and direction.
-	*/
+	
+	int floorNum; 
 
-	int floorNum; // Variable to hold the index of the current floor
-
-	// Check if the player is at the left or right border of the board
-	// Prevent movement outside the left (x == 1) or right (x == board.getWidth() - 2) boundaries
-	if ((x == 1 && dir.x <= -1) || (x == board.getWidth() - 2 && dir.x >= 1)) // magic numbers need const
+	
+	if ((x == 1 && dir.x <= -1) || (x == board.getWidth() - 2 && dir.x >= 1)) // If at a border, only update vertical position
 	{
-		// If at a border, only update vertical position
 		int newY = y + dir.y; // Calculate new vertical position
 		y = newY; // Update player's Y position
 	}
-	// Check if the player is at the top or bottom border of the board
-	else if ((y == 1 && dir.y <= -1) || (y == board.getHeight() - 2 && dir.y < 1))
+	
+	else if ((y == 1 && dir.y <= -1) || (y == board.getHeight() - 2 && dir.y < 1))// If at a border, only update horizontal position
 	{
-		// If at a border, only update horizontal position
+		
 		int newX = x + dir.x; // Calculate new horizontal position
 		x = newX; // Update player's X position
 	}
-	// Check if the player is currently on a floor
 	
-	else
+	
+	else//if inside borders
 	{
-		// If not on a floor, update both X and Y positions based on direction
+		
 		int newX;
 		int newY;
+		onFloor(&floorNum, board);
+		isOnLadder();
+
+		if (!onLadder && dir.x == 0) {//if not on ladder moving verticaly
+			dir.y = 0;//stop
+		}
+
 		newX = x + dir.x; // Calculate new horizontal position
 		newY = y + dir.y; // Calculate new vertical position
-		if (onFloor(&floorNum, board)) {//if on floor
+		
+
+		if (isOnFloor ){//if on floor
 			if (midjump) {//if jump pressed
 				newY--;//update Y to be one higher
 				midjump = false;//reset jump checker
 			}
 		}
 		else {//if not on floor
-			newY++;//continue to fall
+			if (!onLadder)
+				newY++;//continue to fall
 		}
+
+		
+
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
 	}
 }
 
 
-bool player::onFloor(int* floorIndex, boardGame& board)
+void player::onFloor(int* floorIndex, boardGame& board)
 {
 	for (size_t i = 0; i < board.getFloorCount(); i++)
 	{
@@ -83,27 +88,30 @@ bool player::onFloor(int* floorIndex, boardGame& board)
 		{
 			// on floor
 			*floorIndex = i;
-			return true;
+			currentFloor = board.getFloor(i);
+			isOnFloor = true;
+			return ;
 		}
 	}
 	// not on any floor
 	*floorIndex = -1;
-	return false;
+	isOnFloor = false;
 }
 
-void player::isOnLadder(const Floor& f)
+bool player::isOnLadder()
 {
-	int numOfLadders = f.getNumOfLadders(); // get the number of ladders in the floor the player is in
+	int numOfLadders = currentFloor.getNumOfLadders(); // get the number of ladders in the floor the player is in
 	onLadder = false; // init to false
 	for (size_t i = 0; i < numOfLadders; i++)
 	{
-		const Ladder& l = f.getLadderAtIndex(i); // get a ref to the floor
+		const Ladder& l = currentFloor.getLadderAtIndex(i); // get a ref to the floor
 		if (x == l.getX() && y >= l.getMinY() - 1 && y <= l.getMaxY() + 1) // checks if on ladder
 		{
 			onLadder = true;
 			break; // exits the loop if on ladder
 		}
 	}
+	return true;
 }
 
 

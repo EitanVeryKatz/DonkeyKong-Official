@@ -15,9 +15,10 @@ class player
 	int x = 9, y = 10;
 	Direction dir{ 0,0 };
 	char icon = '@';
-	Floor** platformArr;
+	Floor currentFloor;
 	bool midjump = false;
 	bool onLadder = false;
+	bool isOnFloor;
 	void draw(char c) const
 	{
 		gotoxy(x, y);
@@ -35,8 +36,9 @@ public:
 	}
 	void keyPressed(char key);
 	void moveInBoard(boardGame& board);
-	bool onFloor(int* floorIndex, boardGame& board);
-	void isOnLadder(const Floor& f);
-	void moveWithFloor(const Floor& f, boardGame& board, int floorIndex);
+	void onFloor(int* floorIndex, boardGame& board);
+	bool isOnLadder();
+	
+	
 };
 

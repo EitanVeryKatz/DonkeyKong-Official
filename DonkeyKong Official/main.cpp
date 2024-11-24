@@ -21,6 +21,8 @@ int main()
 	while (true)
 	{
 		mario.draw();
+		
+		
 		if (_kbhit())
 		{
 			char key = _getch();

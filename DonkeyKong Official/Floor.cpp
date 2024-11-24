@@ -34,5 +34,6 @@ void Floor::drawFloor() const
 
 void Floor::initLadders() 
 {
+	(dir == '<') ? LadderArr[0].updateX(60): LadderArr[0].updateX(13);
 	LadderArr[0].drawLadder(y - 2, y - 1);
 }

@@ -13,5 +13,6 @@ public:
 	int getX() const { return X; }
 	int getMinY() const { return minY; }
 	int getMaxY() const { return maxY; }
+	void updateX(int newX) { X = newX; }
 };
 
