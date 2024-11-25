@@ -13,6 +13,7 @@ class player
 	struct Direction { int x, y; };
 	static constexpr Direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	int x = 14, y = 10;
+	int prevX = x, prevY = y;
 	Direction dir{ 0,0 };
 	char icon = '@';
 	Floor currentFloor;
