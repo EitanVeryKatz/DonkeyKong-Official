@@ -49,8 +49,8 @@ void player::moveInBoard(boardGame& board)
 		
 		int newX;
 		int newY;
-		onFloor(&floorNum, board);
-		isOnLadder();
+		newIsOnFloor();
+		newIsOnLadder();
 
 		if (!onLadder && dir.x == 0) {//if not on ladder moving verticaly
 			dir.y = 0;//stop
@@ -106,6 +106,10 @@ void player::newIsOnFloor()
 	{
 		isOnFloor = true;
 	}
+}
+
+void player::newIsOnLadder() {
+	onLadder = board->getChar(x, y) == 'H';
 }
 
 bool player::isOnLadder()

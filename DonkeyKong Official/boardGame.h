@@ -44,7 +44,7 @@ class boardGame
 	};
 
 public :
-	char getChar(int x, int y) { return boardLayout[x][y]; }
+	char getChar(int x, int y) { return boardLayout[y][x]; }
 	void initLadders();
 	int getWidth() {return BOARD_WIDTH;}
 	int getHeight() {return BOARD_HEIGHT;}
@@ -52,6 +52,7 @@ public :
 	Floor getFloor(int index) { return boardFloors[index];}
 	void initFloors();
 	void drawBoard();
+	void newDrawBoard();
 
 };
 

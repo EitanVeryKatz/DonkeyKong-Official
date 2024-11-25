@@ -12,7 +12,7 @@ class player
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	struct Direction { int x, y; };
 	static constexpr Direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	int x = 9, y = 10;
+	int x = 14, y = 10;
 	Direction dir{ 0,0 };
 	char icon = '@';
 	Floor currentFloor;
@@ -41,5 +41,6 @@ public:
 	void newIsOnFloor();
 	bool isOnLadder();
 	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
+	void newIsOnLadder();
 };
 
