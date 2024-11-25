@@ -111,6 +111,9 @@ void player::newIsOnFloor()
 	{
 		isOnFloor = true;
 	}
+	if (currBoardIcon == 'H' && !onLadder) {
+		isOnFloor = true;
+	}
 }
 
 void player::newIsOnLadder() {
