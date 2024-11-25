@@ -5,7 +5,7 @@ class Floor;
 
 void player::keyPressed(char key)
 {
-	if (!onLadder && key == 'w') {
+	if (!onLadder && tolower(key) == 'w') {
 		midjump = true;
 	}
 	for (size_t i = 0; i < numKeys; i++) {
