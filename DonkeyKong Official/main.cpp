@@ -36,4 +36,5 @@ int main()
 		mario.erase();
 		mario.moveInBoard(board);
 	}
+	gotoxy(0, 27);
 }

@@ -5,15 +5,16 @@ class Floor;
 
 void player::keyPressed(char key)
 {
-	if (key == ' ') {
+	if (!onLadder && key == 'w') {
 		midjump = true;
 	}
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
 			if (!onLadder){
-				if (keys[i] == 'a' || keys[i] == 'd'|| keys[i] == 's') {
+				if (keys[i] == 'a' || keys[i] == 'd'|| keys[i] == 's'|| (keys[i] == 'x' && board->getChar(x, y + 1) == 'H')) {
 					dir = directions[i];//update dir to coresponding key
 				}
+				
 				return;
 			}
 			else {//if is in ladder move to any direction
@@ -52,7 +53,12 @@ void player::moveInBoard(boardGame& board)
 		newIsOnFloor();
 		newIsOnLadder();
 
-		if (!onLadder && dir.x == 0) {//if not on ladder moving verticaly
+		if (!onLadder && dir.x == 0 ) {//if not on ladder moving verticaly
+			if (this->board->getChar(x, y + 1) != 'H'||dir.y ==-1)
+			dir.y = 0;//stop
+		}
+		if (dir.y == 1 && isOnFloor) {//if going down and reaching floor
+			if(this->board->getChar(x,y+1) != 'H')
 			dir.y = 0;//stop
 		}
 
@@ -107,13 +113,11 @@ void player::newIsOnFloor()
 {
 	isOnFloor = false;
 	char currBoardIcon = board->getChar(x, y + 1);
-	if (currBoardIcon == '<' || currBoardIcon == '>' || currBoardIcon == '=')
+	if (currBoardIcon == '<' || currBoardIcon == '>' || currBoardIcon == '=' || (currBoardIcon == 'H' && board->getChar(x, y) == ' '))
 	{
 		isOnFloor = true;
 	}
-	if (currBoardIcon == 'H' && !onLadder) {
-		isOnFloor = true;
-	}
+
 }
 
 void player::newIsOnLadder() {
