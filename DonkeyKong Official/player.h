@@ -19,6 +19,7 @@ class player
 	bool midjump = false;
 	bool onLadder = false;
 	bool isOnFloor;
+	boardGame* board;
 	void draw(char c) const
 	{
 		gotoxy(x, y);
@@ -37,8 +38,8 @@ public:
 	void keyPressed(char key);
 	void moveInBoard(boardGame& board);
 	void onFloor(int* floorIndex, boardGame& board);
+	void newIsOnFloor();
 	bool isOnLadder();
-	
-	
+	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
 };
 

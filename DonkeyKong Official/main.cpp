@@ -15,6 +15,7 @@ int main()
 	showCurserOnConsole(false);
 	player mario;
 	boardGame board;
+	mario.setGameBoard(&board);
 	board.initFloors();
 	board.drawBoard();
 

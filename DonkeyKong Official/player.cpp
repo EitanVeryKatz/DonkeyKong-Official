@@ -98,6 +98,16 @@ void player::onFloor(int* floorIndex, boardGame& board)
 	isOnFloor = false;
 }
 
+void player::newIsOnFloor()
+{
+	isOnFloor = false;
+	char currBoardIcon = board->getChar(x, y + 1);
+	if (currBoardIcon == '<' || currBoardIcon == '>' || currBoardIcon == '=')
+	{
+		isOnFloor = true;
+	}
+}
+
 bool player::isOnLadder()
 {
 	int numOfLadders = currentFloor.getNumOfLadders(); // get the number of ladders in the floor the player is in
