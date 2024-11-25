@@ -32,7 +32,7 @@ int main()
 			mario.keyPressed(key);
 		}
 
-		Sleep(100);
+		Sleep(160);
 		mario.erase();
 		mario.moveInBoard(board);
 	}

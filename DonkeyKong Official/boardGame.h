@@ -14,7 +14,8 @@ class boardGame
 	Floor boardFloors[NUM_OF_FLOORS];
 
 
-	const char* boardLayout[BOARD_HEIGHT] = {
+	const char* boardLayout[BOARD_HEIGHT] =
+	{
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 		  "Q                &&                                                            Q", // 1
