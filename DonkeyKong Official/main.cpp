@@ -4,13 +4,14 @@
 #include "gameConfig.h"
 #include "player.h"
 #include "boardGame.h"
-
+#include "barrel.h"
 
 
 constexpr int ESC = 27;
 
 int main()
 {
+	int barrelCounter = 0;
 	showCurserOnConsole(false);
 	player mario;
 	boardGame board;
@@ -19,6 +20,11 @@ int main()
 
 	while (true)
 	{
+		if (barrelCounter == board.getBarrelCount() - 1)
+		{
+			// create new barrel array will add later
+		}
+
 		mario.draw();
 		if (_kbhit())
 		{
@@ -29,6 +35,8 @@ int main()
 		}
 
 		Sleep(160);
+		//b.erase();
+		//b.barrelFall();
 		mario.erase();
 		mario.moveInBoard();
 	}

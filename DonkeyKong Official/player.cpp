@@ -26,10 +26,6 @@ void player::keyPressed(char key)
 
 void player::moveInBoard()
 {
-	
-	int floorNum; 
-
-	
 	if ((x == 1 && dir.x <= -1) || (x == board->getWidth() - 2 && dir.x >= 1)) // If at a border, only update vertical position
 	{
 		int newY = y + dir.y; // Calculate new vertical position

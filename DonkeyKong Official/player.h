@@ -15,7 +15,6 @@ class player
 	int prevX = x, prevY = y;
 	Direction dir{ 0,0 };
 	char icon = '@';
-	//Floor currentFloor;
 	bool midjump = false;
 	bool onLadder = false;
 	bool isOnFloor;
