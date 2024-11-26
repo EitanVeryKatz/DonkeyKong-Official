@@ -3,7 +3,6 @@
 #include <conio.h>
 #include "gameConfig.h"
 #include "player.h"
-#include "Floor.h"
 #include "boardGame.h"
 
 
@@ -16,14 +15,11 @@ int main()
 	player mario;
 	boardGame board;
 	mario.setGameBoard(&board);
-	//board.initFloors();
 	board.newDrawBoard();
 
 	while (true)
 	{
 		mario.draw();
-		
-		
 		if (_kbhit())
 		{
 			char key = _getch();
@@ -34,7 +30,7 @@ int main()
 
 		Sleep(160);
 		mario.erase();
-		mario.moveInBoard(board);
+		mario.moveInBoard();
 	}
 	gotoxy(0, 27);
 }

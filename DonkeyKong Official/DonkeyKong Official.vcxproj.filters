@@ -24,9 +24,6 @@
     <ClCompile Include="gameConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Floor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="boardGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,9 +42,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Floor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="boardGame.h">

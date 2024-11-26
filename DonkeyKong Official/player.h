@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include "gameConfig.h"
-#include "Floor.h"
 #include "boardGame.h"
 
 
@@ -37,10 +36,8 @@ public:
 		draw(' ');
 	}
 	void keyPressed(char key);
-	void moveInBoard(boardGame& board);
-	void onFloor(int* floorIndex, boardGame& board);
+	void moveInBoard();
 	void newIsOnFloor();
-	bool isOnLadder();
 	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
 	void newIsOnLadder();
 };

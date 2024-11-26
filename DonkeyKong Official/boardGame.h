@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Floor.h"
 #include "Ladder.h"
 
 class Ladder;
-class Floor;
 
 class boardGame
 {
@@ -46,13 +44,9 @@ class boardGame
 
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; }
-	//void initLadders();
 	int getWidth() {return BOARD_WIDTH;}
 	int getHeight() {return BOARD_HEIGHT;}
 	int getFloorCount() {return NUM_OF_FLOORS;}
-	//Floor getFloor(int index) { return boardFloors[index];}
-	//void initFloors();
-	//void drawBoard();
 	void newDrawBoard();
 
 };
