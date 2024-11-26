@@ -11,7 +11,7 @@ class boardGame
 	static constexpr int NUM_OF_FLOORS = 5;
 	static constexpr int BOARD_WIDTH = 80;
 	static constexpr int BOARD_HEIGHT = 25;
-	Floor boardFloors[NUM_OF_FLOORS];
+	//Floor boardFloors[NUM_OF_FLOORS];
 
 
 	const char* boardLayout[BOARD_HEIGHT] =
@@ -46,13 +46,13 @@ class boardGame
 
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; }
-	void initLadders();
+	//void initLadders();
 	int getWidth() {return BOARD_WIDTH;}
 	int getHeight() {return BOARD_HEIGHT;}
 	int getFloorCount() {return NUM_OF_FLOORS;}
-	Floor getFloor(int index) { return boardFloors[index];}
-	void initFloors();
-	void drawBoard();
+	//Floor getFloor(int index) { return boardFloors[index];}
+	//void initFloors();
+	//void drawBoard();
 	void newDrawBoard();
 
 };

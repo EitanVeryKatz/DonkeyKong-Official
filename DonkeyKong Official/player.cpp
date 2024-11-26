@@ -90,24 +90,24 @@ void player::moveInBoard(boardGame& board)
 }
 
 
-void player::onFloor(int* floorIndex, boardGame& board)
-{
-	for (size_t i = 0; i < board.getFloorCount(); i++)
-	{
-		const Floor& currFloor = board.getFloor(i); // get the ref to floor
-		if (x >= currFloor.xStart && x <= currFloor.xEnd && y == currFloor.y - 1) // checks if on currFloor
-		{
-			// on floor
-			*floorIndex = i;
-			currentFloor = board.getFloor(i);
-			isOnFloor = true;
-			return ;
-		}
-	}
-	// not on any floor
-	*floorIndex = -1;
-	isOnFloor = false;
-}
+//void player::onFloor(int* floorIndex, boardGame& board)
+//{
+//	for (size_t i = 0; i < board.getFloorCount(); i++)
+//	{
+//		const Floor& currFloor = board.getFloor(i); // get the ref to floor
+//		if (x >= currFloor.xStart && x <= currFloor.xEnd && y == currFloor.y - 1) // checks if on currFloor
+//		{
+//			// on floor
+//			*floorIndex = i;
+//			currentFloor = board.getFloor(i);
+//			isOnFloor = true;
+//			return ;
+//		}
+//	}
+//	// not on any floor
+//	*floorIndex = -1;
+//	isOnFloor = false;
+//}
 
 void player::newIsOnFloor()
 {
@@ -124,21 +124,21 @@ void player::newIsOnLadder() {
 	onLadder = board->getChar(x, y) == 'H';
 }
 
-bool player::isOnLadder()
-{
-	int numOfLadders = currentFloor.getNumOfLadders(); // get the number of ladders in the floor the player is in
-	onLadder = false; // init to false
-	for (size_t i = 0; i < numOfLadders; i++)
-	{
-		const Ladder& l = currentFloor.getLadderAtIndex(i); // get a ref to the floor
-		if (x == l.getX() && y >= l.getMinY() - 1 && y <= l.getMaxY() + 1) // checks if on ladder
-		{
-			onLadder = true;
-			break; // exits the loop if on ladder
-		}
-	}
-	return true;
-}
+//bool player::isOnLadder()
+//{
+//	int numOfLadders = currentFloor.getNumOfLadders(); // get the number of ladders in the floor the player is in
+//	onLadder = false; // init to false
+//	for (size_t i = 0; i < numOfLadders; i++)
+//	{
+//		const Ladder& l = currentFloor.getLadderAtIndex(i); // get a ref to the floor
+//		if (x == l.getX() && y >= l.getMinY() - 1 && y <= l.getMaxY() + 1) // checks if on ladder
+//		{
+//			onLadder = true;
+//			break; // exits the loop if on ladder
+//		}
+//	}
+//	return true;
+//}
 
 
 

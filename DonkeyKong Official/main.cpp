@@ -16,7 +16,7 @@ int main()
 	player mario;
 	boardGame board;
 	mario.setGameBoard(&board);
-	board.initFloors();
+	//board.initFloors();
 	board.newDrawBoard();
 
 	while (true)
