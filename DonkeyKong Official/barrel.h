@@ -1,5 +1,4 @@
 #pragma once
-#include "boardGame.h"
 #include "gameConfig.h"
 #include "iostream"
 
@@ -22,6 +21,8 @@ class barrel
 		gotoxy(x, y);
 		std::cout << c;
 	}
+	enum State {INACTIVE, ACTIVE};
+	State state = INACTIVE;
 public:
 	void draw() const
 	{
@@ -34,5 +35,14 @@ public:
 	void setBoard(boardGame* b) { board = b; }
 	void isOnFloor();
 	void barrelFall();
+	void activate() 
+	{ 
+		state = ACTIVE;
+		x = startX;
+		y = startY;
+	}
+	void deactivate() { state = INACTIVE; }
+	bool isActive() const { return state == ACTIVE; }
+	bool hasReachedEnd() const ;
 };
 

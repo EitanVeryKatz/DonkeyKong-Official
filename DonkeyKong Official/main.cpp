@@ -9,36 +9,69 @@
 
 constexpr int ESC = 27;
 
+//int main()
+//{
+//	showCurserOnConsole(false);
+//	player mario;
+//	boardGame board;
+//	mario.setGameBoard(&board);
+//	board.newDrawBoard();
+//	board.startBarrelSequence();
+//	while (true)
+//	{
+//		board.updateBarrels();
+//
+//		mario.draw();
+//		if (_kbhit())
+//		{
+//			char key = _getch();
+//			if (key == ESC)
+//				break;
+//			mario.keyPressed(key);
+//		}
+//
+//		Sleep(160);
+//		mario.erase();
+//		mario.moveInBoard();
+//	}
+//	gotoxy(0, 27);
+//}
+
+
 int main()
 {
-	int barrelCounter = 0;
-	showCurserOnConsole(false);
-	player mario;
-	boardGame board;
-	mario.setGameBoard(&board);
-	board.newDrawBoard();
+    showCurserOnConsole(false);
+    player mario;
+    boardGame board;
+    mario.setGameBoard(&board);
+    board.newDrawBoard();
+    board.startBarrelSequence();
+    while (true)
+    {
+        // Erase mario and barrels
+        mario.erase();
+        board.eraseBarrels();
 
-	while (true)
-	{
-		if (barrelCounter == board.getBarrelCount() - 1)
-		{
-			// create new barrel array will add later
-		}
+        // Update positions
+        mario.moveInBoard();
+        board.updateBarrels();
 
-		mario.draw();
-		if (_kbhit())
-		{
-			char key = _getch();
-			if (key == ESC)
-				break;
-			mario.keyPressed(key);
-		}
+        // Draw board elements that might have been erased
+        board.reDrawOriginal();
 
-		Sleep(160);
-		//b.erase();
-		//b.barrelFall();
-		mario.erase();
-		mario.moveInBoard();
-	}
-	gotoxy(0, 27);
+        // Draw mario and barrels
+        mario.draw();
+        board.drawBarrels();
+
+        if (_kbhit())
+        {
+            char key = _getch();
+            if (key == ESC)
+                break;
+            mario.keyPressed(key);
+        }
+
+        Sleep(160);
+    }
+    gotoxy(0, 27);
 }
