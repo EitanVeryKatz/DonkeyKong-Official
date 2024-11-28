@@ -1,9 +1,8 @@
 #pragma once
-#include "boardGame.h"
 #include "gameConfig.h"
 #include "iostream"
+#include "originalBoard.h"
 
-class boardGame;
 class barrel
 {
 	static constexpr char FLOOR_DIR = '<';
@@ -14,7 +13,7 @@ class barrel
 	Direction dir{ 0,0 };
 	static constexpr int startX = 39, startY = 3, LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3;
 	int x = startX, y = startY;
-	boardGame* board;
+	originalBoard* pBoard;
 	static constexpr char ICON = 'O';
 	bool onFloor = false;
 	void draw(char c) const
@@ -31,7 +30,7 @@ public:
 	{
 		draw(' ');
 	}
-	void setBoard(boardGame* b) { board = b; }
+	void setBoard(originalBoard* board) { pBoard = board; }
 	void isOnFloor();
 	void barrelFall();
 };

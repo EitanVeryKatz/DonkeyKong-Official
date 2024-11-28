@@ -3,7 +3,7 @@
 void barrel::isOnFloor()
 {
 	onFloor = false;
-	char currChar = board->getChar(x, y + 1);
+	char currChar = pBoard->getChar(x, y + 1);
 	if (currChar == '<' || currChar == '>')
 	{
 		onFloor = true;
@@ -19,7 +19,7 @@ void barrel::barrelFall()
 	if (onFloor) // if on floor
 	{
 		dir.y = 0;
-		dirChar = board->getChar(x, y + 1); // get the direction of the floor
+		dirChar = pBoard->getChar(x, y + 1); // get the direction of the floor
 		if (dirChar == FLOOR_DIR) // if left move left on floor
 		{
 			dir = directions[LEFT];
@@ -42,8 +42,6 @@ void barrel::barrelFall()
 		prevY = y;
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
-		if (!(prevX == x && prevY == y)) {
-			gotoxy(prevX, prevY);
-			std::cout << board->getChar(prevX, prevY);
-		}
+		gotoxy(prevX, prevY);
+		std::cout << pBoard->getChar(prevX, prevY);
 }

@@ -15,16 +15,13 @@ int main()
 	showCurserOnConsole(false);
 	player mario;
 	boardGame board;
+	originalBoard originalBoard;
 	mario.setGameBoard(&board);
+	mario.setOriginalBoard(&originalBoard);
 	board.newDrawBoard();
 
 	while (true)
 	{
-		if (barrelCounter == board.getBarrelCount() - 1)
-		{
-			// create new barrel array will add later
-		}
-
 		mario.draw();
 		if (_kbhit())
 		{
@@ -35,8 +32,6 @@ int main()
 		}
 
 		Sleep(160);
-		//b.erase();
-		//b.barrelFall();
 		mario.erase();
 		mario.moveInBoard();
 	}

@@ -1,10 +1,7 @@
 #pragma once
-
-#include "barrel.h"
-class barrel;
-
-class boardGame
+class originalBoard
 {
+
 	static constexpr int BOARD_WIDTH = 80;
 	static constexpr int BOARD_HEIGHT = 25;
 	const char* boardLayout[BOARD_HEIGHT] =
@@ -36,12 +33,7 @@ class boardGame
 		  "Q                                                                              Q", // 23
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
-
-public :
-	char getChar(int x, int y) { return boardLayout[y][x]; }
-	int getWidth() {return BOARD_WIDTH;}
-	int getHeight() {return BOARD_HEIGHT;}
-	void newDrawBoard();
-
+public:
+	char getChar(int x, int y) const { return boardLayout[y][x]; }
 };
 

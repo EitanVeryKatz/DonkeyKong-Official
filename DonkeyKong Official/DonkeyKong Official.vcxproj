@@ -187,6 +187,7 @@
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="originalBoard.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
@@ -195,6 +196,7 @@
     <ClInclude Include="boardGame.h" />
     <ClInclude Include="gameConfig.h" />
     <ClInclude Include="Ladder.h" />
+    <ClInclude Include="originalBoard.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="utils.h" />

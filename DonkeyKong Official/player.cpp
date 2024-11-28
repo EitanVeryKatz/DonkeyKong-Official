@@ -77,10 +77,8 @@ void player::moveInBoard()
 		prevY = y;
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
-		if (!(prevX == x && prevY == y)) {
-			gotoxy(prevX, prevY);
-			std::cout << board->getChar(prevX, prevY);
-		}
+		gotoxy(prevX, prevY);
+		std::cout << pBoardOriginal->getChar(prevX, prevY);
 	}
 }
 
