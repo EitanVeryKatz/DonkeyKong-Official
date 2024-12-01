@@ -11,6 +11,7 @@ constexpr int ESC = 27;
 
 int main()
 {
+	int iterationCounter = 0;
 	int barrelCounter = 0;
 	showCurserOnConsole(false);
 	player mario;
@@ -19,7 +20,7 @@ int main()
 	mario.setGameBoard(&board);
 	mario.setOriginalBoard(&originalBoard);
 	board.newDrawBoard();
-
+	const int numBarrels = board.getBarrelsNum();
 	while (true)
 	{
 		mario.draw();
@@ -30,8 +31,22 @@ int main()
 				break;
 			mario.keyPressed(key);
 		}
-
-		Sleep(160);
+		for (int i = 0; i < barrelCounter; i++)
+		{
+			barrel* pBarrel = &board.getBarrel(i);
+			pBarrel->erase();
+			pBarrel->barrelFall();
+			pBarrel->draw();
+		}
+		if (iterationCounter % 20 == 0 && barrelCounter < numBarrels)
+		{
+			barrel* pBarrel = &board.getBarrel(barrelCounter);
+			pBarrel->setBoard(&originalBoard);
+			pBarrel->draw();
+			barrelCounter++;
+		}
+		Sleep(150);
+		iterationCounter++;
 		mario.erase();
 		mario.moveInBoard();
 	}

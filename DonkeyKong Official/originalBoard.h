@@ -35,5 +35,7 @@ class originalBoard
 	};
 public:
 	char getChar(int x, int y) const { return boardLayout[y][x]; }
+	int getWidth() const { return BOARD_WIDTH; }
+	int getHeight() const { return BOARD_HEIGHT; }
 };
 
