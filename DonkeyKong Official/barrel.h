@@ -7,8 +7,8 @@ class originalBoard;
 
 class barrel
 {
+	static constexpr int FIRST_FLOOR_Y = 6;
 	static constexpr char FLOOR_DIR = '<';
-	//static constexpr char movement[] = { 'L', 'D', 'R', 'S' };
 	struct Direction { int x, y; };
 	//                                            LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directions[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
@@ -18,6 +18,8 @@ class barrel
 	originalBoard* pOriginalBoard;
 	static constexpr char ICON = 'O';
 	bool onFloor = false;
+	bool active = true;
+	int lastFloorY = FIRST_FLOOR_Y;
 	void draw(char c) const
 	{
 		gotoxy(x, y);
@@ -35,5 +37,7 @@ public:
 	void setBoard(originalBoard* board) { pOriginalBoard = board; }
 	void isOnFloor();
 	void barrelFall();
+	void explode();
+	bool isActive() const { return active; }
 };
 
