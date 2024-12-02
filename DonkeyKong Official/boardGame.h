@@ -7,7 +7,7 @@ class boardGame
 {
 	static constexpr int BOARD_WIDTH = 80;
 	static constexpr int BOARD_HEIGHT = 25;
-	static constexpr int BARRELS_NUM = 10;
+	static constexpr int BARRELS_NUM = 30;
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
 	{   //           1         2         3         4         5         6         7                  
@@ -27,7 +27,7 @@ class boardGame
 		  "Q                      >>>>>H>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                 Q", // 12
 		  "Q                           H                                                  Q", // 13
 		  "Q                           H                                                  Q", // 14
-		  "Q            <<<<<<<<<<<<<<<<<<<<<<<<<H<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<        Q", // 15
+		  "Q            <<<<<<<<<<<<<<<<<<<<<<<<<H<<<<<<<<<<<<<<<<<<<<<<<<<<              Q", // 15
 		  "Q                                     H                                        Q", // 16
 		  "Q                                     H                                        Q", // 17
 		  "Q   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       Q", // 18
@@ -38,7 +38,9 @@ class boardGame
 		  "Q                                                                              Q", // 23
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
+	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 
+	void initFailChart();
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; }
 	int getWidth() {return BOARD_WIDTH;}
@@ -46,5 +48,11 @@ public :
 	void newDrawBoard();
 	barrel& getBarrel(int index) { return barrels[index]; }
 	int getBarrelsNum() { return BARRELS_NUM; }
+	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; }
+	char getFailChart(int x, int y) { return failChart[x][y]; }
+	boardGame()
+	{
+		initFailChart();
+	}
 };
 

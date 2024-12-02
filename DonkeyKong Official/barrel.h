@@ -3,7 +3,7 @@
 #include "iostream"
 
 
-class originalBoard;
+class boardGame;
 
 class barrel
 {
@@ -15,7 +15,7 @@ class barrel
 	Direction dir{ 0,0 };
 	static constexpr int startX = 39, startY = 3, LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3;
 	int x = startX, y = startY;
-	originalBoard* pOriginalBoard;
+	boardGame* pBoard;
 	static constexpr char ICON = 'O';
 	bool onFloor = false;
 	bool active = true;
@@ -25,6 +25,7 @@ class barrel
 		gotoxy(x, y);
 		std::cout << c;
 	}
+
 public:
 	void draw() const
 	{
@@ -34,7 +35,7 @@ public:
 	{
 		draw(' ');
 	}
-	void setBoard(originalBoard* board) { pOriginalBoard = board; }
+	void setBoard(boardGame* board) { pBoard = board; }
 	void isOnFloor();
 	void barrelFall();
 	void explode();

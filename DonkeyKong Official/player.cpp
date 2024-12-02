@@ -77,8 +77,12 @@ void player::moveInBoard()
 		prevY = y;
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
+		if (checkFail())
+		{
+			exit(0);
+		}
 		gotoxy(prevX, prevY);
-		std::cout << pBoardOriginal->getChar(prevX, prevY);
+		std::cout << board->getChar(prevX, prevY);
 	}
 }
 
@@ -96,6 +100,16 @@ void player::newIsOnFloor()
 
 void player::newIsOnLadder() {
 	onLadder = board->getChar(x, y) == 'H';
+}
+
+bool player::checkFail()
+{
+	char failChar = board->getFailChart(x, y);
+	if (failChar == 'O' || failChar == '*')
+	{
+		return true;
+	}
+	return false;	
 }
 
 

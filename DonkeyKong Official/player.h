@@ -42,5 +42,6 @@ public:
 	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
 	void setOriginalBoard(originalBoard* originalBoard) { pBoardOriginal = originalBoard; }
 	void newIsOnLadder();
+	bool checkFail();
 };
 

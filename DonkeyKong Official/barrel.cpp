@@ -5,7 +5,7 @@
 void barrel::isOnFloor()
 {
 	onFloor = false;
-	char currChar = pOriginalBoard->getChar(x, y + 1);
+	char currChar = pBoard->getChar(x, y + 1);
 	if (currChar == '<' || currChar == '>')
 	{
 		onFloor = true;
@@ -22,7 +22,7 @@ void barrel::barrelFall()
 	if (onFloor)
 		lastFloorY = y;
 
-	if (y >= pOriginalBoard->getHeight() - 2 || y >= lastFloorY + 8)
+	if (y >= pBoard->getHeight() - 2 || y >= lastFloorY + 8)
 	{
 		explode();
 	}
@@ -30,7 +30,7 @@ void barrel::barrelFall()
 	else if (onFloor) // if on floor
 	{
 		dir.y = 0;
-		dirChar = pOriginalBoard->getChar(x, y + 1); // get the direction of the floor
+		dirChar = pBoard->getChar(x, y + 1); // get the direction of the floor
 		if (dirChar == FLOOR_DIR) // if left move left on floor
 		{
 			dir = directions[LEFT];
@@ -54,8 +54,10 @@ void barrel::barrelFall()
 	prevY = y;
 	x = newX; // Update player's X position
 	y = newY; // Update player's Y position
+	pBoard->UpdateFailChart(prevX, prevY, ' ');
+	pBoard->UpdateFailChart(x, y, ICON);
 	gotoxy(prevX, prevY);
-	std::cout << pOriginalBoard->getChar(prevX, prevY);
+	std::cout << pBoard->getChar(prevX, prevY);
 }
 
 void barrel::explode()
