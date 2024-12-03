@@ -85,7 +85,6 @@ void game::initGame(player& mario, boardGame& board)
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
 	board.initBarrels(); // initialize the barrels
-	board.initFailChart();// reset the fail chart
 }
 
 void game::handleInput(player& mario, bool& running)
@@ -176,7 +175,7 @@ void game::gameLoop(player& mario, boardGame& board)
 				gotoxy(MessageX, MessageY); 
 				std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 				Sleep(breakTime); 
-				initGame(mario, board); // initialize the game again (reset player, barrels, etc.)
+				runGame();
 			}
 		}
 		else if (mario.checkWin()) // if the player won
@@ -191,7 +190,6 @@ void game::gameLoop(player& mario, boardGame& board)
 		}
 		mario.erase();
 		mario.moveInBoard();
-		
 	}
 }
 
