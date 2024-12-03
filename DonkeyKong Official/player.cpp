@@ -1,6 +1,6 @@
 #include "player.h"
 #include "utils.h"
-
+#include "game.h"
 
 void player::keyPressed(char key)
 {
@@ -77,7 +77,12 @@ void player::moveInBoard()
 		prevY = y;
 		if (checkFail())
 		{
-			// if player failed, reset player's position and board and lives count -1
+			system("cls");
+			std::cout << "You have " << lives << " lives left" << std::endl;
+			Sleep(1000);
+			game g;
+			g.runGame();
+			lives--;
 		}
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position

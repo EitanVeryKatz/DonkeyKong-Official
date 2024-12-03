@@ -18,16 +18,27 @@ void barrel::barrelFall()
 	char dirChar;
 	isOnFloor();
 
-	if (onFloor)
-		lastFloorY = y;
+	/*if (onFloor )
+		lastFloorY = y;*/
 
-	if (y >= pBoard->getHeight() - 2 || y >= lastFloorY + 8)
+	/*if (y >= pBoard->getHeight() - 2 || y >= lastFloorY + 8)
+	{
+		explode();
+	}*/
+
+	if (onFloor && y >= lastFloorY + 8)
 	{
 		explode();
 	}
 
+	else if (y >= pBoard->getHeight() - 2)
+	{
+		active = false;
+	}
+
 	else if (onFloor) // if on floor
 	{
+		lastFloorY = y;
 		dir.y = 0;
 		dirChar = pBoard->getChar(x, y + 1); // get the direction of the floor
 		if (dirChar == FLOOR_DIR) // if left move left on floor
