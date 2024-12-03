@@ -18,6 +18,7 @@ class player
 	bool onLadder = false;
 	bool isOnFloor;
 	boardGame* board;
+	int lives = 3;
 
 	void draw(char c) const
 	{
