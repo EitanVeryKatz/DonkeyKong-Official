@@ -75,12 +75,12 @@ void player::moveInBoard()
 		
 		prevX = x;
 		prevY = y;
-		x = newX; // Update player's X position
-		y = newY; // Update player's Y position
 		if (checkFail())
 		{
-			exit(0);
+			// if player failed, reset player's position and board and lives count -1
 		}
+		x = newX; // Update player's X position
+		y = newY; // Update player's Y position
 		gotoxy(prevX, prevY);
 		std::cout << board->getChar(prevX, prevY);
 	}
