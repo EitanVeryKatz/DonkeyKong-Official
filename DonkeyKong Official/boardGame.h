@@ -7,7 +7,7 @@ class boardGame
 {
 	static constexpr int BOARD_WIDTH = 80;
 	static constexpr int BOARD_HEIGHT = 25;
-	static constexpr int BARRELS_NUM = 5;
+	static constexpr int BARRELS_NUM = 15;
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
 	{   //           1         2         3         4         5         6         7                  
@@ -40,7 +40,6 @@ class boardGame
 	};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 
-	void initFailChart();
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; }
 	int getWidth() {return BOARD_WIDTH;}
@@ -51,6 +50,7 @@ public :
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; }
 	char getFailChart(int x, int y) { return failChart[x][y]; }
 	void initBarrels();
+	void initFailChart();
 	boardGame()
 	{
 		initFailChart();
