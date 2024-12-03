@@ -12,6 +12,8 @@ game::game()
 
 void game::displayMenu()
 {
+
+	const int MessageX = 30, MessageY = 12;
 	std::cout << R"( 
 		    ____   ___  _   _ _  _________   __
 			|  _ \ / _ \| \ | | |/ / ____\ \ / /
@@ -45,17 +47,20 @@ void game::displayMenu()
 			{
 				system("cls");
 				std::cout << "Instructions:" << std::endl;
-				std::cout << "Use the 'a' key to move left,\n'd' key to move right,\n'w' key to jump or climb up a ladder,\n's' key to stop,\n'x' key to go down on ladder" << std::endl;
+				std::cout << "Use the 'a' key to move left,\n'd' key to move right,\n'w' key to jump or climb up a ladder,\n's' key to stop,\n'x' key to go down the ladder" << std::endl;
 				std::cout << "Press 'esc' to pause the game\n" << std::endl;
 				std::cout << "\n";
 				std::cout << "Press any key to return to the menu" << std::endl;
-				_getch();
-				system("cls");
+				_getch(); // wait for any key
+				system("cls"); // clear the screen
 				displayMenu(); // any other way?
 				break;
 			}
 			else if (key == '9')
 			{
+				gotoxy(MessageX, MessageY);
+				std::cout << "Goodbye!" << std::endl;
+				system("cls");
 				break;
 			}
         }
@@ -76,10 +81,10 @@ void game::runGame()
 void game::initGame(player& mario, boardGame& board)
 {
 	showCurserOnConsole(false);
-	mario.setGameBoard(&board);
-	mario.resetPlayer();
-	board.newDrawBoard();
-	board.initBarrels();
+	mario.setGameBoard(&board); 
+	mario.resetPlayer(); // reset player's position
+	board.newDrawBoard(); // draw the board
+	board.initBarrels(); // initialize the barrels
 }
 
 void game::handleInput(player& mario, bool& running)
@@ -87,9 +92,9 @@ void game::handleInput(player& mario, bool& running)
 	if (_kbhit())
 	{
 		char key = _getch();
-		if (key == ESC)
+		if (key == ESC) // if the user pressed 'esc'
 		{
-			pauseGame();
+			pauseGame(); // pause the game
 		}
 		else
 			mario.keyPressed(key);
@@ -132,7 +137,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 
 void game::gameLoop(player& mario, boardGame& board)
 {
-	const int livesX = 2, livesY = 2, livesMessageX = 30, livesMessageY = 12;
+	const int livesX = 2, livesY = 2, MessageX = 30, MessageY = 12;
 	const int breakTime = 2000;
 	bool running = true;
 	int barrelCounter = 0;
@@ -149,32 +154,32 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkFail())
 		{
 			lives--;
-			if (lives == 0)
+			if (lives == 0) // if no more lives
 			{
-				running = false;
-				system("cls");
-				gotoxy(livesMessageX, livesMessageY);
-				std::cout << "Game Over" << std::endl;
+				running = false; // end the game
+				system("cls"); // clear the screen
+				gotoxy(MessageX, MessageY); 
+				std::cout << "Game Over" << std::endl;// display the message
 				Sleep(breakTime);
 				displayMenu();
 			}
-			else
+			else // if there are more lives
 			{
-				system("cls");
-				gotoxy(livesMessageX, livesMessageY);
-				std::cout << "You have " << lives << " lives left" << std::endl;
-				Sleep(breakTime);
-				initGame(mario, board);
+				system("cls"); // clear the screen
+				gotoxy(MessageX, MessageY); 
+				std::cout << "You have " << lives << " lives left" << std::endl; // display the message
+				Sleep(breakTime); 
+				initGame(mario, board); // initialize the game again (reset player, barrels, etc.)
 			}
 		}
-		else if (mario.checkWin())
+		else if (mario.checkWin()) // if the player won
 		{
-			running = false;
-			system("cls");
-			gotoxy(livesMessageX, livesMessageY);
-			std::cout << "You won!" << std::endl;
+			running = false; // end the game
+			system("cls"); // clear the screen
+			gotoxy(MessageX, MessageY);
+			std::cout << "You won!" << std::endl; // display the message
 			Sleep(breakTime);
-			displayMenu();
+			displayMenu(); // go back to menu
 		}
 		mario.erase();
 		mario.moveInBoard();
