@@ -189,7 +189,6 @@ void game::gameLoop(player& mario, boardGame& board)
 			std::cout << "You won!" << std::endl; // display the message
 			Sleep(breakTime);
 			system("cls"); // clear the screen
-			gotoxy(0, 0);
 			displayMenu(); // go back to menu
 		}
 		
