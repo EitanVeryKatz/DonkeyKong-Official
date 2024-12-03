@@ -196,12 +196,22 @@ void updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, int ite
     // Update and draw each active barrel
     for (int i = 0; i < barrelCounter; i++)
     {
-        if (!board.getBarrel(i).isActive())
-            continue;
         barrel* pBarrel = &board.getBarrel(i);
+        if (board.getBarrel(i).isActive()){
         pBarrel->erase();
         pBarrel->barrelFall();
-        pBarrel->draw();
+        pBarrel->draw(); 
+        }
+        else {
+            if (pBarrel->isBlastShowing())
+                if (pBarrel->getBlowCount() ==2) {//get blow count counts iterations before clearing explosion
+                    pBarrel->clearBlast();
+                }
+                else {
+                    pBarrel->updateBlowCounter();
+                }
+            
+        }
     }
 
     // Add a new barrel every 60 iterations

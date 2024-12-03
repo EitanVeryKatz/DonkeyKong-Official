@@ -62,7 +62,31 @@ void barrel::barrelFall()
 
 void barrel::explode()
 {
-	erase();
+	for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++) {
+		for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++) {
+			pBoard->UpdateFailChart(x + blowRadiusX, y + blowRadiusY, '*');
+			gotoxy(x + blowRadiusX, y + blowRadiusY);
+			std::cout << '*';
+		}
+	}
+	blastCenterX = x;
+	blastCenterY = y;
+	blastParticlesVisable = true;
 	active = false;
+	blastCounter++;
 }
 
+void barrel::clearBlast() {
+	for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++) {
+		for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++) {
+			pBoard->UpdateFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
+			gotoxy(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+			std::cout << pBoard->getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+		}
+	}
+
+	resetBlowCounter();
+	blastParticlesVisable = false;
+	blastCenterX = 0;
+	blastCenterY = 0;
+}

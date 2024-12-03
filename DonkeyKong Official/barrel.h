@@ -20,6 +20,10 @@ class barrel
 	bool onFloor = false;
 	bool active = true;
 	int lastFloorY = FIRST_FLOOR_Y;
+	int blastCenterX = 0;
+	int blastCenterY = 0;
+	bool blastParticlesVisable = false;
+	int blastCounter = 0;
 	void draw(char c) const
 	{
 		gotoxy(x, y);
@@ -40,5 +44,10 @@ public:
 	void barrelFall();
 	void explode();
 	bool isActive() const { return active; }
+	void clearBlast();
+	bool isBlastShowing() { return blastParticlesVisable; }
+	int getBlowCount() { return blastCounter; }
+	void updateBlowCounter() { blastCounter++; }
+	void resetBlowCounter() { blastCounter = 0; }
 };
 
