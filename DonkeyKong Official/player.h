@@ -15,7 +15,7 @@ class player
 	int prevX = x, prevY = y;
 	Direction dir{ 0,0 };
 	char icon = '@';
-	bool midjump = false;
+	int midjump = 0;
 	bool onLadder = false;
 	bool isOnFloor;
 	boardGame* board;

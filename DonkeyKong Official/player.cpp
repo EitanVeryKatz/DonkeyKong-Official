@@ -4,7 +4,7 @@
 void player::keyPressed(char key)
 {
 	if (!onLadder && tolower(key) == 'w') {
-		midjump = true;
+		midjump++;
 	}
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
@@ -27,7 +27,11 @@ void player::moveInBoard()
 {
 	if ((x == 1 && dir.x <= -1) || (x == board->getWidth() - 2 && dir.x >= 1)) // If at a border, only update vertical position
 	{
-		int newY = y + dir.y; // Calculate new vertical position
+		int newY = y + dir.y;
+		if (!isOnFloor) {
+			newY++;
+		}
+		 // Calculate new vertical position
 		y = newY; // Update player's Y position
 	}
 	
@@ -63,12 +67,16 @@ void player::moveInBoard()
 		if (isOnFloor ){//if on floor
 			if (midjump) {//if jump pressed
 				newY--;//update Y to be one higher
-				midjump = false;//reset jump checker
+				midjump++;
 			}
 		}
 		else {//if not on floor
-			if (!onLadder)
+			if (!onLadder&&midjump==0)
 				newY++;//continue to fall
+			if (!onLadder && midjump == 2) {
+				newY--;
+				midjump = 0;
+			}
 		}
 
 		
@@ -94,7 +102,7 @@ void player::newIsOnFloor()
 }
 
 void player::newIsOnLadder() {
-	onLadder = (board->getChar(x, y) == 'H' ||(board->getChar(x, y+1) == 'H' && (board->getChar(x, y) == '<'|| board->getChar(x, y) == '>')));
+	onLadder = (board->getChar(x, y) == 'H' ||(board->getChar(x, y+1) == 'H' && (board->getChar(x, y) == '<'|| board->getChar(x, y) == '>'|| board->getChar(x, y) == '=')));
 }
 
 bool player::checkFail()
