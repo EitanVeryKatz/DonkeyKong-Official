@@ -3,7 +3,6 @@
 #include <iostream>
 #include "gameConfig.h"
 #include "boardGame.h"
-#include "originalBoard.h"
 
 class player
 {
@@ -19,7 +18,6 @@ class player
 	bool onLadder = false;
 	bool isOnFloor;
 	boardGame* board;
-	originalBoard* pBoardOriginal;
 
 	void draw(char c) const
 	{
@@ -40,7 +38,6 @@ public:
 	void moveInBoard();
 	void newIsOnFloor();
 	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
-	void setOriginalBoard(originalBoard* originalBoard) { pBoardOriginal = originalBoard; }
 	void newIsOnLadder();
 	bool checkFail();
 };

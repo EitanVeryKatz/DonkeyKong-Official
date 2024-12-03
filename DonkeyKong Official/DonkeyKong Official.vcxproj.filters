@@ -27,16 +27,10 @@
     <ClCompile Include="boardGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ladder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="barrel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="originalBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,13 +50,7 @@
     <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ladder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="barrel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="originalBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
