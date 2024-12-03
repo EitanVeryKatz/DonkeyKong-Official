@@ -7,7 +7,12 @@ void boardGame::initFailChart()
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
         for (int c = 0; c < BOARD_WIDTH; c++)
-			failChart[c][r] = ' ';
+        {
+            if (r == 23)
+                failChart[c][r] = '*';
+            else
+                failChart[c][r] = ' ';
+        }
     }
 }
 
@@ -20,6 +25,16 @@ void boardGame::newDrawBoard(){
             std::cout << '\n';
            
     }
+}
+
+void boardGame::initBarrels()
+{
+	for (int i = 0; i < BARRELS_NUM; i++)
+	{
+		barrels[i].setBoard(this);
+		barrels[i].erase();
+        barrels[i].resetBarrel();
+	}
 }
 
 

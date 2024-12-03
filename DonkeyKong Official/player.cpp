@@ -107,6 +107,15 @@ bool player::checkFail()
 	return false;	
 }
 
+bool player::checkWin()
+{
+	if (board->getChar(x, y) == '$')
+	{
+		return true;
+	}
+	return false;
+}
+
 
 
 

@@ -50,6 +50,7 @@ public :
 	int getBarrelsNum() { return BARRELS_NUM; }
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; }
 	char getFailChart(int x, int y) { return failChart[x][y]; }
+	void initBarrels();
 	boardGame()
 	{
 		initFailChart();

@@ -77,7 +77,9 @@ void game::initGame(player& mario, boardGame& board)
 {
 	showCurserOnConsole(false);
 	mario.setGameBoard(&board);
+	mario.resetPlayer();
 	board.newDrawBoard();
+	board.initBarrels();
 }
 
 void game::handleInput(player& mario, bool& running)
@@ -123,7 +125,6 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < numBarrels) // if it's time to add a new barrel
 	{
 		barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
-		pBarrel->setBoard(&board); // set the board
 		pBarrel->draw(); // draw the barrel
 		barrelCounter++; // increment the barrel counter
 	}
@@ -131,12 +132,14 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 
 void game::gameLoop(player& mario, boardGame& board)
 {
+	const int livesX = 2, livesY = 2, livesMessageX = 30, livesMessageY = 12;
+	const int breakTime = 2000;
 	bool running = true;
 	int barrelCounter = 0;
 	int iterationCounter = 0;
 	while (running) // main game loop
 	{
-		gotoxy(2, 2);
+		gotoxy(livesX, livesY);
 		std::cout << "Lives: " << lives << std::endl;
 		mario.draw();
 		handleInput(mario, running);
@@ -149,15 +152,29 @@ void game::gameLoop(player& mario, boardGame& board)
 			if (lives == 0)
 			{
 				running = false;
+				system("cls");
+				gotoxy(livesMessageX, livesMessageY);
+				std::cout << "Game Over" << std::endl;
+				Sleep(breakTime);
+				displayMenu();
 			}
 			else
 			{
 				system("cls");
-				gotoxy(30, 12);
+				gotoxy(livesMessageX, livesMessageY);
 				std::cout << "You have " << lives << " lives left" << std::endl;
-				Sleep(2000);
+				Sleep(breakTime);
 				initGame(mario, board);
 			}
+		}
+		else if (mario.checkWin())
+		{
+			running = false;
+			system("cls");
+			gotoxy(livesMessageX, livesMessageY);
+			std::cout << "You won!" << std::endl;
+			Sleep(breakTime);
+			displayMenu();
 		}
 		mario.erase();
 		mario.moveInBoard();

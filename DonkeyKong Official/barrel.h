@@ -49,5 +49,6 @@ public:
 	int getBlowCount() { return blastCounter; }
 	void updateBlowCounter() { blastCounter++; }
 	void resetBlowCounter() { blastCounter = 0; }
+	void resetBarrel() { onFloor = false ,active = true; x = startX; y = startY; blastParticlesVisable = false; blastCounter = 0; }
 };
 
