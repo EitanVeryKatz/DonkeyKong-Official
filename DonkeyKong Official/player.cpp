@@ -47,10 +47,10 @@ void player::moveInBoard()
 		int newY;
 		newIsOnFloor();
 		newIsOnLadder();
-
-		if (!onLadder && dir.x == 0 ) {//if not on ladder moving verticaly
-			if (this->board->getChar(x, y + 1) != 'H'||dir.y ==-1)
-			dir.y = 0;//stop
+		if(isOnFloor&&dir.y ==1 && board->getChar(x, y + 1) == 'H'){}
+		else if (!onLadder && dir.x == 0) {//if not on ladder moving verticaly
+			if (this->board->getChar(x, y + 2) != 'H' || dir.y == -1)
+				dir.y = 0;//stop
 		}
 		if (dir.y == 1 && isOnFloor) {//if going down and reaching floor
 			if(this->board->getChar(x,y+1) != 'H')
@@ -91,7 +91,7 @@ void player::newIsOnFloor()
 {
 	isOnFloor = false;
 	char currBoardIcon = board->getChar(x, y + 1);
-	if (currBoardIcon == '<' || currBoardIcon == '>' || currBoardIcon == '=' || (currBoardIcon == 'H' && board->getChar(x, y) == ' '))
+	if (currBoardIcon == '<' || currBoardIcon == '>' || currBoardIcon == '=' )
 	{
 		isOnFloor = true;
 	}
@@ -99,7 +99,7 @@ void player::newIsOnFloor()
 }
 
 void player::newIsOnLadder() {
-	onLadder = board->getChar(x, y) == 'H';
+	onLadder = (board->getChar(x, y) == 'H' ||(board->getChar(x, y+1) == 'H' && (board->getChar(x, y) == '<'|| board->getChar(x, y) == '>')));
 }
 
 bool player::checkFail()
