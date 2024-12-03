@@ -3,7 +3,7 @@
 
 void player::keyPressed(char key)
 {
-	if (!onLadder && tolower(key) == 'w') {
+	if (isOnFloor&&!onLadder && tolower(key) == 'w') {
 		midjump++;
 	}
 	for (size_t i = 0; i < numKeys; i++) {
@@ -73,7 +73,7 @@ void player::moveInBoard()
 		else {//if not on floor
 			if (!onLadder&&midjump==0)
 				newY++;//continue to fall
-			if (!onLadder && midjump == 2) {
+			if (!onLadder && midjump >=2) {
 				newY--;
 				midjump = 0;
 			}
