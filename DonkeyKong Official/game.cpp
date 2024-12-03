@@ -150,15 +150,16 @@ void game::gameLoop(player& mario, boardGame& board)
 	int iterationCounter = 0;
 	while (running) // main game loop
 	{
-		bool fail = mario.checkFail();
 		gotoxy(livesX, livesY);
 		std::cout << "Lives: " << lives << std::endl;
 		mario.draw();
 		handleInput(mario, running);
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
+		mario.erase();
+		mario.moveInBoard();
 		Sleep(100);
 		iterationCounter++;
-		if (fail)
+		if (mario.checkFail())
 		{
 			lives--;
 			if (lives == 0) // if no more lives
@@ -187,10 +188,11 @@ void game::gameLoop(player& mario, boardGame& board)
 			gotoxy(MessageX, MessageY);
 			std::cout << "You won!" << std::endl; // display the message
 			Sleep(breakTime);
+			system("cls"); // clear the screen
+			gotoxy(0, 0);
 			displayMenu(); // go back to menu
 		}
-		mario.erase();
-		mario.moveInBoard();
+		
 	}
 }
 
