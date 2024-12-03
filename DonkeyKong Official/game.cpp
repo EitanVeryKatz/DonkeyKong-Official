@@ -5,7 +5,10 @@
 
 constexpr int ESC = 27;
 
-
+game::game()
+{
+	displayMenu();
+}
 
 void game::displayMenu()
 {
@@ -40,9 +43,10 @@ void game::displayMenu()
             }
 			else if (key == '8')
 			{
+				system("cls");
 				std::cout << "Instructions:" << std::endl;
-				std::cout << "Use the 'a' key to move left, 'd' key to move right, 'w' key to jump or climb up a ladder, 's' key to stop, 'x' key to go down on ladder" << std::endl;
-				std::cout << "Press 'esc' to pause the game" << std::endl;
+				std::cout << "Use the 'a' key to move left,\n'd' key to move right,\n'w' key to jump or climb up a ladder,\n's' key to stop,\n'x' key to go down on ladder" << std::endl;
+				std::cout << "Press 'esc' to pause the game\n" << std::endl;
 				std::cout << "\n";
 				std::cout << "Press any key to return to the menu" << std::endl;
 				_getch();
@@ -132,6 +136,8 @@ void game::gameLoop(player& mario, boardGame& board)
 	int iterationCounter = 0;
 	while (running) // main game loop
 	{
+		gotoxy(2, 2);
+		std::cout << "Lives: " << lives << std::endl;
 		mario.draw();
 		handleInput(mario, running);
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
@@ -147,6 +153,7 @@ void game::gameLoop(player& mario, boardGame& board)
 			else
 			{
 				system("cls");
+				gotoxy(30, 12);
 				std::cout << "You have " << lives << " lives left" << std::endl;
 				Sleep(2000);
 				initGame(mario, board);

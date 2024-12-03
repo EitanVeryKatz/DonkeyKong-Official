@@ -14,5 +14,6 @@ public:
 	void pauseGame(); // Pause the game
 	void displayMenu(); // Display the game menu
 	void runGame(); // Run the game
+	game(); // Constructor
 };
 

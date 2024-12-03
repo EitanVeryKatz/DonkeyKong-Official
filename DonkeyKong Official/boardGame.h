@@ -15,7 +15,7 @@ class boardGame
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 		  "Q                                       &                                      Q", // 1
 		  "Q                                       &     $                                Q", // 2
-		  "Q                                    == ====H====                              Q", // 3
+		  "Q                                    == =========                              Q", // 3
 		  "Q                                           H                                  Q", // 4
 		  "Q                                           H                                  Q", // 5
 		  "Q                                >>>>>>>>>>>>>>>>>>>>>>                        Q", // 6
