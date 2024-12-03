@@ -155,8 +155,6 @@ void game::gameLoop(player& mario, boardGame& board)
 		mario.draw();
 		handleInput(mario, running);
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
-		mario.erase();
-		mario.moveInBoard();
 		Sleep(100);
 		iterationCounter++;
 		if (mario.checkFail())
@@ -191,6 +189,8 @@ void game::gameLoop(player& mario, boardGame& board)
 			system("cls"); // clear the screen
 			displayMenu(); // go back to menu
 		}
+		mario.erase();
+		mario.moveInBoard();
 		
 	}
 }
