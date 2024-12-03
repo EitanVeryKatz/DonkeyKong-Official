@@ -137,6 +137,21 @@ void game::gameLoop(player& mario, boardGame& board)
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
 		Sleep(100);
 		iterationCounter++;
+		if (mario.checkFail())
+		{
+			lives--;
+			if (lives == 0)
+			{
+				running = false;
+			}
+			else
+			{
+				system("cls");
+				std::cout << "You have " << lives << " lives left" << std::endl;
+				Sleep(2000);
+				initGame(mario, board);
+			}
+		}
 		mario.erase();
 		mario.moveInBoard();
 	}

@@ -1,6 +1,5 @@
 #include "player.h"
 #include "utils.h"
-#include "game.h"
 
 void player::keyPressed(char key)
 {
@@ -75,15 +74,6 @@ void player::moveInBoard()
 		
 		prevX = x;
 		prevY = y;
-		if (checkFail())
-		{
-			system("cls");
-			std::cout << "You have " << lives << " lives left" << std::endl;
-			Sleep(1000);
-			game g;
-			g.runGame();
-			lives--;
-		}
 		x = newX; // Update player's X position
 		y = newY; // Update player's Y position
 		gotoxy(prevX, prevY);

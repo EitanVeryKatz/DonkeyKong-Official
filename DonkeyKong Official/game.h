@@ -4,6 +4,7 @@
 
 class game
 {
+	int lives = 3;
 	static constexpr int BARREL_SPAWN_RATE = 20;
 	void initGame(player& mario, boardGame& board); // Initialize the game
 	void handleInput(player& mario, bool& running); // Handle user input
