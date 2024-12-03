@@ -9,7 +9,7 @@ void player::keyPressed(char key)
 	for (size_t i = 0; i < numKeys; i++) {
 		if (std::tolower(key) == keys[i]) {
 			if (!onLadder){
-				if (keys[i] == 'a' || keys[i] == 'd'|| keys[i] == 's'|| (keys[i] == 'x' && board->getChar(x, y + 1) == 'H')) {
+				if (keys[i] == 'a' || keys[i] == 'd'|| keys[i] == 's'|| (keys[i] == 'x' && board->getChar(x, y + 2) == 'H')) {
 					dir = directions[i];//update dir to coresponding key
 				}
 				
@@ -52,7 +52,7 @@ void player::moveInBoard()
 				dir.y = 0;//stop
 		}
 		if (dir.y == 1 && isOnFloor) {//if going down and reaching floor
-			if(this->board->getChar(x,y+1) != 'H')
+			if(this->board->getChar(x,y+2) != 'H')
 			dir.y = 0;//stop
 		}
 
