@@ -7,7 +7,7 @@ class boardGame
 {
 	static constexpr int BOARD_WIDTH = 80;
 	static constexpr int BOARD_HEIGHT = 25;
-	static constexpr int BARRELS_NUM = 30;
+	static constexpr int BARRELS_NUM = 5;
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
 	{   //           1         2         3         4         5         6         7                  

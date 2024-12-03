@@ -105,12 +105,17 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 {
 	for (int i = 0; i < barrelCounter; i++) // update all barrels
 	{
-		barrel* pBarrel = &board.getBarrel(i);
-		if (board.getBarrel(i).isActive()) // if barrel is active
+		barrel* pBarrel = &board.getBarrel(i); // get the barrel
+											
+		if (pBarrel->isActive()) // if barrel is active
 		{
 			pBarrel->erase(); // erase the barrel
 			pBarrel->barrelFall(); // make the barrel fall
 			pBarrel->draw(); // draw the barrel
+		}
+		else if (!pBarrel->isActive()) // if the barrel is not active
+		{
+			pBarrel->resetBarrel(); // reset the barrel
 		}
 		else
 		{
