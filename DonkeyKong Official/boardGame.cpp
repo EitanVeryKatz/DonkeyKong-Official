@@ -22,7 +22,8 @@ void boardGame::newDrawBoard(){
             for (int j = 0; j < BOARD_WIDTH;j++) {
                 std::cout << boardLayout[i][j];
             }
-            std::cout << '\n';
+			if (i != BOARD_HEIGHT - 1)
+                std::cout << '\n';
            
     }
 }
