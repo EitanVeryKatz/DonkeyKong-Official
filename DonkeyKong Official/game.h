@@ -10,6 +10,8 @@ class game
 	void handleInput(player& mario, bool& running); // Handle user input
 	void updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, int iterationCounter); // Update barrels
 	void gameLoop(player& mario, boardGame& board); // Main game loop
+	void printMenu(); // Print the game menu
+	void printInstructions(); // Print the game instructions
 public:
 	void pauseGame(); // Pause the game
 	void displayMenu(); // Display the game menu

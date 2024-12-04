@@ -4,16 +4,14 @@
 #include <conio.h>
 
 constexpr int ESC = 27;
-
+constexpr int breakTime = 2000;
 game::game()
 {
 	displayMenu();
 }
 
-void game::displayMenu()
+void game::printMenu()
 {
-
-	const int MessageX = 30, MessageY = 12;
 	std::cout << R"( 
 		    ____   ___  _   _ _  _________   __
 			|  _ \ / _ \| \ | | |/ / ____\ \ / /
@@ -34,6 +32,21 @@ void game::displayMenu()
 	std::cout << "\n";
 	std::cout << "9. Exit" << std::endl;
 	std::cout << "\n";
+}
+
+void game::printInstructions()
+{
+	std::cout << "Instructions:" << std::endl;
+	std::cout << "Use the 'a' key to move left,\n'd' key to move right,\n'w' key to jump or climb up a ladder,\n's' key to stop,\n'x' key to go down the ladder" << std::endl;
+	std::cout << "Press 'esc' to pause the game\n" << std::endl;
+	std::cout << "\n";
+	std::cout << "Press any key to return to the menu" << std::endl;
+}
+
+void game::displayMenu()
+{
+	const int MessageX = 30, MessageY = 12;
+	printMenu();
 	while (true) // menu loop
 	{
 		 if (_kbhit())
@@ -42,15 +55,12 @@ void game::displayMenu()
             if (key == '1')
             {
                 runGame();
+				printMenu();
             }
 			else if (key == '8')
 			{
 				system("cls");
-				std::cout << "Instructions:" << std::endl;
-				std::cout << "Use the 'a' key to move left,\n'd' key to move right,\n'w' key to jump or climb up a ladder,\n's' key to stop,\n'x' key to go down the ladder" << std::endl;
-				std::cout << "Press 'esc' to pause the game\n" << std::endl;
-				std::cout << "\n";
-				std::cout << "Press any key to return to the menu" << std::endl;
+				printInstructions();
 				_getch(); // wait for any key
 				system("cls"); // clear the screen
 				displayMenu(); // any other way?
@@ -58,9 +68,10 @@ void game::displayMenu()
 			}
 			else if (key == '9')
 			{
+				system("cls");
 				gotoxy(MessageX, MessageY);
 				std::cout << "Goodbye!" << std::endl;
-				system("cls");
+				Sleep(breakTime);
 				break;
 			}
         }
@@ -143,7 +154,6 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 void game::gameLoop(player& mario, boardGame& board)
 {
 	const int livesX = 2, livesY = 2, MessageX = 30, MessageY = 12;
-	const int breakTime = 2000;
 	bool running = true;
 	int barrelCounter = 0;
 	int iterationCounter = 0;
@@ -167,7 +177,7 @@ void game::gameLoop(player& mario, boardGame& board)
 				std::cout << "Game Over" << std::endl;// display the message
 				Sleep(breakTime);
 				system("cls"); // clear the screen
-				displayMenu();
+				return;
 			}
 			else // if there are more lives
 			{
@@ -175,7 +185,7 @@ void game::gameLoop(player& mario, boardGame& board)
 				gotoxy(MessageX, MessageY); 
 				std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 				Sleep(breakTime); 
-				runGame();
+				initGame(mario, board); // initialize the game
 			}
 		}
 		else if (mario.checkWin()) // if the player won
@@ -186,12 +196,14 @@ void game::gameLoop(player& mario, boardGame& board)
 			std::cout << "You won!" << std::endl; // display the message
 			Sleep(breakTime);
 			system("cls"); // clear the screen
-			displayMenu(); // go back to menu
+			return; // go back to menu
 		}
 		mario.erase();
 		mario.moveInBoard();
 	}
 }
+
+
 
 void game::pauseGame()
 {
