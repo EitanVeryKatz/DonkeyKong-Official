@@ -42,8 +42,8 @@ public:
 		x = startX;
 		y = startY;
 		dir = { 0,0 };
-		int lastFloorY = firstFloorY;
-		int currentFloorY = firstFloorY;
+		lastFloorY = firstFloorY;
+		currentFloorY = firstFloorY;
 	}
 	void keyPressed(char key);
 	void moveInBoard();
