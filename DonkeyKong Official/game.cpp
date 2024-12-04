@@ -55,6 +55,7 @@ void game::displayMenu()
             if (key == '1')
             {
                 runGame();
+				resetLives();
 				printMenu();
             }
 			else if (key == '8')
@@ -64,7 +65,6 @@ void game::displayMenu()
 				_getch(); // wait for any key
 				system("cls"); // clear the screen
 				displayMenu(); // any other way?
-				break;
 			}
 			else if (key == '9')
 			{
@@ -95,6 +95,7 @@ void game::initGame(player& mario, boardGame& board)
 	mario.setGameBoard(&board); 
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
+	board.initFailChart(); // initialize the fail chart
 	board.initBarrels(); // initialize the barrels
 }
 

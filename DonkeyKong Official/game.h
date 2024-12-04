@@ -12,6 +12,7 @@ class game
 	void gameLoop(player& mario, boardGame& board); // Main game loop
 	void printMenu(); // Print the game menu
 	void printInstructions(); // Print the game instructions
+	void resetLives() { lives = 3; } // Reset the number of lives
 public:
 	void pauseGame(); // Pause the game
 	void displayMenu(); // Display the game menu
