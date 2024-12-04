@@ -7,6 +7,7 @@
 class player
 {
 	static constexpr int startX = 6, startY = 17;
+	static constexpr int firstFloorY = 18;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	struct Direction { int x, y; };
@@ -19,7 +20,8 @@ class player
 	bool onLadder = false;
 	bool isOnFloor;
 	boardGame* board;
-	int lives = 3;
+	int lastFloorY = firstFloorY;
+	int currentFloorY = firstFloorY;
 
 	void draw(char c) const
 	{

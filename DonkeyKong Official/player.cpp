@@ -96,6 +96,8 @@ void player::newIsOnFloor()
 	char currBoardIcon = board->getChar(x, y + 1);
 	if (currBoardIcon == '<' || currBoardIcon == '>' || currBoardIcon == '=' )
 	{
+		lastFloorY = currentFloorY;
+		currentFloorY = y;
 		isOnFloor = true;
 	}
 
@@ -108,7 +110,7 @@ void player::newIsOnLadder() {
 bool player::checkFail()
 {
 	char failChar = board->getFailChart(x, y);
-	if (failChar == 'O' || failChar == '*')
+	if (failChar == 'O' || failChar == '*' || (isOnFloor && y >= lastFloorY + 5 ))
 	{
 		return true;
 	}
