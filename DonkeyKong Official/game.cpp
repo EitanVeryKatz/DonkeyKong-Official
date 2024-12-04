@@ -45,6 +45,7 @@ void game::printInstructions()
 
 void game::displayMenu()
 {
+	showCurserOnConsole(false);
 	const int MessageX = 30, MessageY = 12;
 	printMenu();
 	while (true) // menu loop
@@ -91,15 +92,15 @@ void game::runGame()
 
 void game::initGame(player& mario, boardGame& board)
 {
-	showCurserOnConsole(false);
+	board.initFailChart(); // initialize the fail chart
+	board.initBarrels();  // initialize the barrels
 	mario.setGameBoard(&board); 
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
-	board.initFailChart(); // initialize the fail chart
-	board.initBarrels(); // initialize the barrels
+	
 }
 
-void game::handleInput(player& mario, bool& running)
+void game::handleInput(player& mario)
 {
 	if (_kbhit())
 	{
@@ -163,7 +164,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		gotoxy(livesX, livesY);
 		std::cout << "Lives: " << lives << std::endl;
 		mario.draw();
-		handleInput(mario, running);
+		handleInput(mario);
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
 		Sleep(100);
 		iterationCounter++;
