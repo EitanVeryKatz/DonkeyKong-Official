@@ -203,7 +203,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		mario.draw();
 		handleInput(mario);
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
-		Sleep(100);
+		Sleep(80);
 		iterationCounter++;
 		fail(mario, running, board);
 		if (mario.checkWin()) // if the player won

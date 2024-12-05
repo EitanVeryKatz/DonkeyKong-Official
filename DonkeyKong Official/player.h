@@ -3,6 +3,7 @@
 #include <iostream>
 #include "gameConfig.h"
 #include "boardGame.h"
+#include "point.h"
 
 class player
 {
@@ -22,6 +23,7 @@ class player
 	boardGame* board;
 	int lastFloorY = firstFloorY;
 	int currentFloorY = firstFloorY;
+	point position;
 
 	void draw(char c) const
 	{
@@ -29,6 +31,9 @@ class player
 		std::cout << c;
 	}
 public:
+
+	player() : position(startX, startY) {}
+
 	void draw() const
 	{
 		draw(icon);
@@ -47,6 +52,7 @@ public:
 	}
 	void keyPressed(char key);
 	void moveInBoard();
+	void moveInBoard_USING_POINT();
 	void newIsOnFloor();
 	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
 	void newIsOnLadder();

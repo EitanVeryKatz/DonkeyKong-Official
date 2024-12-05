@@ -1,6 +1,7 @@
 #include "player.h"
 #include "utils.h"
 
+
 void player::keyPressed(char key)
 {
 	if (isOnFloor&&!onLadder && tolower(key) == 'w') {
@@ -87,6 +88,19 @@ void player::moveInBoard()
 		gotoxy(prevX, prevY);
 		std::cout << board->getChar(prevX, prevY);
 	}
+}
+
+void player::moveInBoard_USING_POINT()
+{
+	int currX = position.getX();
+	int currY = position.getY();
+	
+	// handle the case where the player is at the border of the board
+	
+	// handle in board
+
+	newIsOnFloor();
+	newIsOnLadder();
 }
 
 
