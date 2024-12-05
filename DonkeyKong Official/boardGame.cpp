@@ -8,7 +8,7 @@ void boardGame::initFailChart()
     {
         for (int c = 0; c < BOARD_WIDTH; c++)
         {
-            if (r == 23)
+            if (r == BOARD_HEIGHT - 2)
                 failChart[c][r] = '*';
             else
                 failChart[c][r] = ' ';
