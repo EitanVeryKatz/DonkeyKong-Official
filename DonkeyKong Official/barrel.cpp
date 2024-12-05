@@ -18,9 +18,16 @@ void barrel::barrelFall()
 	char dirChar;
 	isOnFloor();
 
+	if (exploaded)
+	{
+		clearBlast();
+		exploaded = false;
+	}
+
 	if (onFloor && y >= lastFloorY + 8)
 	{
 		explode();
+		exploaded = true;
 	}
 
 	else if (y >= pBoard->getHeight() - 2)

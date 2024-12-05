@@ -206,6 +206,16 @@ void game::gameLoop(player& mario, boardGame& board)
 		Sleep(100);
 		iterationCounter++;
 		fail(mario, running, board);
+		if (mario.checkWin()) // if the player won
+		{
+			running = false; // end the game
+			system("cls"); // clear the screen
+			gotoxy(MessageX, MessageY);
+			std::cout << "You won!" << std::endl; // display the message
+			Sleep(breakTime);
+			system("cls"); // clear the screen
+			return; // go back to menu
+		}
 		mario.erase();
 		mario.moveInBoard();
 		fail(mario, running, board);

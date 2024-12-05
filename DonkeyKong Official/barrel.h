@@ -24,6 +24,7 @@ class barrel
 	int blastCenterY = 0;
 	bool blastParticlesVisable = false;
 	int blastCounter = 0;
+	bool exploaded = false;
 	void draw(char c) const
 	{
 		gotoxy(x, y);
