@@ -8,7 +8,7 @@ class game
 	static constexpr int BARREL_SPAWN_RATE = 20;
 	void initGame(player& mario, boardGame& board); // Initialize the game
 	void handleInput(player& mario); // Handle user input
-	void updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, int iterationCounter); // Update barrels
+	void updateBarrels(boardGame& board, int& barrelCounter, int iterationCounter); // Update barrels
 	void gameLoop(player& mario, boardGame& board); // Main game loop
 	void printMenu(); // Print the game menu
 	void printInstructions(); // Print the game instructions

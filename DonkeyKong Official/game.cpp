@@ -2,6 +2,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include "gameConfig.h"
 
 constexpr int ESC = 27;
 constexpr int breakTime = 2000;
@@ -151,7 +152,7 @@ void game::handleInput(player& mario)
 	}
 }
 
-void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, int iterationCounter)
+void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCounter)
 {
 	for (int i = 0; i < barrelCounter; i++) // update all barrels
 	{
@@ -182,7 +183,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 			}
 		}
 	}
-	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < numBarrels) // if it's time to add a new barrel
+	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM) // if it's time to add a new barrel
 	{
 		barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
 		pBarrel->draw(); // draw the barrel
@@ -202,7 +203,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		std::cout << "Lives: " << lives << std::endl;
 		mario.draw_USING_POINT();
 		handleInput(mario);
-		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
+		updateBarrels(board, barrelCounter, iterationCounter);
 		Sleep(80);
 		iterationCounter++;
 		fail(mario, running, board);
