@@ -44,6 +44,7 @@ public:
 		position.draw(' ');
 	}
 
+
 	void draw() const
 	{
 		draw(icon);
@@ -61,10 +62,17 @@ public:
 		currentFloorY = firstFloorY;
 	}
 	void keyPressed(char key);
+	void keyPressed_USING_POINT(char key);
 	void moveInBoard();
 	void moveInBoard_USING_POINT();
+	bool isAtVerticalBorder(int currX, int dirX);
+	bool isAtHorizontalBorder(int currY, int dirY);
+	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY);
+	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY);
+	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY);
 	void newIsOnFloor();
 	void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
+	void setGameBoard_USING_POINT(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
 	void newIsOnLadder();
 	bool checkFail();
 	bool checkWin();

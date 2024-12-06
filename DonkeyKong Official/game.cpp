@@ -147,7 +147,7 @@ void game::handleInput(player& mario)
 			pauseGame(); // pause the game
 		}
 		else
-			mario.keyPressed(key);
+			mario.keyPressed_USING_POINT(key);
 	}
 }
 
@@ -192,6 +192,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 
 void game::gameLoop(player& mario, boardGame& board)
 {
+	mario.setGameBoard_USING_POINT(&board);
 	const int livesX = 2, livesY = 2, MessageX = 30, MessageY = 12;
 	bool running = true;
 	int barrelCounter = 0;
@@ -200,7 +201,7 @@ void game::gameLoop(player& mario, boardGame& board)
 	{
 		gotoxy(livesX, livesY);
 		std::cout << "Lives: " << lives << std::endl;
-		mario.draw();
+		mario.draw_USING_POINT();
 		handleInput(mario);
 		updateBarrels(board, barrelCounter, board.getBarrelsNum(), iterationCounter);
 		Sleep(80);
@@ -216,8 +217,8 @@ void game::gameLoop(player& mario, boardGame& board)
 			system("cls"); // clear the screen
 			return; // go back to menu
 		}
-		mario.erase();
-		mario.moveInBoard();
+		mario.erase_USING_POINT();
+		mario.moveInBoard_USING_POINT();
 		fail(mario, running, board);
 	}
 }
