@@ -168,16 +168,21 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 
 	else if (!position.isOnLadder() && dirX == 0)  //if not on ladder moving vertically
 	{
-		if (position.getChar(currX, currY + 2) != 'H' || dirY == -1)
+		if (position.getChar(currX, currY + 2) != 'H' || dirY == -1) {
 			position.setDirY(0); //stop
+			dirY = 0;
+		}
 	}
 
 	if (dirY == 1 && position.isOnFloor()) //if going down and reaching floor
 	{
-		if (position.getChar(currX, currY + 2) != 'H')
+		if (position.getChar(currX, currY + 2) != 'H') {
 			position.setDirY(0); //stop
+			dirY = 0;
+		}
 	}
 
+	
 	newX = currX + dirX; // Calculate new horizontal position	
 	newY = currY + dirY; // Calculate new vertical position
 
