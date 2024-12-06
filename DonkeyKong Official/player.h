@@ -34,6 +34,16 @@ public:
 
 	player() : position(startX, startY) {}
 
+	void draw_USING_POINT() 
+	{
+		position.draw(icon);
+	}
+
+	void erase_USING_POINT()
+	{
+		position.draw(' ');
+	}
+
 	void draw() const
 	{
 		draw(icon);

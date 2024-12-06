@@ -12,7 +12,7 @@ class point
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
 	struct Direction { int x, y; };
 	static constexpr Direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	void draw(char c) const
+	void drawPoint(char c) const
 	{
 		gotoxy(x, y);
 		std::cout << c;
@@ -20,13 +20,13 @@ class point
 	boardGame* pBoard;
 
 public:
-	void draw(char c) const
+	void draw(char icon) 
 	{
-		draw(c);
+		drawPoint(icon);
 	}
 	void erase()
 	{
-		draw(' ');
+		drawPoint(' ');
 	}
 	point(int x = 0, int y = 0) : x(x), y(y) {}
 	int getX() const { return x; }
