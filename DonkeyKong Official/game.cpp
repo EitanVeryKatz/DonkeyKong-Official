@@ -131,7 +131,7 @@ void game::initGame(player& mario, boardGame& board)
 {
 	board.initFailChart(); // initialize the fail chart
 	board.initBarrels();  // initialize the barrels
-	mario.setGameBoard(&board); 
+	mario.setGameBoard_USING_POINT(&board);
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
 	
@@ -192,7 +192,6 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int numBarrels, i
 
 void game::gameLoop(player& mario, boardGame& board)
 {
-	mario.setGameBoard_USING_POINT(&board);
 	const int livesX = 2, livesY = 2, MessageX = 30, MessageY = 12;
 	bool running = true;
 	int barrelCounter = 0;

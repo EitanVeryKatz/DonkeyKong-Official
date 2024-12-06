@@ -1,5 +1,6 @@
 #include "barrel.h"
 #include "boardGame.h"
+#include "gameConfig.h"
 
 void barrel::isOnFloor()
 {
@@ -30,7 +31,7 @@ void barrel::barrelFall()
 		exploaded = true;
 	}
 
-	else if (y >= pBoard->getHeight() - 2)
+	else if (y >= BOARD_HEIGHT - 2)
 	{
 		active = false;
 	}
