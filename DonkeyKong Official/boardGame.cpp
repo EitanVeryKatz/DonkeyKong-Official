@@ -1,7 +1,6 @@
 #include "boardGame.h"
 #include <iostream>
 
-
 void boardGame::initFailChart()
 {
     for (int r = 0; r < BOARD_HEIGHT; r++)
@@ -16,15 +15,20 @@ void boardGame::initFailChart()
     }
 }
 
-void boardGame::newDrawBoard(){
+void boardGame::newDrawBoard()
+{
+        const int livesX = 2, livesY = 2;
+        gotoxy(livesX, livesY);
+        std::cout << "Lives: " << std::endl;
         gotoxy(0, 0);
-        for (int i = 0; i < BOARD_HEIGHT;i++) {
-            for (int j = 0; j < BOARD_WIDTH;j++) {
+        for (int i = 0; i < BOARD_HEIGHT;i++)
+        {
+            for (int j = 0; j < BOARD_WIDTH;j++)
+            {
                 std::cout << boardLayout[i][j];
             }
 			if (i != BOARD_HEIGHT - 1)
                 std::cout << '\n';
-           
     }
 }
 

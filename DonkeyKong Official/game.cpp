@@ -188,14 +188,14 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 
 void game::gameLoop(player& mario, boardGame& board)
 {
-	const int livesX = 2, livesY = 2, MessageX = 30, MessageY = 12;
+	const int livesX = 9, livesY = 2, MessageX = 30, MessageY = 12;
 	bool running = true;
 	int barrelCounter = 0;
 	int iterationCounter = 0;
 	while (running) // main game loop
 	{
 		gotoxy(livesX, livesY);
-		std::cout << "Lives: " << lives << std::endl;
+		std::cout << lives << std::endl;
 		mario.draw_USING_POINT();
 		handleInput(mario);
 		updateBarrels(board, barrelCounter, iterationCounter);
