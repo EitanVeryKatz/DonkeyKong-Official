@@ -7,7 +7,7 @@
 
 class player
 {
-	static constexpr int startX = 6, startY = 17;
+	static constexpr int startX = 30, startY =21;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	char icon = '@';
