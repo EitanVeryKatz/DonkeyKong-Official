@@ -156,7 +156,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 			pBarrel->barrelFall_USING_POINT(); // make the barrel fall
 			pBarrel->draw_USING_POINT(); // draw the barrel
 		}
-		else if (!pBarrel->isActive()) // if the barrel is not active
+		else if (!pBarrel->isActive() && (iterationCounter % BARREL_SPAWN_RATE == 0)) // if the barrel is not active
 		{
 			pBarrel->resetBarrel_USING_POINT(); // reset the barrel
 		}
