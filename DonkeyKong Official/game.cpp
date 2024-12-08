@@ -13,6 +13,7 @@ game::game()
 
 void game::printMenu()
 {
+	system("cls");
 	std::cout << R"( 
 		         ____   ___  _   _ _  _________   __
 			|  _ \ / _ \| \ | | |/ / ____\ \ / /
@@ -93,8 +94,8 @@ void game::displayMenu()
 				system("cls");
 				printInstructions();
 				_getch(); // wait for any key
-				system("cls"); // clear the screen
-				displayMenu(); // any other way?
+				printMenu();
+				continue;
 			}
 			else if (key == '9')
 			{

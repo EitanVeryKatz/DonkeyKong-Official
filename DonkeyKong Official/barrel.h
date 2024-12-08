@@ -26,6 +26,11 @@ public:
 	void draw_USING_POINT() { position.draw(ICON); }
 	void erase_USING_POINT() { position.erase(); }
 	void barrelFall_USING_POINT();
+	void handleExplosion();
+	void deactivateBarrel();
+	void handleOnFloor(int currX, int currY, int& newX, int& newY, char& dirChar);
+	void handleInAir(int currX, int currY, int& newX, int& newY);
+	void updatePosition(int currX, int currY, int newX, int newY);
 	void setBoard(boardGame* board) { pBoard = board; }
 	void setBoard_USING_POINT(boardGame* board) { position.setGameBoard(board); };
 	void explode();
