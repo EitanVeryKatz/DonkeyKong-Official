@@ -73,8 +73,8 @@ void barrel::handleInAir(int currX, int currY, int &newX, int &newY)
 
 void barrel::updatePosition(int currX, int currY, int newX, int newY)
 {
-    position.setPoint(newX, newY);
     position.setFailChart(' ');
+    position.setPoint(newX, newY);
     position.setFailChart(ICON);
     gotoxy(currX, currY);
     std::cout << position.getChar(currX, currY);
