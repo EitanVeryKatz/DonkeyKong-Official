@@ -2,14 +2,16 @@
 
 #include <iostream>
 #include "gameConfig.h"
-#include "boardGame.h"
+
 class boardGame;
 
 class point
 {
 	int x, y, prevX, prevY;
 	struct Direction { int x, y; };
-	static constexpr Direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+	//                                            LEFT    DOWN    RIGHT   STAY 
+	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	Direction dir{ 0,0 };
 	void drawPoint(char c) const
 	{
@@ -51,9 +53,11 @@ public:
 		setDirX(x);
 		setDirY(y);
 	}
-	char getChar() { return pBoard->getChar(x, y); }
-	char getChar(int x, int y) { return pBoard->getChar(x, y); }
-	void setDirFromArray(int i) { dir = directions[i]; }
-	char getFailChart() { return pBoard->getFailChart(x, y); }
+	char getChar();
+	char getChar(int _x, int _y);
+	char getFailChart();
+	void setFailChart(char c);
+	void setDirFromArrayPlayer(int i) { dir = directionsPlayer[i]; }
+	void setDirFromArrayBarrel(int i) { dir = directionsBarrel[i]; }
 };
 

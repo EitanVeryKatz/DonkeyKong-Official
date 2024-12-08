@@ -44,7 +44,7 @@ void game::printInstructions()
 	std::cout << "Press any key to return to the menu" << std::endl;
 }
 
-void game::fail(player& mario, bool& running, boardGame& board)
+void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
 	int const MessageX = 30, MessageY = 12;
 	if (mario.checkFail())
@@ -66,18 +66,9 @@ void game::fail(player& mario, bool& running, boardGame& board)
 			gotoxy(MessageX, MessageY);
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 			Sleep(breakTime);
+			barrelCounter = 0, iterationCounter = 0;
 			initGame(mario, board); // initialize the game
 		}
-	}
-	else if (mario.checkWin()) // if the player won
-	{
-		running = false; // end the game
-		system("cls"); // clear the screen
-		gotoxy(MessageX, MessageY);
-		std::cout << "You won!" << std::endl; // display the message
-		Sleep(breakTime);
-		system("cls"); // clear the screen
-		return; // go back to menu
 	}
 }
 
@@ -160,13 +151,13 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 											
 		if (pBarrel->isActive()) // if barrel is active
 		{
-			pBarrel->erase(); // erase the barrel
-			pBarrel->barrelFall(); // make the barrel fall
-			pBarrel->draw(); // draw the barrel
+			pBarrel->erase_USING_POINT(); // erase the barrel
+			pBarrel->barrelFall_USING_POINT(); // make the barrel fall
+			pBarrel->draw_USING_POINT(); // draw the barrel
 		}
 		else if (!pBarrel->isActive()) // if the barrel is not active
 		{
-			pBarrel->resetBarrel(); // reset the barrel
+			pBarrel->resetBarrel_USING_POINT(); // reset the barrel
 		}
 		else
 		{
@@ -186,7 +177,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM) // if it's time to add a new barrel
 	{
 		barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
-		pBarrel->draw(); // draw the barrel
+		pBarrel->draw_USING_POINT(); // draw the barrel
 		barrelCounter++; // increment the barrel counter
 	}
 }
@@ -206,7 +197,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		updateBarrels(board, barrelCounter, iterationCounter);
 		Sleep(80);
 		iterationCounter++;
-		fail(mario, running, board);
+		fail(mario, running, board, barrelCounter, iterationCounter);
 		if (mario.checkWin()) // if the player won
 		{
 			running = false; // end the game
@@ -219,7 +210,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		}
 		mario.erase_USING_POINT();
 		mario.moveInBoard_USING_POINT();
-		fail(mario, running, board);
+		fail(mario, running, board, barrelCounter, iterationCounter);
 	}
 }
 

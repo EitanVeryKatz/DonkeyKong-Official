@@ -1,23 +1,19 @@
 #pragma once
 #include "gameConfig.h"
 #include "iostream"
-
+#include "point.h"
 
 class boardGame;
 
 class barrel
 {
+	point position;
 	static constexpr int FIRST_FLOOR_Y = 6;
-	static constexpr char FLOOR_DIR = '<';
-	struct Direction { int x, y; };
-	//                                            LEFT    DOWN    RIGHT   STAY 
-	static constexpr Direction directions[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	Direction dir{ 0,0 };
+	static constexpr char FLOOR_DIR_LEFT = '<';
 	static constexpr int startX = 39, startY = 3, LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3;
 	int x = startX, y = startY;
 	boardGame* pBoard;
 	static constexpr char ICON = 'O';
-	bool onFloor = false;
 	bool active = true;
 	int lastFloorY = FIRST_FLOOR_Y;
 	int blastCenterX = 0;
@@ -25,24 +21,13 @@ class barrel
 	bool blastParticlesVisable = false;
 	int blastCounter = 0;
 	bool exploaded = false;
-	void draw(char c) const
-	{
-		gotoxy(x, y);
-		std::cout << c;
-	}
-
 public:
-	void draw() const
-	{
-		draw(ICON);
-	}
-	void erase()
-	{
-		draw(' ');
-	}
+	barrel();
+	void draw_USING_POINT() { position.draw(ICON); }
+	void erase_USING_POINT() { position.erase(); }
+	void barrelFall_USING_POINT();
 	void setBoard(boardGame* board) { pBoard = board; }
-	void isOnFloor();
-	void barrelFall();
+	void setBoard_USING_POINT(boardGame* board) { position.setGameBoard(board); };
 	void explode();
 	bool isActive() const { return active; }
 	void clearBlast();
@@ -50,6 +35,6 @@ public:
 	int getBlowCount() { return blastCounter; }
 	void updateBlowCounter() { blastCounter++; }
 	void resetBlowCounter() { blastCounter = 0; }
-	void resetBarrel() { onFloor = false ,active = true; x = startX; y = startY; blastParticlesVisable = false; blastCounter = 0; }
+	void resetBarrel_USING_POINT() { position.setPoint(startX, startY); active = true; blastParticlesVisable = false; blastCounter = 0, position.setDirFromArrayBarrel(STAY); }
 };
 

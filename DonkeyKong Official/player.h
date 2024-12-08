@@ -9,26 +9,13 @@ class player
 {
 	static constexpr int startX = 6, startY = 17;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
-	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
-	//struct Direction { int x, y; };
-	//static constexpr Direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	//int x = startX, y = startY;
-	//int prevX = x, prevY = y;
-	//Direction dir{ 0,0 };
+	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	char icon = '@';
 	int midjump = 0;
-	//bool onLadder = false;
-	//bool isOnFloor;
-	//boardGame* board;
 	int lastFloorY = firstFloorY;
 	int currentFloorY = firstFloorY;
 	point position;
 
-	//void draw(char c) const
-	//{
-	//	gotoxy(x, y);
-	//	std::cout << c;
-	//}
 public:
 
 	player() : position(startX, startY) {}
@@ -43,15 +30,6 @@ public:
 		position.draw(' ');
 	}
 
-
-	/*void draw() const
-	{
-		draw(icon);
-	}
-	void erase()
-	{
-		draw(' ');
-	}*/
 	void resetPlayer()
 	{
 		position.setPoint(startX, startY);
@@ -59,20 +37,15 @@ public:
 		lastFloorY = firstFloorY;
 		currentFloorY = firstFloorY;
 	}
-	//void keyPressed(char key);
-	void keyPressed_USING_POINT(char key);
-	//void moveInBoard();
-	void moveInBoard_USING_POINT();
-	bool isAtVerticalBorder(int currX, int dirX);
-	bool isAtHorizontalBorder(int currY, int dirY);
-	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY);
-	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY);
-	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY);
-	//void newIsOnFloor();
-	//void setGameBoard(boardGame* gameBoard) { board = gameBoard; }
+	void keyPressed_USING_POINT(char key); // Handle player's key press
+	void moveInBoard_USING_POINT(); // handle player's movement
+	bool isAtVerticalBorder(int currX, int dirX); // Check if player is at vertical border
+	bool isAtHorizontalBorder(int currY, int dirY); // Check if player is at horizontal border
+	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY); // Handle vertical border
+	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY); // Handle horizontal border
+	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
 	void setGameBoard_USING_POINT(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
-	//void newIsOnLadder();
-	bool checkFail();
-	bool checkWin();
+	bool checkFail(); // Check if player failed
+	bool checkWin(); // Check if player won
 };
 

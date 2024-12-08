@@ -32,9 +32,10 @@ void boardGame::initBarrels()
 {
 	for (int i = 0; i < BARRELS_NUM; i++)
 	{
+		barrels[i].setBoard_USING_POINT(this);
 		barrels[i].setBoard(this);
-		barrels[i].erase();
-        barrels[i].resetBarrel();
+		barrels[i].erase_USING_POINT();
+        barrels[i].resetBarrel_USING_POINT();
 	}
 }
 

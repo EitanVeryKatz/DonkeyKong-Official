@@ -3,8 +3,6 @@
 #include <algorithm>
 
 
-class Floor;
-
 void gotoxy(int x, int y)
 {
 	std::cout.flush();

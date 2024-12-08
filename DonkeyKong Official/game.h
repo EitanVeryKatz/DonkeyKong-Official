@@ -13,7 +13,7 @@ class game
 	void printMenu(); // Print the game menu
 	void printInstructions(); // Print the game instructions
 	void resetLives() { lives = 3; } // Reset the number of lives
-	void fail(player& mario, bool &running, boardGame& board); // Handle player fail
+	void fail(player& mario, bool &running, boardGame& board, int & barrelCounter, int &iterationCounter); // Handle player fail
 public:
 	void pauseGame(); // Pause the game
 	void displayMenu(); // Display the game menu

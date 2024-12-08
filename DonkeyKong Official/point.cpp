@@ -1,5 +1,5 @@
 #include "point.h"
-
+#include "boardGame.h"
 
 bool point::isOnFloor()
 {
@@ -18,3 +18,25 @@ bool point::isOnLadder()
 	}
 	return false;
 }
+
+char point::getChar()
+{
+	return pBoard->getChar(x, y);
+}
+
+char point::getChar(int _x, int _y)
+{
+	return pBoard->getChar(_x, _y);
+}
+
+char point::getFailChart()
+{
+	return pBoard->getFailChart(x, y);
+}
+
+void point::setFailChart(char c)
+{
+	pBoard->UpdateFailChart(x, y, c);
+}
+
+
