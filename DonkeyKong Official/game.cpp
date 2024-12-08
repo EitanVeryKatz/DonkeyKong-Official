@@ -156,7 +156,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 			pBarrel->barrelFall_USING_POINT(); // make the barrel fall
 			pBarrel->draw_USING_POINT(); // draw the barrel
 		}
-		else if (!pBarrel->isActive() && (iterationCounter % BARREL_SPAWN_RATE == 0)&&activeBarrels<maxBarrels) // if the barrel is not active
+		else if (!pBarrel->isActive() && activeBarrels < maxBarrels) // if the barrel is not active
 		{
 			pBarrel->resetBarrel_USING_POINT(); // reset the barrel
 			activeBarrels++;
@@ -182,6 +182,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
 		pBarrel->draw_USING_POINT(); // draw the barrel
 		barrelCounter++; // increment the barrel counter
+		activeBarrels++;
 	}
 }
 
