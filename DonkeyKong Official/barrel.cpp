@@ -23,6 +23,8 @@ void barrel::barrelFall_USING_POINT()
     else if (currY >= BOARD_HEIGHT - 2)
     {
         deactivateBarrel();
+      /*  newX = currX;
+        newY = currY;*/
     }
     else if (onFloor)
     {
@@ -32,7 +34,7 @@ void barrel::barrelFall_USING_POINT()
     {
         handleInAir(currX, currY, newX, newY);
     }
-    updatePosition(currX, currY, newX, newY);
+     updatePosition(currX, currY, newX, newY);
 }
 
 void barrel::handleExplosion()

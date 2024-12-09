@@ -122,12 +122,12 @@ void game::runGame()
 
 void game::initGame(player& mario, boardGame& board)
 {
+	activeBarrels = 0;
 	board.initFailChart(); // initialize the fail chart
 	board.initBarrels();  // initialize the barrels
 	mario.setGameBoard_USING_POINT(&board);
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
-	
 }
 
 void game::handleInput(player& mario)
@@ -154,7 +154,10 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		{
 			pBarrel->erase_USING_POINT(); // erase the barrel
 			pBarrel->barrelFall_USING_POINT(); // make the barrel fall
-			pBarrel->draw_USING_POINT(); // draw the barrel
+			if (pBarrel->isActive())
+				pBarrel->draw_USING_POINT(); // draw the barrel
+			else
+				activeBarrels--;
 		}
 		else if (!pBarrel->isActive() && activeBarrels < maxBarrels) // if the barrel is not active
 		{
@@ -169,6 +172,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 				{
 					pBarrel->clearBlast(); // clear the explosion
 					activeBarrels--;
+
 				}
 				else
 				{
