@@ -7,7 +7,7 @@ barrel::barrel() : position(startX, startY) {}
 
 void barrel::barrelFall_USING_POINT()
 {
-    int currX = position.getX(), currY = position.getY(), newX = 0, newY = 0;
+    int currX = position.getX(), currY = position.getY(), newX = 0, newY = 0;/////source of Q to O
     char dirChar;
     bool onFloor = position.isOnFloor();
     if (exploaded)
