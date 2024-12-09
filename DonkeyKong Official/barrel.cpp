@@ -99,7 +99,7 @@ void barrel::explode()
         {
             if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
                 continue;
-            pBoard->UpdateFailChart(x + blowRadiusX, y + blowRadiusY, '*');
+            position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
             gotoxy(x + blowRadiusX, y + blowRadiusY);
             std::cout << '*';
         }
@@ -121,9 +121,9 @@ void barrel::clearBlast()
         {
 			if (blastCenterY + blowRadiusY < 1 || blastCenterY + blowRadiusY>23)
 				continue;
-			pBoard->UpdateFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
+			position.setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
 			gotoxy(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
-			std::cout << pBoard->getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+			std::cout << position.getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
 		}
 	}
 

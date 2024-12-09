@@ -206,6 +206,8 @@ void game::gameLoop(player& mario, boardGame& board)
 		Sleep(80);//original sleep 80
 		iterationCounter++;
 		fail(mario, running, board, barrelCounter, iterationCounter);
+		if (!running) // after fail break the loop if player failed
+			break;
 		if (mario.checkWin()) // if the player won
 		{
 			running = false; // end the game

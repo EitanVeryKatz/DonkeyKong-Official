@@ -39,4 +39,9 @@ void point::setFailChart(char c)
 	pBoard->UpdateFailChart(x, y, c);
 }
 
+void point::setFailChart(int x, int y, char c)
+{
+	pBoard->UpdateFailChart(x, y, c);
+}
+
 

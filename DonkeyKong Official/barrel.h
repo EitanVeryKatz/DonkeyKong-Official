@@ -11,8 +11,6 @@ class barrel
 	static constexpr int FIRST_FLOOR_Y = 6;
 	static constexpr char FLOOR_DIR_LEFT = '<';
 	static constexpr int startX = 39, startY = 3, LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3;
-	int x = startX, y = startY;
-	boardGame* pBoard;
 	static constexpr char ICON = 'O';
 	bool active = true;
 	int lastFloorY = FIRST_FLOOR_Y;
@@ -31,7 +29,6 @@ public:
 	void handleOnFloor(int currX, int currY, int& newX, int& newY, char& dirChar);
 	void handleInAir(int currX, int currY, int& newX, int& newY);
 	void updatePosition(int currX, int currY, int newX, int newY);
-	void setBoard(boardGame* board) { pBoard = board; }
 	void setBoard_USING_POINT(boardGame* board) { position.setGameBoard(board); };
 	void explode();
 	bool isActive() const { return active; }
