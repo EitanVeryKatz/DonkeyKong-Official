@@ -85,6 +85,7 @@ void game::displayMenu()
             char key = _getch();
             if (key == '1')
             {
+				setDiffculty();
                 runGame();
 				resetLives();
 				printMenu();
@@ -245,5 +246,38 @@ void game::pauseGame()
 			}
 		}
 		Sleep(100);
+	}
+}
+
+
+void game::setDiffculty()
+{
+	system("cls");
+	std::cout << "Chose the diffculty level:" << std::endl;
+	std::cout << "1. Easy" << std::endl;
+	std::cout << "2. Medium" << std::endl;
+	std::cout << "3. Hard" << std::endl;
+	std::cout << "\n";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			char key = _getch();
+			if (key == '1')
+			{
+				maxBarrels = diffculty[0];
+				break;
+			}
+			else if (key == '2')
+			{
+				maxBarrels = diffculty[1];
+				break;
+			}
+			else if (key == '3')
+			{
+				maxBarrels = diffculty[2];
+				break;
+			}
+		}
 	}
 }
