@@ -58,7 +58,11 @@ void barrel::handleOnFloor(int currX, int currY, int &newX, int &newY, char &dir
         position.setDirFromArrayBarrel(LEFT);
         newX = currX + position.getDirX();
     }
-    else
+	else if (dirChar == '=')
+	{
+		newX = currX + position.getDirX();
+	}
+	else
     {
         position.setDirFromArrayBarrel(RIGHT);
         newX = currX + position.getDirX();
