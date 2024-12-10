@@ -6,7 +6,6 @@ class barrel;
 
 class boardGame
 {
-	static constexpr int BARRELS_NUM = 15;
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
 	{   //           1         2         3         4         5         6         7                  

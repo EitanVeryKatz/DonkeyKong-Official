@@ -132,3 +132,17 @@ void barrel::clearBlast()
 	blastCenterX = 0;
 	blastCenterY = 0;
 }
+
+void barrel::resetBarrel_USING_POINT()
+{
+	startX = rand() % 2 == 0 ? startX_1 : startX_2;
+    position.setDirFromArrayBarrel(STAY);
+	position.setPoint(startX, startY);
+	active = true;
+	lastFloorY = FIRST_FLOOR_Y;
+	blastCenterX = 0;
+	blastCenterY = 0;
+	blastParticlesVisable = false;
+	blastCounter = 0;
+	exploaded = false;
+}
