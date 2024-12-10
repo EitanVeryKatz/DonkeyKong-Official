@@ -182,7 +182,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 			}
 		}
 	}
-	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM) // if it's time to add a new barrel
+	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel
 	{
 		barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
 		pBarrel->draw_USING_POINT(); // draw the barrel
@@ -242,6 +242,8 @@ void game::pauseGame()
 			{
 				gotoxy(messageX, messageY);
 				std::cout << "                              " << std::endl;
+				gotoxy(messageX + 1, messageY);
+				std::cout << "Lives:";
 				break;
 			}
 		}
@@ -265,17 +267,17 @@ void game::setDiffculty()
 			char key = _getch();
 			if (key == '1')
 			{
-				maxBarrels = diffculty[0];
+				maxBarrels = diffculty[LOW_DIFFCULTY];
 				break;
 			}
 			else if (key == '2')
 			{
-				maxBarrels = diffculty[1];
+				maxBarrels = diffculty[MEDIUM_DIFFCULTY];
 				break;
 			}
 			else if (key == '3')
 			{
-				maxBarrels = diffculty[2];
+				maxBarrels = diffculty[HIGH_DIFFCULTY];
 				break;
 			}
 		}
