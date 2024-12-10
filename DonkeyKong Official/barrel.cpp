@@ -48,6 +48,10 @@ void barrel::deactivateBarrel()
     active = false;
 }
 
+void barrel:: updateBlowCounter() {
+    blastCounter++;
+}
+
 void barrel::handleOnFloor(int currX, int currY, int &newX, int &newY, char &dirChar)
 {
     lastFloorY = currY;
@@ -112,7 +116,7 @@ void barrel::explode()
     blastCenterY = y;
     blastParticlesVisable = true;
     active = false;
-    blastCounter++;
+
 }
 
 void barrel::clearBlast() 

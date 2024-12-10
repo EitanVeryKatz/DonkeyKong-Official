@@ -36,7 +36,7 @@ public:
 	void clearBlast();
 	bool isBlastShowing() { return blastParticlesVisable; }
 	int getBlowCount() { return blastCounter; }
-	void updateBlowCounter() { blastCounter++; }
+	void updateBlowCounter();
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel_USING_POINT();
 };

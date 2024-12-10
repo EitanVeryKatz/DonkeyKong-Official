@@ -149,47 +149,48 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 {
 	for (int i = 0; i < barrelCounter; i++) // update all barrels
 	{
-		barrel* pBarrel = &board.getBarrel(i); // get the barrel
-											
-		if (pBarrel->isActive()) // if barrel is active
+		barrel& pBarrel = board.getBarrel(i); // get the barrel
+
+		if (pBarrel.isActive()) // if barrel is active
 		{
-			pBarrel->erase_USING_POINT(); // erase the barrel
-			pBarrel->barrelFall_USING_POINT(); // make the barrel fall
-			if (pBarrel->isActive())
-				pBarrel->draw_USING_POINT(); // draw the barrel
+			pBarrel.erase_USING_POINT(); // erase the barrel
+			pBarrel.barrelFall_USING_POINT(); // make the barrel fall
+			if (pBarrel.isActive())
+				pBarrel.draw_USING_POINT(); // draw the barrel
 			else
 				activeBarrels--;
 		}
-		else if (!pBarrel->isActive() && activeBarrels < maxBarrels) // if the barrel is not active
+		else if (!pBarrel.isActive() && activeBarrels < maxBarrels&&!pBarrel.isBlastShowing()) // if the barrel is not active
 		{
-			pBarrel->resetBarrel_USING_POINT(); // reset the barrel
+			pBarrel.resetBarrel_USING_POINT(); // reset the barrel
 			activeBarrels++;
 		}
-		else
-		{
-			if (pBarrel->isBlastShowing()) // if the barrel is exploding
-			{
-				if (pBarrel->getBlowCount() == 2) // if the explosion is over
-				{
-					pBarrel->clearBlast(); // clear the explosion
-					activeBarrels--;
+			
 
-				}
-				else
+		if (pBarrel.isBlastShowing()) // if the barrel is exploding
+		{
+			if (pBarrel.getBlowCount() == 2) // if the explosion is over
 				{
-					pBarrel->updateBlowCounter(); // update the explosion counter
-				}
+				pBarrel.clearBlast(); // clear the explosion
+				activeBarrels--;
+
+			}
+			else
+			{
+				pBarrel.updateBlowCounter(); // update the explosion counter
 			}
 		}
+			
 	}
-	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel
-	{
-		barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
-		pBarrel->draw_USING_POINT(); // draw the barrel
-		barrelCounter++; // increment the barrel counter
-		activeBarrels++;
+		if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel
+		{
+			barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
+			pBarrel->draw_USING_POINT(); // draw the barrel
+			barrelCounter++; // increment the barrel counter
+			activeBarrels++;
+		}
 	}
-}
+
 
 void game::gameLoop(player& mario, boardGame& board)
 {
