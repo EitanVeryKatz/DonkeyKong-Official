@@ -12,10 +12,8 @@ class player
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	char icon = '@';
 	int midjump = 0;
-	int lastFloorY = firstFloorY;
-	int currentFloorY = firstFloorY;
 	point position;
-
+	int fallCounter = 0;
 public:
 
 	player() : position(startX, startY) {}
@@ -32,10 +30,9 @@ public:
 
 	void resetPlayer()
 	{
+		fallCounter = 0;
 		position.setPoint(startX, startY);
 		position.setDir(0, 0);
-		lastFloorY = firstFloorY;
-		currentFloorY = firstFloorY;
 	}
 	void keyPressed_USING_POINT(char key); // Handle player's key press
 	void moveInBoard_USING_POINT(); // handle player's movement
@@ -47,5 +44,6 @@ public:
 	void setGameBoard_USING_POINT(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
 	bool checkFail(); // Check if player failed
 	bool checkWin(); // Check if player won
+	bool isFalling(); // Check if player is falling
 };
 

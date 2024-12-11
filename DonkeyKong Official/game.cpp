@@ -53,6 +53,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 		lives--;
 		if (lives == 0) // if no more lives
 		{
+			Sleep(100);
 			running = false; // end the game
 			system("cls"); // clear the screen
 			gotoxy(MessageX, MessageY);
@@ -63,6 +64,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 		}
 		else // if there are more lives
 		{
+			Sleep(100);
 			system("cls"); // clear the screen
 			gotoxy(MessageX, MessageY);
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
@@ -222,6 +224,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		}
 		mario.erase_USING_POINT();
 		mario.moveInBoard_USING_POINT();
+		mario.draw_USING_POINT();
 		fail(mario, running, board, barrelCounter, iterationCounter);
 	}
 }

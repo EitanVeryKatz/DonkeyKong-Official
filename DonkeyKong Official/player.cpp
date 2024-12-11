@@ -41,10 +41,17 @@ void player::moveInBoard_USING_POINT()
 		handleInsideBorders(currX, currY, dirX, dirY, newX, newY);
 	}
 
-	position.setPrevPos(currX, currY);
+	if (isFalling())
+	{
+		fallCounter++;
+	}
+	else
+	{
+		fallCounter = 0;
+	}
 	position.setPoint(newX, newY); // Update player's position
-	gotoxy(position.getPrevX(), position.getPrevY());
-	std::cout << position.getChar(position.getPrevX(), position.getPrevY());
+	gotoxy(currX, currY);
+	std::cout << position.getChar(currX, currY);
 }
 
 bool player::isAtVerticalBorder(int currX, int dirX)
@@ -102,9 +109,6 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 			newY--; //update Y to be one higher
 			midjump++;
 		}
-		// Update floor positions
-		lastFloorY = currentFloorY;
-		currentFloorY = currY;
 	}
 	else //if not on floor
 	{
@@ -121,7 +125,11 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 bool player::checkFail()
 {
 	char failChar = position.getFailChart();
-	if (failChar == 'O' || failChar == '*' || (position.isOnFloor() && position.getY() >= lastFloorY + 5))
+	if (failChar == 'O' || failChar == '*')
+	{
+		return true;
+	}
+	if (fallCounter >= 5 && position.isOnFloor())
 	{
 		return true;
 	}
@@ -131,6 +139,15 @@ bool player::checkFail()
 bool player::checkWin()
 {
 	if (position.getChar() == '$')
+	{
+		return true;
+	}
+	return false;
+}
+
+bool player::isFalling()
+{
+	if ((!position.isOnFloor() && !position.isOnLadder()) || position.getDirY() == 1)
 	{
 		return true;
 	}
