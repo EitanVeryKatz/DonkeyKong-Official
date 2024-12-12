@@ -83,11 +83,15 @@ void barrel::handleInAir(int currX, int currY, int &newX, int &newY)
 
 void barrel::updatePosition(int currX, int currY, int newX, int newY)
 {
-    position.setFailChart(' ');
+    if (!isBlastShowing()) {
+        position.setFailChart(' ');
+    }
     position.setPoint(newX, newY);
     position.setFailChart(ICON);
-    gotoxy(currX, currY);
-    std::cout << position.getChar(currX, currY);
+    if (!isBlastShowing() && getBlowCount() < 2) {
+        gotoxy(currX, currY);
+        std::cout << position.getChar(currX, currY);
+    }
 }
 
 /// @brief Causes the barrel to explode, updating the game board and displaying the explosion.
@@ -99,23 +103,48 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
 void barrel::explode()
 {
     int x = position.getX(), y = position.getY();
-    for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++) 
-    {
-        if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
-            continue;
-        for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++) 
+    if (blastCounter == 0) {
+        for (int blowRadiusX = -1; blowRadiusX <= 1; blowRadiusX++)
         {
-            if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
+            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
                 continue;
-            position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
-            gotoxy(x + blowRadiusX, y + blowRadiusY);
-            std::cout << '*';
+            for (int blowRadiusY = -1; blowRadiusY <= 1; blowRadiusY++)
+            {
+                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
+                    continue;
+                position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
+                gotoxy(x + blowRadiusX, y + blowRadiusY);
+                std::cout << '*';
+            }
         }
+        blastCenterX = x;
+        blastCenterY = y;
+        blastParticlesVisable = true;
+        active = false;
+    }if (blastCounter == 1) {
+        x = blastCenterX;
+        y = blastCenterY;
+        for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++)
+        {
+            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
+                continue;
+            for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++)
+            {
+                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
+                    continue;
+                position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
+
+                gotoxy(x + blowRadiusX, y + blowRadiusY);
+                if (blowRadiusX == -2 || blowRadiusX == 2 || blowRadiusY == -2 || blowRadiusY == 2) {
+                    std::cout << '*';
+                }
+                else {
+                    std::cout << ' ';
+                }
+            }
+        }
+
     }
-    blastCenterX = x;
-    blastCenterY = y;
-    blastParticlesVisable = true;
-    active = false;
 
 }
 

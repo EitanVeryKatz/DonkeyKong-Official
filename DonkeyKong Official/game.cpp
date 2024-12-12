@@ -177,9 +177,14 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 				activeBarrels--;
 
 			}
-			else
+			else if(pBarrel.getBlowCount() == 1)
 			{
+				pBarrel.explode();
 				pBarrel.updateBlowCounter(); // update the explosion counter
+				
+			}
+			else {
+				pBarrel.updateBlowCounter();
 			}
 		}
 			
