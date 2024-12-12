@@ -58,6 +58,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			system("cls"); // clear the screen
 			gotoxy(MessageX, MessageY);
 			std::cout << "Game Over" << std::endl;// display the message
+			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
 			return;
@@ -291,4 +292,13 @@ void game::setDiffculty()
 			}
 		}
 	}
+}
+
+void game::playFailSong() {
+	Beep(523, 300); // C5, 500 ms
+	Beep(587, 300); // D5, 500 ms
+	Beep(659, 300); // E5, 500 ms
+	Beep(698, 300); // F5, 500 ms
+	Beep(784, 500); // G5, 500 ms
+
 }
