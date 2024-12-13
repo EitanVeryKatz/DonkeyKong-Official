@@ -8,14 +8,14 @@ void boardGame::initFailChart()
         for (int c = 0; c < BOARD_WIDTH; c++)
         {
             if (r == BOARD_HEIGHT - 2)
-                failChart[c][r] = '*';
+				failChart[c][r] = '*'; // set the fail chart to '*' at the bottom of the board
             else
-                failChart[c][r] = ' ';
+				failChart[c][r] = ' '; // set the fail chart to ' ' at the rest of the board
         }
     }
 }
 
-void boardGame::newDrawBoard()
+void boardGame::newDrawBoard() const
 {
         const int livesX = 2, livesY = 2;
         gotoxy(livesX, livesY);
@@ -36,9 +36,9 @@ void boardGame::initBarrels()
 {
 	for (int i = 0; i < BARRELS_NUM; i++)
 	{
-		barrels[i].setBoard_USING_POINT(this);
-		barrels[i].erase_USING_POINT();
-        barrels[i].resetBarrel_USING_POINT();
+		barrels[i].setBoard_USING_POINT(this); // set the board of the barrel
+		barrels[i].erase_USING_POINT(); // erase the barrel
+		barrels[i].resetBarrel_USING_POINT(); // reset the barrel
 	}
 }
 

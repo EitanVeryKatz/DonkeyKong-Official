@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "player.h"
 #include "boardGame.h"
-
+#include "utils.h"
 class game
 {
 
@@ -21,7 +21,6 @@ public:
 	void pauseGame(); // Pause the game
 	void displayMenu(); // Display the game menu
 	void runGame(); // Run the game
-	void playFailSong();
 	game(); // Constructor
 };
 

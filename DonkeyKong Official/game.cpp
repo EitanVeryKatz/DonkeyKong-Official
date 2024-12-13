@@ -4,8 +4,11 @@
 #include <conio.h>
 #include "gameConfig.h"
 
+
 constexpr int ESC = 27;
 constexpr int breakTime = 2000;
+constexpr int MessageX = 30, MessageY = 12;
+
 game::game()
 {
 	displayMenu();
@@ -47,10 +50,9 @@ void game::printInstructions()
 
 void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
-	int const MessageX = 30, MessageY = 12;
-	if (mario.checkFail())
+	if (mario.checkFail()) // if the player failed
 	{
-		lives--;
+		lives--; // decrement the number of lives
 		if (lives == 0) // if no more lives
 		{
 			Sleep(100);
@@ -71,6 +73,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 			Sleep(breakTime);
 			barrelCounter = 0, iterationCounter = 0;
+			std::fflush(stdin); // clear the input buffer
 			initGame(mario, board); // initialize the game
 		}
 	}
@@ -79,35 +82,34 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 void game::displayMenu()
 {
 	showCurserOnConsole(false);
-	const int MessageX = 30, MessageY = 12;
-	printMenu();
+	printMenu(); // print the menu
 	while (true) // menu loop
 	{
-		 if (_kbhit())
+		if (_kbhit()) // if the user pressed a key
         {
-            char key = _getch();
-            if (key == '1')
+			char key = _getch(); // get the key
+			if (key == '1') // if the user pressed '1'
             {
-				setDiffculty();
-                runGame();
-				resetLives();
-				printMenu();
+				setDiffculty(); // set the diffculty
+				runGame(); // run the game
+				resetLives(); // reset the number of lives after the game ends
+				printMenu(); // print the menu
             }
 			else if (key == '8')
 			{
 				system("cls");
-				printInstructions();
+				printInstructions(); // print the instructions
 				_getch(); // wait for any key
-				printMenu();
-				continue;
+				printMenu(); // print the menu
+				continue; // continue to the next iteration
 			}
 			else if (key == '9')
 			{
 				system("cls");
 				gotoxy(MessageX, MessageY);
 				std::cout << "Goodbye!" << std::endl;
-				Sleep(breakTime);
-				break;
+				Sleep(breakTime); 
+				break; // exit the loop
 			}
         }
 		 Sleep(100);
@@ -116,35 +118,35 @@ void game::displayMenu()
 
 void game::runGame()
 {
-	player mario;
-	boardGame board;
-	initGame(mario, board);
-	gameLoop(mario, board);
+	player mario; // create a player
+	boardGame board; // create a board
+	initGame(mario, board); // initialize the game
+	gameLoop(mario, board); // run the game loop
 }
 
 
 
 void game::initGame(player& mario, boardGame& board)
 {
-	activeBarrels = 0;
+	activeBarrels = 0; // reset the number of active barrels
 	board.initFailChart(); // initialize the fail chart
 	board.initBarrels();  // initialize the barrels
-	mario.setGameBoard_USING_POINT(&board);
+	mario.setGameBoard_USING_POINT(&board); // set the board of the player
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
 }
 
 void game::handleInput(player& mario)
 {
-	if (_kbhit())
+	if (_kbhit()) // if the user pressed a key
 	{
-		char key = _getch();
+		char key = _getch(); // get the key
 		if (key == ESC) // if the user pressed 'esc'
 		{
 			pauseGame(); // pause the game
 		}
 		else
-			mario.keyPressed_USING_POINT(key);
+			mario.keyPressed_USING_POINT(key); // handle the key
 	}
 }
 
@@ -161,21 +163,23 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 			if (pBarrel.isActive())
 				pBarrel.draw_USING_POINT(); // draw the barrel
 			else
-				activeBarrels--;
+				activeBarrels--; // decrement the number of active barrels
 		}
-		else if (!pBarrel.isActive() && activeBarrels < maxBarrels&&!pBarrel.isBlastShowing()) // if the barrel is not active
+		else if (!pBarrel.isActive() && activeBarrels < maxBarrels && !pBarrel.isBlastShowing()) // if the barrel is not active and there are less than the maximum number of barrels and the barrel is not exploding
 		{
 			pBarrel.resetBarrel_USING_POINT(); // reset the barrel
-			activeBarrels++;
+			activeBarrels++; // increment the number of active barrels
 		}
 			
 
+
+		// comment this
 		if (pBarrel.isBlastShowing()) // if the barrel is exploding
 		{
 			if (pBarrel.getBlowCount() == 2) // if the explosion is over
-				{
+			{
 				pBarrel.clearBlast(); // clear the explosion
-				activeBarrels--;
+				activeBarrels--; // decrement the number of active barrels
 
 			}
 			else if(pBarrel.getBlowCount() == 1)
@@ -190,32 +194,32 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		}
 			
 	}
-		if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel
+	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel and there are less than the maximum number of barrels
 		{
 			barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
 			pBarrel->draw_USING_POINT(); // draw the barrel
 			barrelCounter++; // increment the barrel counter
-			activeBarrels++;
+			activeBarrels++; // increment the number of active barrels
 		}
 	}
 
 
 void game::gameLoop(player& mario, boardGame& board)
 {
-	const int livesX = 9, livesY = 2, MessageX = 30, MessageY = 12;
+	const int livesX = 9, livesY = 2;
 	bool running = true;
-	int barrelCounter = 0;
+	int barrelCounter = 0; 
 	int iterationCounter = 0;
 	while (running) // main game loop
 	{
 		gotoxy(livesX, livesY);
 		std::cout << lives << std::endl;
-		mario.draw_USING_POINT();
-		handleInput(mario);
-		updateBarrels(board, barrelCounter, iterationCounter);
-		Sleep(80);//original sleep 80
+		mario.draw_USING_POINT(); // draw the player
+		handleInput(mario); // handle the user input
+		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
+		Sleep(GAME_SPEED);
 		iterationCounter++;
-		fail(mario, running, board, barrelCounter, iterationCounter);
+		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
 			break;
 		if (mario.checkWin()) // if the player won
@@ -224,14 +228,15 @@ void game::gameLoop(player& mario, boardGame& board)
 			system("cls"); // clear the screen
 			gotoxy(MessageX, MessageY);
 			std::cout << "You won!" << std::endl; // display the message
+			playWinningSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
 			return; // go back to menu
 		}
-		mario.erase_USING_POINT();
-		mario.moveInBoard_USING_POINT();
-		mario.draw_USING_POINT();
-		fail(mario, running, board, barrelCounter, iterationCounter);
+		mario.erase_USING_POINT(); // erase the player
+		mario.moveInBoard_USING_POINT(); // move the player
+		mario.draw_USING_POINT(); // draw the player
+		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
 	}
 }
 
@@ -242,16 +247,16 @@ void game::pauseGame()
 	const int messageX = 2;
 	const int messageY = 2;
 	gotoxy(messageX, messageY);
-	std::cout << "Press 'esc' to resume the game" << std::endl;
-	while (true)
+	std::cout << "Press 'esc' to resume the game" << std::endl; // display the pause message
+	while (true) // pause loop
 	{
-		if (_kbhit())
+		if (_kbhit()) // if the user pressed a key
 		{
-			char key = _getch();
-			if (key == ESC)
+			char key = _getch(); // get the key
+			if (key == ESC) // if pressed ESC resume the game
 			{
-				gotoxy(messageX, messageY);
-				std::cout << "                              " << std::endl;
+				gotoxy(messageX, messageY); 
+				std::cout << "                              " << std::endl; // clear the message
 				gotoxy(messageX + 1, messageY);
 				std::cout << "Lives:";
 				break;
@@ -272,8 +277,9 @@ void game::setDiffculty()
 	std::cout << "\n";
 	while (true)
 	{
-		if (_kbhit())
+		if (_kbhit()) // if the user pressed a key
 		{
+			// set the diffculty according to the user's choice
 			char key = _getch();
 			if (key == '1')
 			{
@@ -292,13 +298,4 @@ void game::setDiffculty()
 			}
 		}
 	}
-}
-
-void game::playFailSong() {
-	Beep(523, 300); // C5, 500 ms
-	Beep(587, 300); // D5, 500 ms
-	Beep(659, 300); // E5, 500 ms
-	Beep(698, 300); // F5, 500 ms
-	Beep(784, 500); // G5, 500 ms
-
 }

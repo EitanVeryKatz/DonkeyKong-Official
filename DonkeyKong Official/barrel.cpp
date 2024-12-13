@@ -2,39 +2,37 @@
 #include "boardGame.h"
 #include "gameConfig.h"
 
-barrel::barrel() : position(startX, startY) {}
+barrel::barrel() : position(startX, startY) {} // constructor of the barrel that calls the constructor of the point class
 
 
 void barrel::barrelFall_USING_POINT()
 {
-    int currX = position.getX(), currY = position.getY(), newX = 0, newY = 0;/////source of Q to O
+	int currX = position.getX(), currY = position.getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
     char dirChar;
     bool onFloor = position.isOnFloor();
-    if (exploaded)
+	if (exploaded) // if the barrel has exploded clear the explosion and set the explosion flag to false
     {
         clearBlast();
         exploaded = false;
     }
 
-    if (onFloor && currY >= lastFloorY + 8)
+	if (onFloor && currY >= lastFloorY + 8) // if the barrel is on floor and passed more than 8 Y postions from the last floor position explode the barrel
     {
         handleExplosion();
     }
-    else if (currY >= BOARD_HEIGHT - 2)
+	else if (currY >= BOARD_HEIGHT - 2) // if the barrel reached the bottom of the board deactivate the barrel
     {
         deactivateBarrel();
-      /*  newX = currX;
-        newY = currY;*/
     }
-    else if (onFloor)
+	else if (onFloor) // if the barrel is on floor handle the movement on floor
     {
         handleOnFloor(currX, currY, newX, newY, dirChar);
     }
-    else
+	else // if the barrel is in air handle the movement in air
     {
         handleInAir(currX, currY, newX, newY);
     }
-     updatePosition(currX, currY, newX, newY);
+	updatePosition(currX, currY, newX, newY); // update the position of the barrel
 }
 
 void barrel::handleExplosion()
@@ -54,56 +52,52 @@ void barrel:: updateBlowCounter() {
 
 void barrel::handleOnFloor(int currX, int currY, int &newX, int &newY, char &dirChar)
 {
-    lastFloorY = currY;
-    position.setDirY(0);
-    dirChar = position.getChar(currX, currY + 1);
-    if (dirChar == FLOOR_DIR_LEFT)
+	lastFloorY = currY; // update the last floor position
+	position.setDirY(STOP); // set the Y direction of the barrel to 0
+    dirChar = position.getChar(currX, currY + 1); // get the char of the floor
+    if (dirChar == FLOOR_DIR_LEFT) // if the floor direction is left set the direction of the barrel to left
     {
-        position.setDirFromArrayBarrel(LEFT);
-        newX = currX + position.getDirX();
+       position.setDirFromArrayBarrel(LEFT);
     }
-	else if (dirChar == '=')
-	{
-		newX = currX + position.getDirX();
-	}
-	else
+    else if (dirChar != '=') // if the floor direction is not '=' set the direction of the barrel to right
     {
-        position.setDirFromArrayBarrel(RIGHT);
-        newX = currX + position.getDirX();
-    }
-    newY = currY + position.getDirY();
+       position.setDirFromArrayBarrel(RIGHT);
+    } 
+	// if '=' the same x direction of the barrel
+	newX = currX + position.getDirX(); // update the new X position
+	newY = currY + position.getDirY(); // update the new Y position
 }
 
 void barrel::handleInAir(int currX, int currY, int &newX, int &newY)
 {
-    position.setDirY(1);
-    newY = currY + position.getDirY();
-    newX = currX + position.getDirX();
+	position.setDirY(DOWN); // set the Y direction of the barrel to down
+	newY = currY + position.getDirY(); // update the new Y position
+	newX = currX + position.getDirX(); // update the new X position
 }
 
 void barrel::updatePosition(int currX, int currY, int newX, int newY)
 {
-    if (!isBlastShowing()) {
-        position.setFailChart(' ');
+	if (!isBlastShowing()) // if the barrel is not exploded erase the barrel from the fail chart
+    {
+        position.setFailChart(' '); 
     }
-    position.setPoint(newX, newY);
-    position.setFailChart(ICON);
-    if (!isBlastShowing() && getBlowCount() < 2) {
+	position.setPoint(newX, newY); // update the position of the barrel
+	position.setFailChart(ICON); // draw the barrel on the fail chart
+
+
+    // comment this
+    if (!isBlastShowing() && getBlowCount() < 2) 
+    {
         gotoxy(currX, currY);
         std::cout << position.getChar(currX, currY);
     }
 }
 
-/// @brief Causes the barrel to explode, updating the game board and displaying the explosion.
-/// The explosion affects a 5x5 area centered on the barrel's current position.
-/// The explosion is visualized with '*' characters on the game board.
-/// The barrel becomes inactive after the explosion.
-/// The explosion's center coordinates and visibility status are updated.
-/// The explosion counter is incremented.
 void barrel::explode()
 {
     int x = position.getX(), y = position.getY();
-    if (blastCounter == 0) {
+    if (blastCounter == 0)
+    {
         for (int blowRadiusX = -1; blowRadiusX <= 1; blowRadiusX++)
         {
             if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
@@ -121,7 +115,9 @@ void barrel::explode()
         blastCenterY = y;
         blastParticlesVisable = true;
         active = false;
-    }if (blastCounter == 1) {
+    }
+    if (blastCounter == 1) 
+    {
         x = blastCenterX;
         y = blastCenterY;
         for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++)
@@ -172,14 +168,14 @@ void barrel::clearBlast()
 
 void barrel::resetBarrel_USING_POINT()
 {
-	startX = rand() % 2 == 0 ? startX_1 : startX_2;
-    position.setDirFromArrayBarrel(STAY);
-	position.setPoint(startX, startY);
-	active = true;
-	lastFloorY = FIRST_FLOOR_Y;
-	blastCenterX = 0;
-	blastCenterY = 0;
-	blastParticlesVisable = false;
-	blastCounter = 0;
-	exploaded = false;
+	startX = rand() % 2 == 0 ? startX_1 : startX_2; // determine the start position of the barrel between the two possible positions
+	position.setDirFromArrayBarrel(STAY); // set the direction of the barrel to stay
+	position.setPoint(startX, startY); // set the position of the barrel to the start position
+	active = true; // set the barrel to active
+	lastFloorY = FIRST_FLOOR_Y; // set the last floor position to the first floor position
+	blastCenterX = 0; // set the center of the blast to 0
+	blastCenterY = 0; // set the center of the blast to 0
+	blastParticlesVisable = false; // set the blast particles to not visible
+	blastCounter = 0; // set the blast counter to 0
+	exploaded = false; // set the explosion flag to false
 }

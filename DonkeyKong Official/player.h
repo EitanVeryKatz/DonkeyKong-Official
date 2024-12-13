@@ -7,7 +7,7 @@
 
 class player
 {
-	static constexpr int startX = 30, startY =21;
+	static constexpr int startX = 30, startY = firstFloorY - 1, STAY = 4;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	char icon = '@';
@@ -32,7 +32,7 @@ public:
 	{
 		fallCounter = 0;
 		position.setPoint(startX, startY);
-		position.setDir(0, 0);
+		position.setDirFromArrayPlayer(STAY);
 	}
 	void keyPressed_USING_POINT(char key); // Handle player's key press
 	void moveInBoard_USING_POINT(); // handle player's movement

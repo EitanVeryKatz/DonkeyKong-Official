@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "gameConfig.h"
+#include "utils.h"
 
 class boardGame;
 
@@ -38,9 +39,6 @@ public:
 	void setX(int x) { this->x = x; }
 	void setY(int y) { this->y = y; }
 	void setPoint(int x, int y) { this->x = x; this->y = y; }
-	//int getPrevX() const { return prevX; }
-	//int getPrevY() const { return prevY; }
-	//void setPrevPos(int x, int y) { prevX = x; prevY = y; }
 	void setGameBoard(boardGame* pBoard) { this->pBoard = pBoard; }
 	bool isOnFloor();
 	bool isOnLadder();

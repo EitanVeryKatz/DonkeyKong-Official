@@ -39,14 +39,14 @@ class boardGame
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 
 public :
-	char getChar(int x, int y) { return boardLayout[y][x]; }
-	void newDrawBoard();
-	barrel& getBarrel(int index) { return barrels[index]; }
-	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; }
-	char getFailChart(int x, int y) { return failChart[x][y]; }
-	void initBarrels();
-	void initFailChart();
-	boardGame()
+	char getChar(int x, int y) { return boardLayout[y][x]; } // get the char of the board at the given coordinates
+	void newDrawBoard() const; // draw the board
+	barrel& getBarrel(int index) { return barrels[index]; } // get the barrel at the given index
+	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; } // update the fail chart at the given coordinates
+	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates
+	void initBarrels(); // initialize the barrels
+	void initFailChart(); // initialize the fail chart
+	boardGame() // constructor of the boardGame class that calls the initFailChart function
 	{
 		initFailChart();
 	}

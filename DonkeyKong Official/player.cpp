@@ -7,7 +7,7 @@ void player::keyPressed_USING_POINT(char key)
 		midjump++;
 	}
 	if (position.isOnFloor()||position.isOnLadder()) {
-		for (size_t i = 0; i < numKeys; i++) {
+		for (int i = 0; i < numKeys; i++) {
 			if (std::tolower(key) == keys[i]) {
 				if (!position.isOnLadder()) {
 					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && position.getChar(position.getX(), position.getY() + 2) == 'H')) {
@@ -15,7 +15,8 @@ void player::keyPressed_USING_POINT(char key)
 					}
 					return;
 				}
-				else { // if is in ladder move to any direction
+				else 
+				{ // if is in ladder move to any direction
 					position.setDirFromArrayPlayer(i);
 					return;
 				}
