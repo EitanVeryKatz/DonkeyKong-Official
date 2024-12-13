@@ -132,7 +132,7 @@ bool player::checkFail()
 	{
 		return true;
 	}
-	if (fallCounter >= 5 && position.isOnFloor())
+	if (fallCounter >= 5 && position.isOnFloor() && !position.isOnLadder())
 	{
 		return true;
 	}

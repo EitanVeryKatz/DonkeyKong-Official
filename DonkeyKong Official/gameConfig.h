@@ -6,7 +6,7 @@ constexpr int BOARD_WIDTH = 80;
 constexpr int BOARD_HEIGHT = 25;
 constexpr int firstFloorY = 23;
 constexpr int BARRELS_NUM = 15;
-constexpr int diffculty[3] = { 0, 5, 7 };
+constexpr int diffculty[3] = { 3, 5, 7 };
 constexpr int BARREL_SPAWN_RATE = 20;
 constexpr int GAME_SPEED = 80;
 
