@@ -157,8 +157,8 @@ void printFailMessage()
     std::cout << padding << "| /  __  \\  \\   \\  /   / |   ____||   _  \\     |\n";
     std::cout << padding << "||  |  |  |  \\   \\/   /  |  |__   |  |_)  |    |\n";
     std::cout << padding << "||  |  |  |   \\      /   |   __|  |      /     |\n";
-    std::cout << padding << "||  `--'  |    \\    /    |  |____ |  |\\  \\----.|\n";
-    std::cout << padding << "| \\______/      \\__/     |_______|| _| `._____||\n";
+    std::cout << padding << "||  `--'  |    \\    /    |  |____ |  |\\  \\.    |  \n";
+    std::cout << padding << "| \\______/      \\__/     |_______|| _| `._|    |  \n";
     std::cout << padding << "+----------------------------------------------+\n";
 
     // Print vertical padding (after the ASCII art)

@@ -149,7 +149,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 			
 
 
-		// comment this
+		
 		if (pBarrel.isBlastShowing()) // if the barrel is exploding
 		{
 			if (pBarrel.getBlowCount() == 2) // if the explosion is over
@@ -158,14 +158,14 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 				activeBarrels--; // decrement the number of active barrels
 
 			}
-			else if(pBarrel.getBlowCount() == 1)
+			else if(pBarrel.getBlowCount() == 1)//if explosion ongoing
 			{
-				pBarrel.explode();
+				pBarrel.explode();//continue explosion
 				pBarrel.updateBlowCounter(); // update the explosion counter
 				
-			}
+			}//if explosion just began on this iteration
 			else {
-				pBarrel.updateBlowCounter();
+				pBarrel.updateBlowCounter();//update the explosion counter
 			}
 		}
 			
@@ -236,8 +236,8 @@ void game::pauseGame()
 void game::setDifficulty()
 {
 	system("cls");
-	int centerX = 40; // Assuming the console width is 80
-	int centerY = 12; // Assuming the console height is 25
+	int centerX = 27; // Assuming the console width is 80
+	int centerY = 11; // Assuming the console height is 25
 	gotoxy(centerX, centerY - 2);
 	std::cout << "Chose the difficulty level:" << std::endl;
 	gotoxy(centerX, centerY);

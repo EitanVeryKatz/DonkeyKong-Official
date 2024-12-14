@@ -101,33 +101,35 @@ void barrel::explode()
         //draw 3x3 square using '*' around barrel location
         for (int blowRadiusX = -1; blowRadiusX <= 1; blowRadiusX++)
         {
-            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
+            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)//if reached border - skip
                 continue;
             for (int blowRadiusY = -1; blowRadiusY <= 1; blowRadiusY++)
             {
-                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
+                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)//if reached border - skip
                     continue;
                 position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');//update fail chart for explosion particals
                 gotoxy(x + blowRadiusX, y + blowRadiusY);
                 std::cout << '*';
             }
         }
+        
         blastCenterX = x;
         blastCenterY = y;
         blastParticlesVisable = true;
         active = false;
     }
-    if (blastCounter == 1) 
+    if (blastCounter == 1) //second frame of explosion
     {
         x = blastCenterX;
         y = blastCenterY;
         for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++)
+            //draw 5x5 frame using '*' around blast center
         {
-            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
+            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)//if reached border - skip
                 continue;
             for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++)
             {
-                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
+                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)//if reached border - skip
                     continue;
                 position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
 
@@ -149,13 +151,16 @@ void barrel::clearBlast()
 {
 	for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++) 
     {
+        //at all places blast particals were visable
 		if (blastCenterX + blowRadiusX < 1 || blastCenterX + blowRadiusX>79)
 			continue;
 		for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++) 
         {
 			if (blastCenterY + blowRadiusY < 1 || blastCenterY + blowRadiusY>23)
 				continue;
+            //update fail chart
 			position.setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
+            //restore erased parts of game map
 			gotoxy(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
 			std::cout << position.getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
 		}
