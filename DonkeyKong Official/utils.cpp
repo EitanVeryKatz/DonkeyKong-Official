@@ -21,3 +21,6 @@ void showCurserOnConsole(bool showFlag)
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
+
+
+

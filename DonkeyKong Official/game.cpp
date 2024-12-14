@@ -14,40 +14,6 @@ game::game()
 	displayMenu();
 }
 
-void game::printMenu()
-{
-	system("cls");
-	std::cout << R"( 
-		         ____   ___  _   _ _  _________   __
-			|  _ \ / _ \| \ | | |/ / ____\ \ / /
-			| | | | | | |  \| | ' /|  _|  \ V / 
-			| |_| | |_| | |\  | . \| |___  | |  
-			|____/_\___/|_|_\_|_|\_\_____| |_|  
-			| |/ / _ \| \ | |/ ___|             
-			| ' / | | |  \| | |  _              
-			| . \ |_| | |\  | |_| |             
-			|_|\_\___/|_| \_|\____|             )" << std::endl;
-
-	std::cout << "******************************************************************************" << std::endl;
-	std::cout << "Chose from the options below by using the keyboard:" << std::endl;
-	std::cout << "\n";
-	std::cout << "1. Start Game" << std::endl;
-	std::cout << "\n";
-	std::cout << "8. Present instructions and keys" << std::endl;
-	std::cout << "\n";
-	std::cout << "9. Exit" << std::endl;
-	std::cout << "\n";
-}
-
-void game::printInstructions()
-{
-	std::cout << "Instructions:" << std::endl;
-	std::cout << "Use the 'a' key to move left,\n'd' key to move right,\n'w' key to jump or climb up a ladder,\n's' key to stop,\n'x' key to go down the ladder" << std::endl;
-	std::cout << "Press 'esc' to pause the game\n" << std::endl;
-	std::cout << "\n";
-	std::cout << "Press any key to return to the menu" << std::endl;
-}
-
 void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
 	if (mario.checkFail()) // if the player failed
@@ -55,11 +21,10 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 		lives--; // decrement the number of lives
 		if (lives == 0) // if no more lives
 		{
-			Sleep(100);
+			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			running = false; // end the game
 			system("cls"); // clear the screen
-			gotoxy(MessageX, MessageY);
-			std::cout << "Game Over" << std::endl;// display the message
+			printFailMessage(); // display the fail message
 			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
@@ -67,7 +32,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 		}
 		else // if there are more lives
 		{
-			Sleep(100);
+			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			system("cls"); // clear the screen
 			gotoxy(MessageX, MessageY);
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
@@ -77,6 +42,17 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			initGame(mario, board); // initialize the game
 		}
 	}
+}
+
+void game::win(player& mario, bool& running, boardGame& board)
+{
+	running = false; // end the game
+	system("cls"); // clear the screen
+	gotoxy(MessageX, MessageY);
+	printWinningMessage(); // display the winning message
+	playWinningSong();
+	Sleep(breakTime);
+	system("cls"); // clear the screen
 }
 
 void game::displayMenu()
@@ -90,7 +66,7 @@ void game::displayMenu()
 			char key = _getch(); // get the key
 			if (key == '1') // if the user pressed '1'
             {
-				setDiffculty(); // set the diffculty
+				setDifficulty(); // set the diffculty
 				runGame(); // run the game
 				resetLives(); // reset the number of lives after the game ends
 				printMenu(); // print the menu
@@ -223,16 +199,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (!running) // after fail break the loop if player failed
 			break;
 		if (mario.checkWin()) // if the player won
-		{
-			running = false; // end the game
-			system("cls"); // clear the screen
-			gotoxy(MessageX, MessageY);
-			std::cout << "You won!" << std::endl; // display the message
-			playWinningSong();
-			Sleep(breakTime);
-			system("cls"); // clear the screen
-			return; // go back to menu
-		}
+			win(mario, running, board); // handle player win
 		mario.erase_USING_POINT(); // erase the player
 		mario.moveInBoard_USING_POINT(); // move the player
 		mario.draw_USING_POINT(); // draw the player
@@ -266,20 +233,25 @@ void game::pauseGame()
 	}
 }
 
-
-void game::setDiffculty()
+void game::setDifficulty()
 {
 	system("cls");
-	std::cout << "Chose the diffculty level:" << std::endl;
+	int centerX = 40; // Assuming the console width is 80
+	int centerY = 12; // Assuming the console height is 25
+	gotoxy(centerX, centerY - 2);
+	std::cout << "Chose the difficulty level:" << std::endl;
+	gotoxy(centerX, centerY);
 	std::cout << "1. Easy" << std::endl;
+	gotoxy(centerX, centerY + 1);
 	std::cout << "2. Medium" << std::endl;
+	gotoxy(centerX, centerY + 2);
 	std::cout << "3. Hard" << std::endl;
 	std::cout << "\n";
 	while (true)
 	{
 		if (_kbhit()) // if the user pressed a key
 		{
-			// set the diffculty according to the user's choice
+			// set the difficulty according to the user's choice
 			char key = _getch();
 			if (key == '1')
 			{
@@ -299,3 +271,8 @@ void game::setDiffculty()
 		}
 	}
 }
+
+
+
+
+
