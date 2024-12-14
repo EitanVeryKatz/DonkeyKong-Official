@@ -96,8 +96,9 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
 void barrel::explode()
 {
     int x = position.getX(), y = position.getY();
-    if (blastCounter == 0)
+    if (blastCounter == 0)//first frame of exlposion:
     {
+        //draw 3x3 square using '*' around barrel location
         for (int blowRadiusX = -1; blowRadiusX <= 1; blowRadiusX++)
         {
             if (x + blowRadiusX < 1 || x + blowRadiusX > 79)
@@ -106,7 +107,7 @@ void barrel::explode()
             {
                 if (y + blowRadiusY < 1 || y + blowRadiusY > 23)
                     continue;
-                position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
+                position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');//update fail chart for explosion particals
                 gotoxy(x + blowRadiusX, y + blowRadiusY);
                 std::cout << '*';
             }
