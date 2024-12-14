@@ -151,7 +151,7 @@ bool player::checkWin()
 
 bool player::isFalling()
 {
-	if ((!position.isOnFloor() && !position.isOnLadder()) || position.getDirY() == 1)//not on ladder or floor or if going down
+	if ((!position.isOnFloor() && !position.isOnLadder() && !midjump) || position.getDirY() == 1)//not on ladder or floor or if going down
 	{
 		return true;
 	}
