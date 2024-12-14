@@ -45,5 +45,6 @@ public:
 	bool checkFail(); // Check if player failed
 	bool checkWin(); // Check if player won
 	bool isFalling(); // Check if player is falling
+	
 };
 

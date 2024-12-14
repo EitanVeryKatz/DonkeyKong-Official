@@ -129,11 +129,11 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 bool player::checkFail()
 {
 	char failChar = position.getFailChart();
-	if (failChar == 'O' || failChar == '*')
+	if (failChar == 'O' || failChar == '*')//if touched barrel or explosion particale
 	{
 		return true;
 	}
-	if (fallCounter >= 5 && position.isOnFloor() && !position.isOnLadder())
+	if (fallCounter >= 5 && position.isOnFloor() && !position.isOnLadder())//if fallen from hight of 5 characters and landed on floor
 	{
 		return true;
 	}
@@ -142,7 +142,7 @@ bool player::checkFail()
 
 bool player::checkWin()
 {
-	if (position.getChar() == '$')
+	if (position.getChar() == '$')//if reached the princess
 	{
 		return true;
 	}
@@ -151,7 +151,7 @@ bool player::checkWin()
 
 bool player::isFalling()
 {
-	if ((!position.isOnFloor() && !position.isOnLadder()) || position.getDirY() == 1)
+	if ((!position.isOnFloor() && !position.isOnLadder()) || position.getDirY() == 1)//not on ladder or floor or if going down
 	{
 		return true;
 	}
