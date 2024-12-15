@@ -1,5 +1,6 @@
 #include "gameConfig.h"
 #include <iostream>
+#include "utils.h"
 
 // Function to play the winning song
 void playWinningSong() {
@@ -96,77 +97,73 @@ void printWinningMessage()
     const int consoleWidth = 80;
     const int artWidth = 75;
     const int consoleHeight = 25;
-    const int artHeight = 7;
 
-    int horizontalPadding = (consoleWidth - artWidth) / 2; // 2 spaces
-    int verticalPadding = (consoleHeight - artHeight) / 2; // 9 blank lines
+    const char* art[] = {
+        "+---------------------------------------------------------------------------+",
+        "|____    ____  ______    __    __     ____    __    ____  ______   .__   __.|",
+        "|\\   \\  /   / /  __  \\  |  |  |  |    \\   \\  /  \\  /   / /  __  \\  |  \\ |  ||",
+        "| \\   \\/   / |  |  |  | |  |  |  |     \\   \\/    \\/   / |  |  |  | |   \\|  ||",
+        "|  \\_    _/  |  |  |  | |  |  |  |      \\            /  |  |  |  | |  . `  ||",
+        "|    |  |    |  `--'  | |  `--'  |       \\    /\\    /   |  `--'  | |  |\\   ||",
+        "|    |__|     \\______/   \\______/         \\__/  \\__/     \\______/  |__| \\__||",
+        "+---------------------------------------------------------------------------+"
+    };
 
-    // Print vertical padding (before the ASCII art)
-    for (int i = 0; i < verticalPadding; ++i)
+    // Dynamically calculate art height based on array size
+    const int artHeight = sizeof(art) / sizeof(art[0]);
+
+    int horizontalPadding = (consoleWidth - artWidth) / 2; // Horizontal centering
+    int verticalPadding = (consoleHeight - artHeight) / 2; // Vertical centering
+
+    // Print each line of the ASCII art
+    for (int i = 0; i < artHeight; ++i)
     {
-        std::cout << std::endl;
-    }
-
-    // Print ASCII art with horizontal padding
-    std::string padding(horizontalPadding, ' '); // Generate 2 spaces
-    std::cout << padding << R"(
-+---------------------------------------------------------------------------+
-|____    ____  ______    __    __     ____    __    ____  ______   .__   __.|
-|\   \  /   / /  __  \  |  |  |  |    \   \  /  \  /   / /  __  \  |  \ |  ||
-| \   \/   / |  |  |  | |  |  |  |     \   \/    \/   / |  |  |  | |   \|  ||
-|  \_    _/  |  |  |  | |  |  |  |      \            /  |  |  |  | |  . `  ||
-|    |  |    |  `--'  | |  `--'  |       \    /\    /   |  `--'  | |  |\   ||
-|    |__|     \______/   \______/         \__/  \__/     \______/  |__| \__||
-+---------------------------------------------------------------------------+
-)" << std::endl;
-
-    // Print vertical padding (after the ASCII art)
-    for (int i = 0; i < verticalPadding; ++i)
-    {
-        std::cout << std::endl;
+        gotoxy(horizontalPadding, verticalPadding + i); // Position each line
+        std::cout << art[i];
     }
 }
+
+
 
 void printFailMessage()
 {
     const int consoleWidth = 80;
     const int artWidth = 46;
     const int consoleHeight = 25;
-    const int artHeight = 12;
 
-    int horizontalPadding = (consoleWidth - artWidth) / 2; // 17 spaces
-    int verticalPadding = (consoleHeight - artHeight) / 2; // 6 blank lines
+    const char* art[] = {
+        "+----------------------------------------------+",
+        "|  _______      ___      .___  ___.  _______   |",
+        "| /  _____|    /   \\     |   \\/   | |   ____|  |",
+        "||  |  __     /  ^  \\    |  \\  /  | |  |__     |",
+        "||  | |_ |   /  /_\\  \\   |  |\\/|  | |   __|    |",
+        "||  |__| |  /  _____  \\  |  |  |  | |  |____   |",
+        "| \\______| /__/     \\__\\ |__|  |__| |_______|  |",
+        "|                                              |",
+        "|  ______   ____    ____  _______ .______      |",
+        "| /  __  \\  \\   \\  /   / |   ____||   _  \\     |",
+        "||  |  |  |  \\   \\/   /  |  |__   |  |_)  |    |",
+        "||  |  |  |   \\      /   |   __|  |      /     |",
+        "||  `--'  |    \\    /    |  |____ |  |\\  \\----.|",
+        "| \\______/      \\__/     |_______|| _| `._____||",
+        "+----------------------------------------------+"
+    };
 
-    // Print vertical padding (before the ASCII art)
-    for (int i = 0; i < verticalPadding; ++i)
+    // Dynamically calculate art height based on array size
+    const int artHeight = sizeof(art) / sizeof(art[0]);
+
+    int horizontalPadding = (consoleWidth - artWidth) / 2; // Horizontal centering
+    int verticalPadding = (consoleHeight - artHeight) / 2; // Vertical centering
+
+    // Print each line of the ASCII art
+    for (int i = 0; i < artHeight; ++i)
     {
-        std::cout << std::endl;
-    }
-
-    // Print ASCII art with horizontal padding
-    std::string padding(horizontalPadding, ' '); // Generate 17 spaces
-    std::cout << padding << "+----------------------------------------------+\n";
-    std::cout << padding << "|  _______      ___      .___  ___.  _______   |\n";
-    std::cout << padding << "| /  _____|    /   \\     |   \\/   | |   ____|  |\n";
-    std::cout << padding << "||  |  __     /  ^  \\    |  \\  /  | |  |__     |\n";
-    std::cout << padding << "||  | |_ |   /  /_\\  \\   |  |\\/|  | |   __|    |\n";
-    std::cout << padding << "||  |__| |  /  _____  \\  |  |  |  | |  |____   |\n";
-    std::cout << padding << "| \\______| /__/     \\__\\ |__|  |__| |_______|  |\n";
-    std::cout << padding << "|                                              |\n";
-    std::cout << padding << "|  ______   ____    ____  _______ .______      |\n";
-    std::cout << padding << "| /  __  \\  \\   \\  /   / |   ____||   _  \\     |\n";
-    std::cout << padding << "||  |  |  |  \\   \\/   /  |  |__   |  |_)  |    |\n";
-    std::cout << padding << "||  |  |  |   \\      /   |   __|  |      /     |\n";
-    std::cout << padding << "||  `--'  |    \\    /    |  |____ |  |\\  \\.    |  \n";
-    std::cout << padding << "| \\______/      \\__/     |_______|| _| `._|    |  \n";
-    std::cout << padding << "+----------------------------------------------+\n";
-
-    // Print vertical padding (after the ASCII art)
-    for (int i = 0; i < verticalPadding; ++i)
-    {
-        std::cout << std::endl;
+        gotoxy(horizontalPadding, verticalPadding + i); // Position each line
+        std::cout << art[i];
     }
 }
+
+
 
 
 void printInstructions()
