@@ -75,7 +75,7 @@ void game::displayMenu()
 			{
 				system("cls");
 				printInstructions(); // print the instructions
-				_getch(); // wait for any key
+				(void)_getch(); // wait for any key
 				printMenu(); // print the menu
 				continue; // continue to the next iteration
 			}
