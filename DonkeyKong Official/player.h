@@ -30,6 +30,7 @@ public:
 
 	void resetPlayer()
 	{
+		midjump = 0;
 		fallCounter = 0;
 		position.setPoint(startX, startY);
 		position.setDirFromArrayPlayer(STAY);
