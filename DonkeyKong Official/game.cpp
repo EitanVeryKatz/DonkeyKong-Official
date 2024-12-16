@@ -82,8 +82,7 @@ void game::displayMenu()
 			else if (key == '9')
 			{
 				system("cls");
-				gotoxy(MessageX, MessageY);
-				std::cout << "Goodbye!" << std::endl;
+				printGoodbyeMessage(); // print the goodbye message
 				Sleep(breakTime); 
 				break; // exit the loop
 			}

@@ -224,6 +224,29 @@ void printMenu()
 }
 
 
+void printGoodbyeMessage()
+{
+    const int consoleWidth = 80;
+    const int consoleHeight = 25;
+    const int artWidth = 69;
+    const int artHeight = 7;
+
+    int startX = (consoleWidth - artWidth) / 2;
+    int startY = (consoleHeight - artHeight) / 2;
+
+    gotoxy(startX, startY++); std::cout << "+---------------------------------------------------------------------+";
+    gotoxy(startX, startY++); std::cout << "|     _______. _______  _______            ____    ____  ___       __ |";
+    gotoxy(startX, startY++); std::cout << "|    /       ||   ____||   ____|           \\\   \\\  /   / /   \\\     |  ||";
+    gotoxy(startX, startY++); std::cout << "|   |   (----`|  |__   |  |__    ______     \\\   \\\/   / /  ^  \\\    |  ||";
+    gotoxy(startX, startY++); std::cout << "|    \\\   \\\    |   __|  |   __|  |______|     \\\\_    _/ /  /_\\  \\\   |  ||";
+    gotoxy(startX, startY++); std::cout << "|.----)   |   |  |____ |  |____                |  |  /  _____  \\\  |__||";
+    gotoxy(startX, startY++); std::cout << "||_______/    |_______||_______|               |__| /__/     \\\__\\\ (__)|";
+    gotoxy(startX, startY++); std::cout << "+---------------------------------------------------------------------+";
+}
+
+
+
+
 
 
 
