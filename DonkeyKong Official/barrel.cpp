@@ -101,11 +101,11 @@ void barrel::explode()
         //draw 3x3 square using '*' around barrel location
         for (int blowRadiusX = -1; blowRadiusX <= 1; blowRadiusX++)
         {
-            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)//if reached border - skip
+            if (x + blowRadiusX < 1 || x + blowRadiusX > BOARD_WIDTH - 1)//if reached border - skip
                 continue;
             for (int blowRadiusY = -1; blowRadiusY <= 1; blowRadiusY++)
             {
-                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)//if reached border - skip
+                if (y + blowRadiusY < 1 || y + blowRadiusY > BOARD_HEIGHT - 2)//if reached border - skip
                     continue;
                 position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');//update fail chart for explosion particals
                 gotoxy(x + blowRadiusX, y + blowRadiusY);
@@ -129,7 +129,7 @@ void barrel::explode()
                 continue;
             for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++)
             {
-                if (y + blowRadiusY < 1 || y + blowRadiusY > 23)//if reached border - skip
+                if (y + blowRadiusY < 1 || y + blowRadiusY > BOARD_HEIGHT - 2)//if reached border - skip
                     continue;
                 position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
 
@@ -152,11 +152,11 @@ void barrel::clearBlast()
 	for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++) 
     {
         //at all places blast particals were visable
-		if (blastCenterX + blowRadiusX < 1 || blastCenterX + blowRadiusX>79)
+		if (blastCenterX + blowRadiusX < 1 || blastCenterX + blowRadiusX > BOARD_WIDTH - 1)
 			continue;
 		for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++) 
         {
-			if (blastCenterY + blowRadiusY < 1 || blastCenterY + blowRadiusY>23)
+			if (blastCenterY + blowRadiusY < 1 || blastCenterY + blowRadiusY > BOARD_HEIGHT - 2)
 				continue;
             //update fail chart
 			position.setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
