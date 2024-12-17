@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <iostream>
 #include <algorithm>
+#include <conio.h>
 
 
 void gotoxy(int x, int y)
@@ -20,6 +21,16 @@ void showCurserOnConsole(bool showFlag)
 	cursorInfo.bVisible = showFlag; // set the cursor visibility
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
+
+
+void clear_key_buffer() 
+{
+	while (_kbhit()) 
+	{
+		(void)_getch();  // Consume the key in the buffer
+	}
+}
+
 
 
 

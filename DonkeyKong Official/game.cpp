@@ -38,7 +38,6 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 			Sleep(breakTime);
 			barrelCounter = 0, iterationCounter = 0;
-			std::fflush(stdin); // clear the input buffer
 			initGame(mario, board); // initialize the game
 		}
 	}
@@ -103,6 +102,7 @@ void game::runGame()
 
 void game::initGame(player& mario, boardGame& board)
 {
+	clear_key_buffer(); // clear the input buffer
 	activeBarrels = 0; // reset the number of active barrels
 	board.initFailChart(); // initialize the fail chart
 	board.initBarrels();  // initialize the barrels
@@ -203,6 +203,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		mario.moveInBoard_USING_POINT(); // move the player
 		mario.draw_USING_POINT(); // draw the player
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
+		std::fflush(stdin); // clear the input buffer
 	}
 }
 
