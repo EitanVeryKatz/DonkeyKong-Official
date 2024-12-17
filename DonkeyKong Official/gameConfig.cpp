@@ -194,11 +194,11 @@ void printGoodbyeMessage()
 
     gotoxy(startX, startY++); std::cout << "+---------------------------------------------------------------------+";
     gotoxy(startX, startY++); std::cout << "|     _______. _______  _______            ____    ____  ___       __ |";
-    gotoxy(startX, startY++); std::cout << "|    /       ||   ____||   ____|           \\\   \\\  /   / /   \\\     |  ||";
-    gotoxy(startX, startY++); std::cout << "|   |   (----`|  |__   |  |__    ______     \\\   \\\/   / /  ^  \\\    |  ||";
-    gotoxy(startX, startY++); std::cout << "|    \\\   \\\    |   __|  |   __|  |______|     \\\\_    _/ /  /_\\  \\\   |  ||";
-    gotoxy(startX, startY++); std::cout << "|.----)   |   |  |____ |  |____                |  |  /  _____  \\\  |__||";
-    gotoxy(startX, startY++); std::cout << "||_______/    |_______||_______|               |__| /__/     \\\__\\\ (__)|";
+    gotoxy(startX, startY++); std::cout << "|    /       ||   ____||   ____|           \\   \\  /   / /   \\     |  ||";
+    gotoxy(startX, startY++); std::cout << "|   |   (----`|  |__   |  |__    ______     \\   \\/   / /  ^  \\    |  ||";
+    gotoxy(startX, startY++); std::cout << "|    \\   \\    |   __|  |   __|  |______|     \\_    _/ /  /_\\  \\   |  ||";
+    gotoxy(startX, startY++); std::cout << "|.----)   |   |  |____ |  |____                |  |  /  _____  \\  |__||";
+    gotoxy(startX, startY++); std::cout << "||_______/    |_______||_______|               |__| /__/     \\__\\ (__)|";
     gotoxy(startX, startY++); std::cout << "+---------------------------------------------------------------------+";
 }
 
