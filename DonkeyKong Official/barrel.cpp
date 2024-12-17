@@ -125,7 +125,7 @@ void barrel::explode()
         for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++)
             //draw 5x5 frame using '*' around blast center
         {
-            if (x + blowRadiusX < 1 || x + blowRadiusX > 79)//if reached border - skip
+            if (x + blowRadiusX < 1 || x + blowRadiusX > BOARD_WIDTH - 1)//if reached border - skip
                 continue;
             for (int blowRadiusY = -2; blowRadiusY <= 2; blowRadiusY++)
             {

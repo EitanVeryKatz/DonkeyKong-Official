@@ -6,10 +6,14 @@ void player::keyPressed_USING_POINT(char key)
 	if (position.isOnFloor() && !position.isOnLadder() && tolower(key) == 'w') {
 		midjump++;
 	}
-	if (position.isOnFloor()||position.isOnLadder()) {//as long as player not in the air
-		for (int i = 0; i < numKeys; i++) {
-			if (std::tolower(key) == keys[i]) {//find chosen direction in direction array
-				if (!position.isOnLadder()) {//if player not currently on ladder 
+	if (position.isOnFloor()||position.isOnLadder()) 
+	{//as long as player not in the air
+		for (int i = 0; i < numKeys; i++) 
+		{
+			if (std::tolower(key) == keys[i]) 
+			{//find chosen direction in direction array
+				if (!position.isOnLadder()) 
+				{//if player not currently on ladder 
 					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && position.getChar(position.getX(), position.getY() + 2) == 'H')) {
 						//allow change to only x axis movenemt unless wanting to go down existing ladder
 						position.setDirFromArrayPlayer(i);//update direction
@@ -86,19 +90,19 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 {
 	
 
-	if (!position.isOnLadder() && dirX == 0)  //if not on ladder moving vertically
+	if (!position.isOnLadder() && dirX == STOP)  //if not on ladder moving vertically
 	{
 		if (position.getChar(currX, currY + 2) != 'H' || dirY == -1) {//if not standing above ladder or going up
-			position.setDirY(0); //stop climbing
-			dirY = 0;
+			position.setDirY(STOP); //stop climbing
+			dirY = STOP;
 		}
 	}
 
-	if (dirY == 1 && position.isOnFloor()) //if going down and reaching floor
+	if (dirY == DOWN && position.isOnFloor()) //if going down and reaching floor
 	{
 		if (position.getChar(currX, currY + 2) != 'H') {
-			position.setDirY(0); //stop
-			dirY = 0;
+			position.setDirY(STOP); //stop
+			dirY = STOP;
 		}
 	}
 
@@ -116,12 +120,12 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	}
 	else //if not on floor
 	{
-		if (!position.isOnLadder() && midjump == 0)
+		if (!position.isOnLadder() && midjump == STOP) //if not on ladder and not jumping
 			newY++; //continue to fall
-		if (!position.isOnLadder() && midjump >= 2)//if on second frame of jumping
+		if (!position.isOnLadder() && midjump >= JUMPING_FARME)//if on second frame of jumping
 		{
 			newY--;//start falling
-			midjump = 0;
+			midjump = STOP; // stop jumping
 		}
 	}
 }
@@ -133,7 +137,7 @@ bool player::checkFail()
 	{
 		return true;
 	}
-	if (fallCounter >= 5 && position.isOnFloor() && !position.isOnLadder())//if fallen from hight of 5 characters and landed on floor
+	if (fallCounter >= FALL_TO_DEATH && position.isOnFloor() && !position.isOnLadder())//if fallen from hight of 5 characters and landed on floor
 	{
 		return true;
 	}
@@ -151,7 +155,7 @@ bool player::checkWin()
 
 bool player::isFalling()
 {
-	if ((!position.isOnFloor() && !position.isOnLadder() && !midjump) || position.getDirY() == 1)//not on ladder or floor or if going down
+	if ((!position.isOnFloor() && !position.isOnLadder() && !midjump) || position.getDirY() == DOWN)//not on ladder or floor or if going down
 	{
 		return true;
 	}
