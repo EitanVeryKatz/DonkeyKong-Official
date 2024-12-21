@@ -10,7 +10,8 @@ class player
 	static constexpr int startX = 30, startY = firstFloorY - 1, STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
-	char icon = '@';
+	static constexpr char icon = '@';
+	static constexpr char hammerIcon = 'P';
 	point hammerLocation;
 	bool hasHammer;
 	int midjump = 0;
@@ -51,7 +52,10 @@ public:
 	bool checkWin(); // Check if player won
 	bool isFalling(); // Check if player is falling
 	void setHammerLocation();
-	void drawHammer();
+	void drawHammer()
+	{
+		hammerLocation.draw(hammerIcon);
+	}
 	
 };
 
