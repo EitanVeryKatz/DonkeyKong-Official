@@ -162,8 +162,18 @@ bool player::isFalling()
 	return false;
 }
 
+void player::setHammerLocation() {
+	do {
+		hammerLocation.setX(rand() % 78 + 1);
+		hammerLocation.setY(rand() % 23 + 1);
+	} while (hammerLocation.getChar() != ' ');
+}
 
 
+void player::drawHammer() {
+	gotoxy(hammerLocation.getX(), hammerLocation.getY());
+	std::cout << "P";
+}
 
 
 

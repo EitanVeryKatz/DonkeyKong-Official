@@ -107,7 +107,9 @@ void game::initGame(player& mario, boardGame& board)
 	board.initFailChart(); // initialize the fail chart
 	board.initBarrels();  // initialize the barrels
 	mario.setGameBoard_USING_POINT(&board); // set the board of the player
+	mario.setHemmerBoard(&board);
 	mario.resetPlayer(); // reset player's position
+	mario.drawHammer();
 	board.newDrawBoard(); // draw the board
 }
 
