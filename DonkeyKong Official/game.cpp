@@ -109,7 +109,6 @@ void game::initGame(player& mario, boardGame& board)
 	mario.setGameBoard_USING_POINT(&board); // set the board of the player
 	mario.setHemmerBoard(&board);
 	mario.resetPlayer(); // reset player's position
-	mario.drawHammer();
 	board.newDrawBoard(); // draw the board
 }
 
@@ -192,6 +191,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		gotoxy(livesX, livesY);
 		std::cout << lives << std::endl;
 		mario.draw_USING_POINT(); // draw the player
+		mario.drawHammer(); // draw the hammer
 		handleInput(mario); // handle the user input
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		Sleep(GAME_SPEED);
