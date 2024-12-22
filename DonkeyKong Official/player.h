@@ -11,7 +11,7 @@ class player
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	static constexpr char icon = '@';
-	static constexpr char hammerIcon = 'P';
+	static constexpr char hammerIcon = 'p';
 	point hammerLocation;
 	bool hasHammer;
 	int midjump = 0;
