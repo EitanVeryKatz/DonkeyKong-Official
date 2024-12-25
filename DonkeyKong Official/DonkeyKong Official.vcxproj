@@ -186,6 +186,7 @@
     <ClCompile Include="boardGame.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameConfig.cpp" />
+    <ClCompile Include="ghost.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="point.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="boardGame.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameConfig.h" />
+    <ClInclude Include="ghost.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="resource.h" />

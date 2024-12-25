@@ -11,8 +11,10 @@ class point
 	int x, y;
 	struct Direction { int x, y; };
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	//                                            LEFT    DOWN    RIGHT   STAY 
+	//													LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+
+	static constexpr Direction directionsGhost[] = { {-1, 0}, {1, 0} };
 	Direction dir{ 0,0 };
 	void drawPoint(char c) const
 	{
