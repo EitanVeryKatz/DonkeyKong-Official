@@ -6,6 +6,11 @@ void player::keyPressed_USING_POINT(char key)
 	if (position.isOnFloor() && !position.isOnLadder() && tolower(key) == 'w') {
 		midjump++;
 	}
+	if (hasHammer && position.getDirY() == 0) {//if mario holds hammer and looking sideways.
+		if (tolower(key) == 'p') {
+			swingHammer();
+		}
+	}
 	if (position.isOnFloor()||position.isOnLadder()) 
 	{//as long as player not in the air
 		for (int i = 0; i < numKeys; i++) 
@@ -172,11 +177,28 @@ void player::setHammerLocation() {
 }
 
 
+void player::checkHasHmmer() {
+	if (position.getX() == hammerLocation.getX() && position.getY() == hammerLocation.getY())
+		hasHammer = true;
+}
+
+
+void player::swingHammer() {
+	int swingx = position.getX() + position.getDirX();
+	int swingy = position.getY() + position.getDirY();
+	gotoxy(swingx, swingy);
+	if (swingHit(swingx, swingy)) {
+		
+	}
+	std::cout << '#';
 
 
 
+}
 
-
+bool player::swingHit(int swingx, int swingy) {
+	return true;
+}
 
 
 

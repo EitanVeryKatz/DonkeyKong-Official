@@ -196,6 +196,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		Sleep(GAME_SPEED);
 		iterationCounter++;
+		mario.checkHasHmmer();
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
 			break;

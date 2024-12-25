@@ -37,7 +37,7 @@ class boardGame
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
-
+	
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; } // get the char of the board at the given coordinates
 	void newDrawBoard() const; // draw the board
@@ -50,5 +50,6 @@ public :
 	{
 		initFailChart();
 	}
+
 };
 
