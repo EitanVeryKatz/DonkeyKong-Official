@@ -4,20 +4,20 @@ class ghost
 {
 	static constexpr int dir_LEFT = 0, dir_RIGHT = 1;
 	static constexpr char icon = 'x';
-	point gohstPosition;
+	point ghostPosition;
 
 public:
 	void draw()
 	{
-		gohstPosition.draw(icon);
+		ghostPosition.draw(icon);
 	}
 	void erase()
 	{
-		gohstPosition.erase();
+		ghostPosition.erase();
 	}
 	void setGhostPosition(int x, int y)
 	{
-		gohstPosition.setPoint(x, y);
+		ghostPosition.setPoint(x, y);
 	}
 };
 
