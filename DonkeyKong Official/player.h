@@ -37,7 +37,7 @@ public:
 		fallCounter = 0;
 		position.setPoint(startX, startY);
 		position.setDirFromArrayPlayer(STAY);
-		hasHammer = false;
+		hasHammer = true;
 		setHammerLocation();
 	}
 	void keyPressed_USING_POINT(char key); // Handle player's key press

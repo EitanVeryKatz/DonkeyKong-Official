@@ -184,4 +184,10 @@ void barrel::resetBarrel_USING_POINT()
 	blastParticlesVisable = false; // set the blast particles to not visible
 	blastCounter = 0; // set the blast counter to 0
 	exploaded = false; // set the explosion flag to false
+
+}
+
+bool barrel::checkSmash(){
+    return position.getFailChart() == 'p';
+    
 }

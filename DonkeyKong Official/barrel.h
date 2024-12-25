@@ -39,5 +39,6 @@ public:
 	void updateBlowCounter();
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel_USING_POINT();
+	bool checkSmash();
 };
 

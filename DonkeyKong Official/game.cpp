@@ -138,7 +138,13 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 			pBarrel.erase_USING_POINT(); // erase the barrel
 			pBarrel.barrelFall_USING_POINT(); // make the barrel fall
 			if (pBarrel.isActive())
-				pBarrel.draw_USING_POINT(); // draw the barrel
+				if (pBarrel.checkSmash()) {
+					pBarrel.deactivateBarrel();
+					activeBarrels--;
+				}
+				else {
+					pBarrel.draw_USING_POINT(); // draw the barrel
+				}
 			else
 				activeBarrels--; // decrement the number of active barrels
 		}

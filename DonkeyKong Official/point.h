@@ -22,6 +22,7 @@ class point
 		std::cout << c;
 	}
 	boardGame* pBoard = nullptr;
+	char*** pFailChart = nullptr;
 
 public:
 

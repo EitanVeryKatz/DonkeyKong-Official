@@ -21,6 +21,8 @@ void player::keyPressed_USING_POINT(char key)
 				{//if player not currently on ladder 
 					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && position.getChar(position.getX(), position.getY() + 2) == 'H')) {
 						//allow change to only x axis movenemt unless wanting to go down existing ladder
+						if (keys[i] == 'a' || keys[i] == 'd')
+							hammerLocation.setDirFromArrayPlayer(i);
 						position.setDirFromArrayPlayer(i);//update direction
 					}
 					return;
@@ -184,20 +186,14 @@ void player::checkHasHmmer() {
 
 
 void player::swingHammer() {
-	int swingx = position.getX() + position.getDirX();
-	int swingy = position.getY() + position.getDirY();
-	gotoxy(swingx, swingy);
-	if (swingHit(swingx, swingy)) {
-		
-	}
+	hammerLocation.setX(position.getX() + hammerLocation.getDirX())  ;
+	hammerLocation.setY(position.getY() + hammerLocation.getDirY());
+	gotoxy(hammerLocation.getX(), hammerLocation.getY());
+	hammerLocation.setFailChart(hammerIcon);
 	std::cout << '#';
 
 
 
-}
-
-bool player::swingHit(int swingx, int swingy) {
-	return true;
 }
 
 
