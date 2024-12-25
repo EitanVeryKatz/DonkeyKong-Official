@@ -201,14 +201,14 @@ void game::gameLoop(player& mario, boardGame& board)
 		Sleep(GAME_SPEED);
 		iterationCounter++;
 		mario.checkHasHmmer();
+		ghost.moveGhost(); // move the ghost
+		ghost.erase(); // erase the ghost
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
 			break;
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase_USING_POINT(); // erase the player
-		ghost.erase(); // erase the ghost
-		ghost.moveGhost(); // move the ghost
 		mario.moveInBoard_USING_POINT(); // move the player
 		mario.draw_USING_POINT(); // draw the player
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
