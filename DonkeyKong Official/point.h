@@ -60,5 +60,6 @@ public:
 	void setFailChart(int x, int y, char c);
 	void setDirFromArrayPlayer(int i) { dir = directionsPlayer[i]; }
 	void setDirFromArrayBarrel(int i) { dir = directionsBarrel[i]; }
+	void setDirFromArrayGhost(int i) { dir = directionsGhost[i]; }
 };
 

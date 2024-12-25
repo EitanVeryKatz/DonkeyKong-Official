@@ -2,6 +2,8 @@
 #include "player.h"
 #include "boardGame.h"
 #include "utils.h"
+#include "ghost.h"
+
 class game
 {
 

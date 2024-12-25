@@ -138,7 +138,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 bool player::checkFail()
 {
 	char failChar = position.getFailChart();
-	if (failChar == 'O' || failChar == '*')//if touched barrel or explosion particale
+	if (failChar == 'O' || failChar == '*' || failChar == 'x')//if touched barrel or explosion particale
 	{
 		return true;
 	}

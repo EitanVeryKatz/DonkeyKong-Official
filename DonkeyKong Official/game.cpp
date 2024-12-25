@@ -183,6 +183,9 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 
 void game::gameLoop(player& mario, boardGame& board)
 {
+	ghost ghost; // create a ghost
+	ghost.setGhostPosition(15, firstFloorY - 1); // set the ghost position
+	ghost.setGameBoard(&board); // set the board of the ghost
 	const int livesX = 9, livesY = 2;
 	bool running = true;
 	int barrelCounter = 0; 
@@ -192,6 +195,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		gotoxy(livesX, livesY);
 		std::cout << lives << std::endl;
 		mario.draw_USING_POINT(); // draw the player
+		ghost.draw(); // draw the ghost
 		handleInput(mario); // handle the user input
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		Sleep(GAME_SPEED);
@@ -203,6 +207,8 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase_USING_POINT(); // erase the player
+		ghost.erase(); // erase the ghost
+		ghost.moveGhost(); // move the ghost
 		mario.moveInBoard_USING_POINT(); // move the player
 		mario.draw_USING_POINT(); // draw the player
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement

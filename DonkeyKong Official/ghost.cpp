@@ -1,1 +1,44 @@
 #include "ghost.h"
+
+ghost::ghost()
+{
+	int i = rand() % 2; // random number between 0 and 2
+	ghostPosition.setDirFromArrayGhost(i); // set the direction of the ghost randomly
+}
+
+bool ghost::checkFloorEdge()
+{
+    int currX = ghostPosition.getX(), currY = ghostPosition.getY();
+    if ((ghostPosition.getChar(currX + 1, currY + 1) != '<' && ghostPosition.getChar(currX + 1, currY + 1) != '>' && ghostPosition.getChar(currX + 1, currY + 1) != '=') && ghostPosition.getDirX() == RIGHT) // if the ghost is at the edge of the floor and moving right
+        return true;
+
+    if ((ghostPosition.getChar(currX - 1, currY + 1) != '<' && ghostPosition.getChar(currX - 1, currY + 1) != '>' && ghostPosition.getChar(currX - 1, currY + 1) != '=') && ghostPosition.getDirX() == LEFT) // if the ghost is at the edge of the floor and moving left
+        return true;
+    
+    return false;
+}
+
+void ghost::changeDirection()
+{
+	if (ghostPosition.getDirX() == LEFT)
+		ghostPosition.setDirFromArrayGhost(dir_RIGHT);
+	else
+		ghostPosition.setDirFromArrayGhost(dir_LEFT);
+}
+
+void ghost::moveGhost()
+{
+	int currX = ghostPosition.getX(), currY = ghostPosition.getY();
+	int newX = currX, newY = currY;
+	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
+
+	if (randChangeDir <= 5 || checkFloorEdge()) // if the random number is less than 5 or the ghost is at the edge of the floor
+		changeDirection();
+
+	newX = currX + ghostPosition.getDirX(); // update the new X position
+	ghostPosition.setFailChart(' '); // erase the ghost from the fail chart	
+	ghostPosition.setPoint(newX, newY); // update the position of the ghost
+	ghostPosition.setFailChart('x'); // draw the ghost on the fail chart
+	gotoxy(currX, currY);
+	std::cout << ghostPosition.getChar(currX, currY); // restore the previous character on the screen
+}
