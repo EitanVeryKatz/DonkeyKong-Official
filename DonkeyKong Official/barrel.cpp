@@ -82,7 +82,13 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
         position.setFailChart(' '); 
     }
 	position.setPoint(newX, newY); // update the position of the barrel
-	position.setFailChart(ICON); // draw the barrel on the fail chart
+    if (position.getFailChart() != 'p') {
+        position.setFailChart(ICON); // draw the barrel on the fail chart
+    }
+    else {
+        deactivateBarrel();
+        position.setFailChart(' ');
+    }
 
 
     // comment this
