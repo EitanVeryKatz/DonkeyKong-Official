@@ -2,11 +2,12 @@
 #include "point.h"
 class ghost
 {
-	static constexpr int dir_LEFT = 0, dir_RIGHT = 1;
+	static constexpr int dir_LEFT = 0, dir_RIGHT = 1, LEFT = -1, RIGHT = 1;
 	static constexpr char icon = 'x';
 	point ghostPosition;
 
 public:
+	ghost();
 	void draw()
 	{
 		ghostPosition.draw(icon);
@@ -19,5 +20,9 @@ public:
 	{
 		ghostPosition.setPoint(x, y);
 	}
+	bool checkFloorEdge();
+	void changeDirection();
+	void moveGhost();
+	void setGameBoard(boardGame* gameBoard) { ghostPosition.setGameBoard(gameBoard); }
 };
 
