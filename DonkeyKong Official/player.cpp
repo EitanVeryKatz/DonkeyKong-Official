@@ -180,8 +180,10 @@ void player::setHammerLocation() {
 
 
 void player::checkHasHmmer() {
-	if (position.getX() == hammerLocation.getX() && position.getY() == hammerLocation.getY())
+	if (position.getX() == hammerLocation.getX() && position.getY() == hammerLocation.getY()) {
 		hasHammer = true;
+		icon = iconArr[1];
+	}
 }
 
 
