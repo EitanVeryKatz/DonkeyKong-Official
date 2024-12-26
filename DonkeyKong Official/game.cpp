@@ -201,16 +201,30 @@ void game::gameLoop(player& mario, boardGame& board)
 		gotoxy(livesX, livesY);
 		std::cout << lives << std::endl;
 		mario.draw_USING_POINT(); // draw the player
-		ghost.draw(); // draw the ghost
+
+		// testing
+		if(ghost.isActive())
+			ghost.draw(); // draw the ghost
+		//
+
 		if(mario.isSwingingHammer())
-		mario.clearHammerSwing();
+			mario.clearHammerSwing();
+
 		handleInput(mario); // handle the user input
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		Sleep(GAME_SPEED);
 		iterationCounter++;
 		mario.checkHasHmmer();
-		ghost.moveGhost(); // move the ghost
+
+		// testing
+		if (ghost.isActive())
+		{
+			ghost.moveGhost(); // move the ghost
+			
+		} 
 		ghost.erase(); // erase the ghost
+		//
+
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
 			break;

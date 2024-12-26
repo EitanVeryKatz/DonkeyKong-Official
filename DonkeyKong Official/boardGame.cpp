@@ -15,6 +15,35 @@ void boardGame::initFailChart()
     }
 }
 
+void boardGame::getFloorCoordinates()
+{
+    floor temp;
+	bool isFloor = false;
+	floors_coord.reserve(20); // reserve 20 elements in the vector
+	for (int i = 0; i < BOARD_HEIGHT; i++) // iterate over the board
+    {
+        for (int j = 0; j < BOARD_WIDTH; j++)
+        {
+			if (boardLayout[i][j] == '=' || boardLayout[i][j] == '<' || boardLayout[i][j] == '>') // if the current character is a floor
+            {
+				if (!isFloor) // if the current character is the start of the floor
+                {
+					temp.startX = j; // set the start X of the floor
+					temp.y = i; // set the Y of the floor
+					isFloor = true; // set the isFloor flag to true
+                }
+				temp.endX = j; // set the end X of the floor each iteration of the floor
+            }
+			else if (isFloor && (boardGame::boardLayout[i][j] != '=' && boardGame::boardLayout[i][j] != '<' && boardGame::boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
+            {
+				floors_coord.push_back(temp); // push the floor to the vector
+				isFloor = false; // set the isFloor flag to false
+            }
+        }
+    }
+	floors_coord.shrink_to_fit(); // shrink the vector to fit the number of floors
+}
+
 void boardGame::newDrawBoard() const
 {
         const int livesX = 2, livesY = 2;

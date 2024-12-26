@@ -2,10 +2,19 @@
 
 #include "barrel.h"
 #include "gameConfig.h"
+#include <vector>
+
+using std::vector;
+
 class barrel;
 
 class boardGame
 {
+	struct floor
+	{
+		int startX, endX;
+		int y;
+	};
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
 	{   //           1         2         3         4         5         6         7                  
@@ -37,6 +46,7 @@ class boardGame
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
+	vector <floor> floors_coord;
 	
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; } // get the char of the board at the given coordinates
@@ -49,7 +59,9 @@ public :
 	boardGame() // constructor of the boardGame class that calls the initFailChart function
 	{
 		initFailChart();
+		getFloorCoordinates();
 	}
 
+	void getFloorCoordinates();
 };
 
