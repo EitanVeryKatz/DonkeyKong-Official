@@ -34,7 +34,7 @@ void boardGame::getFloorCoordinates()
                 }
 				temp.endX = j; // set the end X of the floor each iteration of the floor
             }
-			else if (isFloor && (boardGame::boardLayout[i][j] != '=' && boardGame::boardLayout[i][j] != '<' && boardGame::boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
+			else if (isFloor && (boardLayout[i][j] != '=' && boardLayout[i][j] != '<' && boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
             {
 				floors_coord.push_back(temp); // push the floor to the vector
 				isFloor = false; // set the isFloor flag to false
