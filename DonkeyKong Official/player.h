@@ -15,6 +15,7 @@ class player
 	point hammerLocation;
 	bool hasHammer;
 	int midjump = 0;
+	bool midswing = false;
 	point position;
 	int fallCounter = 0;
 public:
@@ -37,9 +38,11 @@ public:
 		fallCounter = 0;
 		position.setPoint(startX, startY);
 		position.setDirFromArrayPlayer(STAY);
-		hasHammer = true;
+		hasHammer = false;
+		midswing = 0;
 		setHammerLocation();
 	}
+	bool isSwingingHammer() { return midswing; }
 	void keyPressed_USING_POINT(char key); // Handle player's key press
 	void checkHasHmmer();
 	void moveInBoard_USING_POINT(); // handle player's movement
@@ -60,5 +63,6 @@ public:
 		hammerLocation.draw(hammerIcon);
 	}
 	void swingHammer();
+	void clearHammerSwing();
 };
 

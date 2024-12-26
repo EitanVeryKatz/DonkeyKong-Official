@@ -86,8 +86,8 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
         position.setFailChart(ICON); // draw the barrel on the fail chart
     }
     else {
-        deactivateBarrel();
         position.setFailChart(' ');
+        deactivateBarrel();
     }
 
 

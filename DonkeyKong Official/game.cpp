@@ -202,6 +202,8 @@ void game::gameLoop(player& mario, boardGame& board)
 		std::cout << lives << std::endl;
 		mario.draw_USING_POINT(); // draw the player
 		ghost.draw(); // draw the ghost
+		if(mario.isSwingingHammer())
+		mario.clearHammerSwing();
 		handleInput(mario); // handle the user input
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		Sleep(GAME_SPEED);

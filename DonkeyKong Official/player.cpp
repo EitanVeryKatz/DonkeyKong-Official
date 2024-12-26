@@ -191,10 +191,22 @@ void player::swingHammer() {
 	gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	hammerLocation.setFailChart(hammerIcon);
 	std::cout << '#';
+	midswing = true;
 
 
 
 }
 
-
+void player::clearHammerSwing() {
+	gotoxy(hammerLocation.getX(), hammerLocation.getY());
+	
+	if (hammerLocation.getX() == position.getX() && hammerLocation.getY() == position.getY()) {
+		std::cout << icon;
+	}
+	else {
+		std::cout << hammerLocation.getChar();
+	}
+	hammerLocation.setFailChart(' ');
+	midswing = false;
+}
 
