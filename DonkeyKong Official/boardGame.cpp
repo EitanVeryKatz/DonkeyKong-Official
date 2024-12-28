@@ -1,5 +1,6 @@
 #include "boardGame.h"
 #include <iostream>
+#include "ghost.h"
 
 void boardGame::initFailChart()
 {
@@ -33,6 +34,7 @@ void boardGame::getFloorCoordinates()
 					isFloor = true; // set the isFloor flag to true
                 }
 				temp.endX = j; // set the end X of the floor each iteration of the floor
+                temp.lenOfFloor = temp.endX - temp.startX;
             }
 			else if (isFloor && (boardLayout[i][j] != '=' && boardLayout[i][j] != '<' && boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
             {
@@ -42,6 +44,37 @@ void boardGame::getFloorCoordinates()
         }
     }
 	floors_coord.shrink_to_fit(); // shrink the vector to fit the number of floors
+}
+
+void boardGame::setNumOfGhosts()
+{
+    vector<floor>::iterator itr = floors_coord.begin();
+    vector<floor>::iterator itr_end = floors_coord.end();
+    for (; itr != itr_end; ++itr)
+    {
+        if (itr->lenOfFloor > 5)
+            itr->NumOfGhost = 1 + rand() % 2;
+        else if (itr->lenOfFloor <= 5 && itr->lenOfFloor > 2)
+            itr->NumOfGhost = 1;
+    }
+}
+
+void boardGame::setGhosts()
+{
+    vector<floor>::iterator itr = floors_coord.begin();
+    vector<floor>::iterator itr_end = floors_coord.end();
+    ghosts.reserve(30);
+    for (; itr != itr_end; ++itr)
+    {
+        for (int i = 0; i < itr->NumOfGhost; i++)
+        {
+            ghost temp;
+            int x = itr->startX + rand() % (itr->endX - itr->startX + 1);
+            temp.setGhostPosition(x, itr->y - 1);
+            ghosts.push_back(temp);
+        }
+    }
+    ghosts.shrink_to_fit();
 }
 
 void boardGame::newDrawBoard() const

@@ -14,6 +14,7 @@ class boardGame
 	{
 		int startX, endX;
 		int y;
+		int lenOfFloor;
 	};
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
