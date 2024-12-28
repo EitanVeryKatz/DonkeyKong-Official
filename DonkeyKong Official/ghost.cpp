@@ -43,6 +43,9 @@ void ghost::moveGhost()
 		active = false;
 		ghostPosition.setFailChart(' ');
 	}
+	else
+		ghostPosition.setFailChart(icon);
+
 	gotoxy(currX, currY);
 	std::cout << ghostPosition.getChar(currX, currY); // restore the previous character on the screen
 }
