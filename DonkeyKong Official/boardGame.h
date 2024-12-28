@@ -7,6 +7,7 @@
 using std::vector;
 
 class barrel;
+class ghost;
 
 class boardGame
 {
@@ -15,6 +16,7 @@ class boardGame
 		int startX, endX;
 		int y;
 		int lenOfFloor;
+		int NumOfGhost;
 	};
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
@@ -48,7 +50,7 @@ class boardGame
 	};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	vector <floor> floors_coord;
-	
+	vector <ghost> ghosts;
 public :
 	char getChar(int x, int y) { return boardLayout[y][x]; } // get the char of the board at the given coordinates
 	void newDrawBoard() const; // draw the board
@@ -57,12 +59,9 @@ public :
 	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates
 	void initBarrels(); // initialize the barrels
 	void initFailChart(); // initialize the fail chart
-	boardGame() // constructor of the boardGame class that calls the initFailChart function
-	{
-		initFailChart();
-		getFloorCoordinates();
-	}
-
+	boardGame();
 	void getFloorCoordinates();
+	void setNumOfGhosts();
+	void setGhosts();
 };
 

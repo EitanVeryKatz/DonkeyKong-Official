@@ -2,6 +2,13 @@
 #include <iostream>
 #include "ghost.h"
 
+boardGame::boardGame()
+{
+    initFailChart();
+    getFloorCoordinates();
+    setNumOfGhosts();
+    setGhosts();
+}
 void boardGame::initFailChart()
 {
     for (int r = 0; r < BOARD_HEIGHT; r++)
@@ -15,6 +22,7 @@ void boardGame::initFailChart()
         }
     }
 }
+
 
 void boardGame::getFloorCoordinates()
 {
@@ -34,7 +42,7 @@ void boardGame::getFloorCoordinates()
 					isFloor = true; // set the isFloor flag to true
                 }
 				temp.endX = j; // set the end X of the floor each iteration of the floor
-                temp.lenOfFloor = temp.endX - temp.startX;
+                temp.lenOfFloor = temp.endX - temp.startX + 1;
             }
 			else if (isFloor && (boardLayout[i][j] != '=' && boardLayout[i][j] != '<' && boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
             {
@@ -69,7 +77,8 @@ void boardGame::setGhosts()
         for (int i = 0; i < itr->NumOfGhost; i++)
         {
             ghost temp;
-            int x = itr->startX + rand() % (itr->endX - itr->startX + 1);
+            temp.setGameBoard(this);
+            int x = itr->startX + rand() % (itr->lenOfFloor);
             temp.setGhostPosition(x, itr->y - 1);
             ghosts.push_back(temp);
         }

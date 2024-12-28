@@ -32,6 +32,8 @@ void ghost::moveGhost()
 	int newX = currX, newY = currY;
 	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
 
+
+	// add ghost colide
 	if (randChangeDir <= 5 || checkFloorEdge()) // if the random number is less than 5 or the ghost is at the edge of the floor
 		changeDirection();
 
