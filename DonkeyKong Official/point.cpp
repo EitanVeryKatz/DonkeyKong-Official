@@ -34,6 +34,11 @@ char point::getFailChart()
 	return pBoard->getFailChart(x, y);
 }
 
+char point::getFailChart(int _x, int _y)
+{
+	return pBoard->getFailChart(_x, _y);
+}
+
 void point::setFailChart(char c)
 {
 	pBoard->UpdateFailChart(x, y, c);

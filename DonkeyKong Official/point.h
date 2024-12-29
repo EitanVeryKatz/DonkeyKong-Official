@@ -57,6 +57,7 @@ public:
 	char getChar();
 	char getChar(int _x, int _y);
 	char getFailChart();
+	char getFailChart(int _x, int _y);
 	void setFailChart(char c);
 	void setFailChart(int x, int y, char c);
 	void setDirFromArrayPlayer(int i) { dir = directionsPlayer[i]; }

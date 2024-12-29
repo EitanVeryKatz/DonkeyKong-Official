@@ -1,13 +1,14 @@
 #include "boardGame.h"
 #include <iostream>
 #include "ghost.h"
+#include <algorithm>
 
 boardGame::boardGame()
 {
     initFailChart();
     getFloorCoordinates();
     setNumOfGhosts();
-    setGhosts();
+    initGhosts();
 }
 void boardGame::initFailChart()
 {
@@ -60,30 +61,46 @@ void boardGame::setNumOfGhosts()
     vector<floor>::iterator itr_end = floors_coord.end();
     for (; itr != itr_end; ++itr)
     {
-        if (itr->lenOfFloor > 5)
-            itr->NumOfGhost = 1 + rand() % 2;
-        else if (itr->lenOfFloor <= 5 && itr->lenOfFloor > 2)
-            itr->NumOfGhost = 1;
+        if (itr->lenOfFloor > 10)
+            itr->NumOfGhost = rand() % 3;
+        else if (itr->lenOfFloor <= 10 && itr->lenOfFloor > 8)
+            itr->NumOfGhost = rand() % 2;
     }
 }
 
-void boardGame::setGhosts()
+void boardGame::initGhosts()
 {
-    vector<floor>::iterator itr = floors_coord.begin();
-    vector<floor>::iterator itr_end = floors_coord.end();
-    ghosts.reserve(30);
-    for (; itr != itr_end; ++itr)
+    vector<floor>::iterator itr = floors_coord.begin(); // initialize iterator to the beginning of floors_coord
+    vector<floor>::iterator itr_end = floors_coord.end(); // initialize iterator to the end of floors_coord
+    ghosts.reserve(30); // reserve space for 30 ghosts in the ghosts vector
+    for (; itr != itr_end; ++itr) // iterate over each floor in floors_coord
     {
-        for (int i = 0; i < itr->NumOfGhost; i++)
+        vector<int> used_positions; // vector to keep track of used positions on the floor
+        for (int i = 0; i < itr->NumOfGhost; i++) // iterate for the number of ghosts on the current floor
         {
-            ghost temp;
-            temp.setGameBoard(this);
-            int x = itr->startX + rand() % (itr->lenOfFloor);
-            temp.setGhostPosition(x, itr->y - 1);
-            ghosts.push_back(temp);
+            ghost temp; // create a temporary ghost object
+            temp.setGameBoard(this); // set the game board for the ghost
+            int x; 
+            do
+            {
+              x = itr->startX + rand() % (itr->lenOfFloor); // generate a random x position within the floor's range
+            } while (std::find(used_positions.begin(), used_positions.end(), x) != used_positions.end()); // ensure the position is not already used
+            temp.setGhostPosition(x, (itr->y) - 1); // set the ghost's position
+            used_positions.push_back(x);
+            ghosts.push_back(temp); // add the ghost to the ghosts vector
         }
     }
-    ghosts.shrink_to_fit();
+    ghosts.shrink_to_fit(); // shrink the ghosts vector to fit the number of ghosts
+}
+
+void boardGame::resetGhosts()
+{
+    vector<ghost>::iterator itr = ghosts.begin(); // initialize iterator to the beginning of floors_coord
+    vector<ghost>::iterator itr_end = ghosts.end(); // initialize iterator to the end of floors_coord
+    for (; itr != itr_end; ++itr) // iterate over each floor in floors_coord
+    {
+        itr->activate();
+    }
 }
 
 void boardGame::newDrawBoard() const

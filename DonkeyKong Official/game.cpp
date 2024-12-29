@@ -9,6 +9,8 @@ constexpr int ESC = 27;
 constexpr int breakTime = 2000;
 constexpr int MessageX = 30, MessageY = 12;
 
+using std::vector;
+
 game::game()
 {
 	displayMenu();
@@ -32,6 +34,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 		}
 		else // if there are more lives
 		{
+			firstGame = false;
 			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			system("cls"); // clear the screen
 			gotoxy(MessageX, MessageY);
@@ -106,6 +109,8 @@ void game::initGame(player& mario, boardGame& board)
 	activeBarrels = 0; // reset the number of active barrels
 	board.initFailChart(); // initialize the fail chart
 	board.initBarrels();  // initialize the barrels
+	if (!firstGame)
+		board.resetGhosts();
 	mario.setGameBoard_USING_POINT(&board); // set the board of the player
 	mario.setHemmerBoard(&board);
 	mario.resetPlayer(); // reset player's position
@@ -186,6 +191,23 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		}
 	}
 
+void game::updateGhosts(boardGame& board)
+{
+	vector<ghost>::iterator itr = board.ghosts.begin();
+	vector<ghost>::iterator itr_end = board.ghosts.end();
+	for (; itr != itr_end; itr++)
+	{
+		if (itr->isActive())
+		{	
+			itr->erase();
+			itr->moveGhost();
+			itr->draw();
+		}
+		else
+			itr->erase();
+	}
+}
+
 
 void game::gameLoop(player& mario, boardGame& board)
 {
@@ -202,28 +224,29 @@ void game::gameLoop(player& mario, boardGame& board)
 		std::cout << lives << std::endl;
 		mario.draw_USING_POINT(); // draw the player
 
-		// testing
-		if(ghost.isActive())
-			ghost.draw(); // draw the ghost
-		//
+		//// testing
+		//if(ghost.isActive())
+		//	ghost.draw(); // draw the ghost
+		////
 
 		if(mario.isSwingingHammer())
 			mario.clearHammerSwing();
 
 		handleInput(mario); // handle the user input
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
+		updateGhosts(board);
 		Sleep(GAME_SPEED);
 		iterationCounter++;
 		mario.checkHasHmmer();
 
-		// testing
-		if (ghost.isActive())
-		{
-			ghost.moveGhost(); // move the ghost
-			
-		} 
-		ghost.erase(); // erase the ghost
-		//
+		//// testing
+		//if (ghost.isActive())
+		//{
+		//	ghost.moveGhost(); // move the ghost
+		//	
+		//} 
+		//ghost.erase(); // erase the ghost
+		////
 
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed

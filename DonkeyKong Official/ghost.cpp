@@ -33,8 +33,7 @@ void ghost::moveGhost()
 	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
 
 
-	// add ghost colide
-	if (randChangeDir <= 5 || checkFloorEdge()) // if the random number is less than 5 or the ghost is at the edge of the floor
+	if (randChangeDir <= 5 || checkFloorEdge() || ghostPosition.getFailChart(currX + 1, currY) == icon || ghostPosition.getFailChart(currX - 1, currY) == icon) // if the random number is less than 5 or the ghost is at the edge of the floor
 		changeDirection();
 
 	newX = currX + ghostPosition.getDirX(); // update the new X position

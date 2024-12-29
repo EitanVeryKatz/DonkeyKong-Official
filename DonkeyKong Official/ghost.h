@@ -26,5 +26,7 @@ public:
 	void setGameBoard(boardGame* gameBoard) { ghostPosition.setGameBoard(gameBoard); }
 	bool hammerHit();
 	bool isActive() { return active; }
+	void activate() { active = true; }
+	int getX() { return ghostPosition.getX(); }
 };
 
