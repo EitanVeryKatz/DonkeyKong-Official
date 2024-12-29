@@ -10,13 +10,14 @@ void barrel::barrelFall_USING_POINT()
 	int currX = position.getX(), currY = position.getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
     char dirChar;
     bool onFloor = position.isOnFloor();
+    updateFallCount();
 	if (exploaded) // if the barrel has exploded clear the explosion and set the explosion flag to false
     {
         clearBlast();
         exploaded = false;
     }
 
-	if (onFloor && currY >= lastFloorY + 8) // if the barrel is on floor and passed more than 8 Y postions from the last floor position explode the barrel
+	if (onFloor && fallCounter >= 8) // if the barrel is on floor and passed more than 8 Y postions from the last floor position explode the barrel
     {
         handleExplosion();
     }
@@ -190,10 +191,22 @@ void barrel::resetBarrel_USING_POINT()
 	blastParticlesVisable = false; // set the blast particles to not visible
 	blastCounter = 0; // set the blast counter to 0
 	exploaded = false; // set the explosion flag to false
-
+	fallCounter = 0;
 }
 
 bool barrel::checkSmash(){
     return position.getFailChart() == 'p';
     
+}
+
+void barrel::updateFallCount()
+{
+	if (position.getDirY() == DOWN)
+	{
+		fallCounter++;
+	}
+	else
+	{
+		fallCounter = 0;
+	}
 }

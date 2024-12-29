@@ -20,6 +20,7 @@ class barrel
 	bool blastParticlesVisable = false;
 	int blastCounter = 0;
 	bool exploaded = false;
+	int fallCounter = 0;
 public:
 	barrel();
 	void draw_USING_POINT() { position.draw(ICON); }
@@ -40,5 +41,6 @@ public:
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel_USING_POINT();
 	bool checkSmash();
+	void updateFallCount();
 };
 
