@@ -9,7 +9,6 @@ constexpr int ESC = 27;
 constexpr int breakTime = 2000;
 constexpr int MessageX = 30, MessageY = 12;
 
-using std::vector;
 
 game::game()
 {
@@ -95,8 +94,8 @@ void game::displayMenu()
 
 void game::runGame()
 {
-	player mario; // create a player
 	boardGame board; // create a board
+	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
 	initGame(mario, board); // initialize the game
 	gameLoop(mario, board); // run the game loop
 }

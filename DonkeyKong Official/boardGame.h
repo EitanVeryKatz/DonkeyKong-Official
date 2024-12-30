@@ -11,13 +11,16 @@ class ghost;
 
 class boardGame
 {
-	struct floor
+	/*struct floor
 	{
 		int startX, endX;
 		int y;
 		int lenOfFloor;
 		int NumOfGhost = 0;
-	};
+	};*/
+	int startXMario, startYMario;
+	int monkeX, monkeY;
+	int Lx, Ly;
 	barrel barrels[BARRELS_NUM];
 	const char* boardLayout[BOARD_HEIGHT] =
 	{   //           1         2         3         4         5         6         7                  
@@ -48,12 +51,13 @@ class boardGame
 		  "Q            ===============================================================   Q", // 23
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
+	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH];
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
-	vector <floor> floors_coord;
-	void getFloorCoordinates();
-	void setNumOfGhosts();
+	//vector <floor> floors_coord;
+	//void getFloorCoordinates();
+	//void setNumOfGhosts();
 public :
-	char getChar(int x, int y) { return boardLayout[y][x]; } // get the char of the board at the given coordinates
+	char getChar(int x, int y) { return activeBoard[y][x]; } // get the char of the board at the given coordinates
 	void newDrawBoard() const; // draw the board
 	barrel& getBarrel(int index) { return barrels[index]; } // get the barrel at the given index
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; } // update the fail chart at the given coordinates
@@ -61,8 +65,13 @@ public :
 	void initBarrels(); // initialize the barrels
 	void initFailChart(); // initialize the fail chart
 	boardGame();
-	void initGhosts();
+	//void initGhosts();
+	void initActiveBoard();
 	void resetGhosts();
 	vector <ghost> ghosts;
+	int getMarioStartX() const { return startXMario; }
+	int getMarioStartY() const { return startYMario; }
+	int getMonkeX() const { return monkeX; }
+	int getMonkeY() const { return monkeY; }
 };
 

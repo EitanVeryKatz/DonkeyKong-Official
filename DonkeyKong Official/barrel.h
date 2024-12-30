@@ -1,7 +1,10 @@
 #pragma once
+#include <vector>
 #include "gameConfig.h"
 #include "iostream"
 #include "point.h"
+
+using std::vector;
 
 class boardGame;
 
@@ -10,8 +13,7 @@ class barrel
 	point position;
 	static constexpr int FIRST_FLOOR_Y = 6;
 	static constexpr char FLOOR_DIR_LEFT = '<';
-	static constexpr int startX_1 = 39, startY = 3, startX_2 = 42, LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3, STOP = 0;
-	int startX = rand() % 2 == 0 ? startX_1 : startX_2; // determine the start position of the barrel between the two possible positions
+	static constexpr int LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3, STOP = 0;
 	static constexpr char ICON = 'O';
 	bool active = true;
 	int lastFloorY = FIRST_FLOOR_Y;
@@ -22,7 +24,8 @@ class barrel
 	bool exploaded = false;
 	int fallCounter = 0;
 public:
-	barrel();
+	static vector<int> startingXPos;
+	void setBarrelPos(int x, int y) { position.setPoint(x, y); }
 	void draw_USING_POINT() { position.draw(ICON); }
 	void erase_USING_POINT() { position.erase(); }
 	void barrelFall_USING_POINT(); // handles barrel movement

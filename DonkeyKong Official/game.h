@@ -4,9 +4,9 @@
 #include "utils.h"
 #include "ghost.h"
 
+
 class game
 {
-
 	int lives = 3;
 	int activeBarrels = 0;
 	int maxBarrels;

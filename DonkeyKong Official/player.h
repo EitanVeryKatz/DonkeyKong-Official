@@ -7,7 +7,8 @@
 
 class player
 {
-	static constexpr int startX = 30, startY = firstFloorY - 1, STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2;
+	static constexpr int STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2;
+	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	static constexpr char iconArr[] = { '@' ,'a'};
@@ -21,7 +22,11 @@ class player
 	int fallCounter = 0;
 public:
 
-	player() : position(startX, startY) {}
+	player(int x, int y) : position(x, y)
+	{
+		startX = x;
+		startY = y;
+	}
 
 	void draw_USING_POINT() 
 	{

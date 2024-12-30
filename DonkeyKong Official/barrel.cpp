@@ -2,7 +2,8 @@
 #include "boardGame.h"
 #include "gameConfig.h"
 
-barrel::barrel() : position(startX, startY) {} // constructor of the barrel that calls the constructor of the point class
+vector<int> barrel::startingXPos = {};
+
 
 
 void barrel::barrelFall_USING_POINT()
@@ -210,3 +211,7 @@ void barrel::updateFallCount()
 		fallCounter = 0;
 	}
 }
+
+
+
+
