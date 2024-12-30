@@ -6,10 +6,46 @@
 boardGame::boardGame()
 {
     initFailChart();
-    getFloorCoordinates();
-    setNumOfGhosts();
-    initGhosts();
+    initActiveBoard();
 }
+
+void boardGame::initActiveBoard()
+{
+    ghosts.reserve(20);
+    char currChar = activeBoard[0][0];
+    for (int r = 0; r < BOARD_HEIGHT; r++)
+    {
+	    for (int c = 0; c < BOARD_WIDTH; c++)
+	    {
+            currChar = activeBoard[r][c];
+		    if (currChar == 'x')
+		    {
+                ghost temp;
+                temp.setGhostPosition(c, r);
+                ghosts.push_back(temp);
+                activeBoard[r][c] = ' ';
+		    }
+            else if (currChar == '@')
+		    {
+                startXMario = c;
+                startYMario = r;
+                activeBoard[r][c] = ' ';
+		    }
+            else if (currChar == '&')
+            {
+                monkeX = c;
+                monkeY = r;
+            }
+            else if (currChar == 'L')
+            {
+                Lx = c;
+                Ly = r;
+            }
+	    }
+    }
+    ghosts.shrink_to_fit();
+}
+
 void boardGame::initFailChart()
 {
     for (int r = 0; r < BOARD_HEIGHT; r++)
@@ -25,73 +61,50 @@ void boardGame::initFailChart()
 }
 
 
-void boardGame::getFloorCoordinates()
-{
-    floor temp;
-	bool isFloor = false;
-	floors_coord.reserve(20); // reserve 20 elements in the vector
-	for (int i = 0; i < BOARD_HEIGHT; i++) // iterate over the board
-    {
-        for (int j = 0; j < BOARD_WIDTH; j++)
-        {
-			if (boardLayout[i][j] == '=' || boardLayout[i][j] == '<' || boardLayout[i][j] == '>') // if the current character is a floor
-            {
-				if (!isFloor) // if the current character is the start of the floor
-                {
-					temp.startX = j; // set the start X of the floor
-					temp.y = i; // set the Y of the floor
-					isFloor = true; // set the isFloor flag to true
-                }
-				temp.endX = j; // set the end X of the floor each iteration of the floor
-                temp.lenOfFloor = temp.endX - temp.startX + 1;
-            }
-			else if (isFloor && (boardLayout[i][j] != '=' && boardLayout[i][j] != '<' && boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
-            {
-				floors_coord.push_back(temp); // push the floor to the vector
-				isFloor = false; // set the isFloor flag to false
-            }
-        }
-    }
-	floors_coord.shrink_to_fit(); // shrink the vector to fit the number of floors
-}
+//void boardGame::getFloorCoordinates()
+//{
+//    floor temp;
+//	bool isFloor = false;
+//	floors_coord.reserve(20); // reserve 20 elements in the vector
+//	for (int i = 0; i < BOARD_HEIGHT; i++) // iterate over the board
+//    {
+//        for (int j = 0; j < BOARD_WIDTH; j++)
+//        {
+//			if (boardLayout[i][j] == '=' || boardLayout[i][j] == '<' || boardLayout[i][j] == '>') // if the current character is a floor
+//            {
+//				if (!isFloor) // if the current character is the start of the floor
+//                {
+//					temp.startX = j; // set the start X of the floor
+//					temp.y = i; // set the Y of the floor
+//					isFloor = true; // set the isFloor flag to true
+//                }
+//				temp.endX = j; // set the end X of the floor each iteration of the floor
+//                temp.lenOfFloor = temp.endX - temp.startX + 1;
+//            }
+//			else if (isFloor && (boardLayout[i][j] != '=' && boardLayout[i][j] != '<' && boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
+//            {
+//				floors_coord.push_back(temp); // push the floor to the vector
+//				isFloor = false; // set the isFloor flag to false
+//            }
+//        }
+//    }
+//	floors_coord.shrink_to_fit(); // shrink the vector to fit the number of floors
+//}
 
-void boardGame::setNumOfGhosts()
-{
-    vector<floor>::iterator itr = floors_coord.begin();
-    vector<floor>::iterator itr_end = floors_coord.end();
-    for (; itr != itr_end; ++itr)
-    {
-        if (itr->lenOfFloor > 10)
-            itr->NumOfGhost = rand() % 3;
-        else if (itr->lenOfFloor <= 10 && itr->lenOfFloor > 8)
-            itr->NumOfGhost = rand() % 2;
-    }
-}
+//void boardGame::setNumOfGhosts()
+//{
+//    vector<floor>::iterator itr = floors_coord.begin();
+//    vector<floor>::iterator itr_end = floors_coord.end();
+//    for (; itr != itr_end; ++itr)
+//    {
+//        if (itr->lenOfFloor > 10)
+//            itr->NumOfGhost = rand() % 3;
+//        else if (itr->lenOfFloor <= 10 && itr->lenOfFloor > 8)
+//            itr->NumOfGhost = rand() % 2;
+//    }
+//}
 
-void boardGame::initGhosts()
-{
-    vector<floor>::iterator itr = floors_coord.begin(); // initialize iterator to the beginning of floors_coord
-    vector<floor>::iterator itr_end = floors_coord.end(); // initialize iterator to the end of floors_coord
-    ghosts.reserve(30); // reserve space for 30 ghosts in the ghosts vector
-    for (; itr != itr_end; ++itr) // iterate over each floor in floors_coord
-    {
-        vector<int> used_positions; // vector to keep track of used positions on the floor
-        for (int i = 0; i < itr->NumOfGhost; i++) // iterate for the number of ghosts on the current floor
-        {
-            ghost temp; // create a temporary ghost object
-            temp.setGameBoard(this); // set the game board for the ghost
-            int x; 
-            do
-            {
-              x = itr->startX + rand() % (itr->lenOfFloor); // generate a random x position within the floor's range
-            } while (std::find(used_positions.begin(), used_positions.end(), x) != used_positions.end()); // ensure the position is not already used
-            temp.setGhostPosition(x, (itr->y) - 1); // set the ghost's position
-            used_positions.push_back(x);
-            ghosts.push_back(temp); // add the ghost to the ghosts vector
-        }
-    }
-    ghosts.shrink_to_fit(); // shrink the ghosts vector to fit the number of ghosts
-}
+
 
 void boardGame::resetGhosts()
 {
@@ -122,8 +135,16 @@ void boardGame::newDrawBoard() const
 
 void boardGame::initBarrels()
 {
+    if (barrel::startingXPos.empty())
+    {
+        if (boardLayout[monkeX + 1][monkeY + 1] == ' ')
+            barrel::startingXPos.push_back(monkeX + 1);
+        if (boardLayout[monkeX - 1][monkeY+1] == ' ')
+            barrel::startingXPos.push_back(monkeX - 1);
+    }
 	for (int i = 0; i < BARRELS_NUM; i++)
 	{
+        barrels[i].setBarrelPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
 		barrels[i].setBoard_USING_POINT(this); // set the board of the barrel
 		barrels[i].erase_USING_POINT(); // erase the barrel
 		barrels[i].resetBarrel_USING_POINT(); // reset the barrel
