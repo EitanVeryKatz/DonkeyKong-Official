@@ -53,6 +53,7 @@ class boardGame
 	};
 	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH];
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
+	void readBoardFromFile(std::string fileName);
 	//vector <floor> floors_coord;
 	//void getFloorCoordinates();
 	//void setNumOfGhosts();

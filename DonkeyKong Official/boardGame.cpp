@@ -2,6 +2,8 @@
 #include <iostream>
 #include "ghost.h"
 #include <algorithm>
+#include <fstream>
+#include <string>
 
 boardGame::boardGame()
 {
@@ -114,6 +116,33 @@ void boardGame::resetGhosts()
     {
         itr->activate();
     }
+}
+
+void boardGame::readBoardFromFile(std::string fileName)
+{
+    std::ifstream boardFile(fileName);
+    if (!boardFile) // check if file open succesfully
+    {
+        system("cls");
+        std::cout << "ERROR: unable to open file";
+        // needs to add more error handling (should maybe return to menu)
+        return;
+    }
+    std::string line;
+    for (int r = 0; r < BOARD_HEIGHT; r++)
+    {
+	    if (std::getline(boardFile, line)) // read the line
+	    {
+            for (int c = 0; c < BOARD_WIDTH; c++)
+                activeBoard[r][c] = (c < line.length() ? line[c] : ' '); // if there are not enough chars in a line pad with space
+	    }
+        else // if there is no line put spaces
+        {
+            for (int c = 0; c < BOARD_WIDTH; c++)
+                activeBoard[r][c] = ' ';
+        }
+    }
+    boardFile.close();
 }
 
 void boardGame::newDrawBoard() const
