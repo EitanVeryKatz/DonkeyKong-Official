@@ -11,6 +11,7 @@ class boardGame;
 class barrel
 {
 	point position;
+	point startingPos;
 	static constexpr int FIRST_FLOOR_Y = 6;
 	static constexpr char FLOOR_DIR_LEFT = '<';
 	static constexpr int LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3, STOP = 0;
@@ -26,6 +27,7 @@ class barrel
 public:
 	static vector<int> startingXPos;
 	void setBarrelPos(int x, int y) { position.setPoint(x, y); }
+	void setStartPos(int x, int y) { startingPos.setPoint(x, y); }
 	void draw_USING_POINT() { position.draw(ICON); }
 	void erase_USING_POINT() { position.erase(); }
 	void barrelFall_USING_POINT(); // handles barrel movement

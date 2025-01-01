@@ -5,8 +5,9 @@
 #include <fstream>
 #include <string>
 
-boardGame::boardGame()
+boardGame::boardGame(const std::string& fileName)
 {
+	readBoardFromFile(fileName);
     initFailChart();
     initActiveBoard();
 }
@@ -14,21 +15,22 @@ boardGame::boardGame()
 void boardGame::initActiveBoard()
 {
     ghosts.reserve(20);
-    char currChar = activeBoard[0][0];
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
 	    for (int c = 0; c < BOARD_WIDTH; c++)
 	    {
-            currChar = activeBoard[r][c];
+            char currChar = activeBoard[r][c];
 		    if (currChar == 'x')
 		    {
                 ghost temp;
                 temp.setGhostPosition(c, r);
+				temp.setGameBoard(this);
                 ghosts.push_back(temp);
                 activeBoard[r][c] = ' ';
 		    }
-            else if (currChar == '@')
+            else if (currChar == '@' && checkPlayerPos(c, r))
 		    {
+				validPlayerPos = true;
                 startXMario = c;
                 startYMario = r;
                 activeBoard[r][c] = ' ';
@@ -63,51 +65,6 @@ void boardGame::initFailChart()
 }
 
 
-//void boardGame::getFloorCoordinates()
-//{
-//    floor temp;
-//	bool isFloor = false;
-//	floors_coord.reserve(20); // reserve 20 elements in the vector
-//	for (int i = 0; i < BOARD_HEIGHT; i++) // iterate over the board
-//    {
-//        for (int j = 0; j < BOARD_WIDTH; j++)
-//        {
-//			if (boardLayout[i][j] == '=' || boardLayout[i][j] == '<' || boardLayout[i][j] == '>') // if the current character is a floor
-//            {
-//				if (!isFloor) // if the current character is the start of the floor
-//                {
-//					temp.startX = j; // set the start X of the floor
-//					temp.y = i; // set the Y of the floor
-//					isFloor = true; // set the isFloor flag to true
-//                }
-//				temp.endX = j; // set the end X of the floor each iteration of the floor
-//                temp.lenOfFloor = temp.endX - temp.startX + 1;
-//            }
-//			else if (isFloor && (boardLayout[i][j] != '=' && boardLayout[i][j] != '<' && boardLayout[i][j] != '>')) // if the current character is not a floor and the previous character was a floor
-//            {
-//				floors_coord.push_back(temp); // push the floor to the vector
-//				isFloor = false; // set the isFloor flag to false
-//            }
-//        }
-//    }
-//	floors_coord.shrink_to_fit(); // shrink the vector to fit the number of floors
-//}
-
-//void boardGame::setNumOfGhosts()
-//{
-//    vector<floor>::iterator itr = floors_coord.begin();
-//    vector<floor>::iterator itr_end = floors_coord.end();
-//    for (; itr != itr_end; ++itr)
-//    {
-//        if (itr->lenOfFloor > 10)
-//            itr->NumOfGhost = rand() % 3;
-//        else if (itr->lenOfFloor <= 10 && itr->lenOfFloor > 8)
-//            itr->NumOfGhost = rand() % 2;
-//    }
-//}
-
-
-
 void boardGame::resetGhosts()
 {
     vector<ghost>::iterator itr = ghosts.begin(); // initialize iterator to the beginning of floors_coord
@@ -118,7 +75,14 @@ void boardGame::resetGhosts()
     }
 }
 
-void boardGame::readBoardFromFile(std::string fileName)
+bool boardGame::checkPlayerPos(int x, int y) const
+{
+	if (activeBoard[y + 1][x] == '=' || activeBoard[y + 1][x] == '>' || activeBoard[y + 1][x] == '<')
+		return true;
+	return false;
+}
+
+void boardGame::readBoardFromFile(const std::string &fileName)
 {
     std::ifstream boardFile(fileName);
     if (!boardFile) // check if file open succesfully
@@ -134,12 +98,23 @@ void boardGame::readBoardFromFile(std::string fileName)
 	    if (std::getline(boardFile, line)) // read the line
 	    {
             for (int c = 0; c < BOARD_WIDTH; c++)
-                activeBoard[r][c] = (c < line.length() ? line[c] : ' '); // if there are not enough chars in a line pad with space
+				if (c < line.length())
+					activeBoard[r][c] = line[c];
+				else // if the line is shorter than the board width
+					if (c == BOARD_WIDTH - 1)
+						activeBoard[r][c] = 'Q'; // set the last char to 'Q'
+					else
+						activeBoard[r][c] = ' '; // set the rest of the chars to ' '
 	    }
         else // if there is no line put spaces
         {
             for (int c = 0; c < BOARD_WIDTH; c++)
-                activeBoard[r][c] = ' ';
+				if (c == BOARD_WIDTH - 1)
+					activeBoard[r][c] = 'Q'; // set the last char to 'Q'
+				else if (r != BOARD_HEIGHT - 1)
+					activeBoard[r][c] = ' '; // set the rest of the chars to ' '
+				else if (r == BOARD_HEIGHT - 1 || r == 0) // if the last row or the first row
+					activeBoard[r][c] = 'Q'; // set the last row to 'Q'
         }
     }
     boardFile.close();
@@ -155,7 +130,7 @@ void boardGame::newDrawBoard() const
         {
             for (int j = 0; j < BOARD_WIDTH;j++)
             {
-                std::cout << boardLayout[i][j];
+                std::cout << activeBoard[i][j];
             }
 			if (i != BOARD_HEIGHT - 1)
                 std::cout << '\n';
@@ -166,14 +141,14 @@ void boardGame::initBarrels()
 {
     if (barrel::startingXPos.empty())
     {
-        if (boardLayout[monkeX + 1][monkeY + 1] == ' ')
+        if (activeBoard[monkeX + 1][monkeY + 1] == ' ')
             barrel::startingXPos.push_back(monkeX + 1);
-        if (boardLayout[monkeX - 1][monkeY+1] == ' ')
+        if (activeBoard[monkeX - 1][monkeY+1] == ' ')
             barrel::startingXPos.push_back(monkeX - 1);
     }
 	for (int i = 0; i < BARRELS_NUM; i++)
 	{
-        barrels[i].setBarrelPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
+        barrels[i].setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
 		barrels[i].setBoard_USING_POINT(this); // set the board of the barrel
 		barrels[i].erase_USING_POINT(); // erase the barrel
 		barrels[i].resetBarrel_USING_POINT(); // reset the barrel

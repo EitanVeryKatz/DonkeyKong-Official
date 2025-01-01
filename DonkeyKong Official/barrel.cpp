@@ -182,11 +182,9 @@ void barrel::clearBlast()
 
 void barrel::resetBarrel_USING_POINT()
 {
-	startX = rand() % 2 == 0 ? startX_1 : startX_2; // determine the start position of the barrel between the two possible positions
+	position.setPoint(startingPos.getX(), startingPos.getY()); // set the position of the barrel to the starting position
 	position.setDirFromArrayBarrel(STAY); // set the direction of the barrel to stay
-	position.setPoint(startX, startY); // set the position of the barrel to the start position
 	active = true; // set the barrel to active
-	lastFloorY = FIRST_FLOOR_Y; // set the last floor position to the first floor position
 	blastCenterX = 0; // set the center of the blast to 0
 	blastCenterY = 0; // set the center of the blast to 0
 	blastParticlesVisable = false; // set the blast particles to not visible

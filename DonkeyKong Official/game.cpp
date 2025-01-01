@@ -94,7 +94,15 @@ void game::displayMenu()
 
 void game::runGame()
 {
-	boardGame board; // create a board
+	boardGame board("board001.txt"); // create a board
+	if (!board.getValidity())
+	{
+		system("cls");
+		gotoxy(MessageX, MessageY);
+		std::cout << "player postion is invalid";
+		Sleep(breakTime);
+		return;
+	}
 	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
 	initGame(mario, board); // initialize the game
 	gameLoop(mario, board); // run the game loop
