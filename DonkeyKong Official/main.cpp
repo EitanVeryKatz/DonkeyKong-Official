@@ -2,6 +2,7 @@
 #include "game.h"
 int main()
 {
-	game();
+	game g;
+	g.displayMenu();
 	return 0;
 }

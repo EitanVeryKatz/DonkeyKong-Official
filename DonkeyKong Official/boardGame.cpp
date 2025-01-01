@@ -87,9 +87,7 @@ void boardGame::readBoardFromFile(const std::string &fileName)
     std::ifstream boardFile(fileName);
     if (!boardFile) // check if file open succesfully
     {
-        system("cls");
-        std::cout << "ERROR: unable to open file";
-        // needs to add more error handling (should maybe return to menu)
+	    succOpen = false;
         return;
     }
     std::string line;
@@ -117,6 +115,7 @@ void boardGame::readBoardFromFile(const std::string &fileName)
 					activeBoard[r][c] = 'Q'; // set the last row to 'Q'
         }
     }
+	succOpen = true;
     boardFile.close();
 }
 

@@ -10,10 +10,6 @@ constexpr int breakTime = 2000;
 constexpr int MessageX = 30, MessageY = 12;
 
 
-game::game()
-{
-	displayMenu();
-}
 
 void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
@@ -95,6 +91,14 @@ void game::displayMenu()
 void game::runGame()
 {
 	boardGame board("board001.txt"); // create a board
+	if (!board.getOpen())
+	{
+		system("cls");
+		gotoxy(MessageX, MessageY);
+		std::cout << "ERROR: unable to open file";
+		Sleep(breakTime);
+		return;
+	}
 	if (!board.getValidity())
 	{
 		system("cls");
@@ -231,10 +235,6 @@ void game::gameLoop(player& mario, boardGame& board)
 		std::cout << lives << std::endl;
 		mario.draw_USING_POINT(); // draw the player
 
-		//// testing
-		//if(ghost.isActive())
-		//	ghost.draw(); // draw the ghost
-		////
 
 		if(mario.isSwingingHammer())
 			mario.clearHammerSwing();
@@ -246,14 +246,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		iterationCounter++;
 		mario.checkHasHmmer();
 
-		//// testing
-		//if (ghost.isActive())
-		//{
-		//	ghost.moveGhost(); // move the ghost
-		//	
-		//} 
-		//ghost.erase(); // erase the ghost
-		////
+		
 
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed

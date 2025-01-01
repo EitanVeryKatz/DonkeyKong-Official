@@ -19,6 +19,7 @@ class boardGame
 	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH];
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
+	bool succOpen = false;
 public :
 	char getChar(int x, int y) { return activeBoard[y][x]; } // get the char of the board at the given coordinates
 	void newDrawBoard() const; // draw the board
@@ -38,5 +39,6 @@ public :
 	int getMonkeY() const { return monkeY; }
 	bool checkPlayerPos (int x, int y) const;
 	bool getValidity() const { return validPlayerPos; }
+	bool getOpen() const { return succOpen; }
 };
 
