@@ -91,7 +91,7 @@ void game::displayMenu()
 
 void game::runGame()
 {
-	boardGame board("board001.txt"); // create a board
+	boardGame board("board001.screen"); // create a board
 	board.setNewBoardFile(true); // flag that new file is loading
 	if (!board.getOpen())
 	{
