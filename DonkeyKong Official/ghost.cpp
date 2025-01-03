@@ -32,11 +32,12 @@ void ghost::moveGhost()
 	int newX = currX, newY = currY;
 	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
 
-
-	if (randChangeDir <= 5 || checkFloorEdge() || (ghostPosition.getChar(currX + 1, currY) == icon && ghostPosition.getDirX() == RIGHT) || (ghostPosition.getChar(currX - 1, currY) == icon && ghostPosition.getDirX() == LEFT)) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
+	int currDir = ghostPosition.getDirX();
+	if (randChangeDir <= 5 || checkFloorEdge() || (ghostPosition.getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (ghostPosition.getFailChart(currX - 1, currY) == icon && currDir == LEFT)) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
 		changeDirection();
+	currDir = ghostPosition.getDirX();
 
-	newX = currX + ghostPosition.getDirX(); // update the new X position
+	newX = currX + currDir; // update the new X position
 	ghostPosition.setFailChart(' '); // erase the ghost from the fail chart	
 	ghostPosition.setPoint(newX, newY); // update the position of the ghost
 	if (hammerHit())

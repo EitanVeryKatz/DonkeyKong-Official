@@ -14,6 +14,9 @@ boardGame::boardGame(const std::string& fileName)
 
 void boardGame::initActiveBoard()
 {
+    if (newBoardFile)
+        ghosts.clear(); // clear the ghosts vector when new file is loaded
+
     ghosts.reserve(20);
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
@@ -85,6 +88,7 @@ bool boardGame::checkPlayerPos(int x, int y) const
 void boardGame::readBoardFromFile(const std::string &fileName)
 {
     std::ifstream boardFile(fileName);
+
     if (!boardFile) // check if file open succesfully
     {
 	    succOpen = false;
