@@ -143,9 +143,9 @@ void boardGame::initBarrels()
     {
 		barrel::startingXPos.clear(); // when new file is loaded clear the previous starting x positions
 
-        if (activeBoard[monkeX + 1][monkeY + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+        if (activeBoard[monkeY + 1][monkeX + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX + 1);
-        if (activeBoard[monkeX - 1][monkeY+1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+        if (activeBoard[monkeY - 1][monkeX + 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX - 1);
     }
 	for (auto& b : barrels)

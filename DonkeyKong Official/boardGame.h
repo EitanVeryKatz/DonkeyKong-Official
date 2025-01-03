@@ -16,7 +16,7 @@ class boardGame
 	int Lx, Ly;
 	barrel barrels[BARRELS_NUM];
 	bool validPlayerPos = false;;
-	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH];
+	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH] = {};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
 	bool succOpen = false;
