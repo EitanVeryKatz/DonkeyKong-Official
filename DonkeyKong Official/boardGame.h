@@ -20,6 +20,8 @@ class boardGame
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
 	bool succOpen = false;
+	bool newBoardFile = false;
+	vector <ghost> ghosts;
 public :
 	char getChar(int x, int y) { return activeBoard[y][x]; } // get the char of the board at the given coordinates
 	void newDrawBoard() const; // draw the board
@@ -29,10 +31,8 @@ public :
 	void initBarrels(); // initialize the barrels
 	void initFailChart(); // initialize the fail chart
 	boardGame(const std::string& fileName);
-	//void initGhosts();
 	void initActiveBoard();
 	void resetGhosts();
-	vector <ghost> ghosts;
 	int getMarioStartX() const { return startXMario; }
 	int getMarioStartY() const { return startYMario; }
 	int getMonkeX() const { return monkeX; }
@@ -40,5 +40,10 @@ public :
 	bool checkPlayerPos (int x, int y) const;
 	bool getValidity() const { return validPlayerPos; }
 	bool getOpen() const { return succOpen; }
+	bool getNewBoardFile() const { return newBoardFile; }
+	void setNewBoardFile(bool b) { newBoardFile = b; }
+	
+	vector<ghost>::iterator getGhostsBegin() { return ghosts.begin(); }
+	vector<ghost>::iterator getGhostsEnd() { return ghosts.end(); }
 };
 

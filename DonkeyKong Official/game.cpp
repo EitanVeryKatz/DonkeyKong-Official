@@ -66,6 +66,7 @@ void game::displayMenu()
 				setDifficulty(); // set the diffculty
 				runGame(); // run the game
 				resetLives(); // reset the number of lives after the game ends
+				
 				printMenu(); // print the menu
             }
 			else if (key == '8')
@@ -91,6 +92,7 @@ void game::displayMenu()
 void game::runGame()
 {
 	boardGame board("board001.txt"); // create a board
+	board.setNewBoardFile(true); // flag that new file is loading
 	if (!board.getOpen())
 	{
 		system("cls");
@@ -110,6 +112,7 @@ void game::runGame()
 	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
 	initGame(mario, board); // initialize the game
 	gameLoop(mario, board); // run the game loop
+	board.setNewBoardFile(false); // when finished the game set the flag to false
 }
 
 
@@ -204,9 +207,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 
 void game::updateGhosts(boardGame& board)
 {
-	vector<ghost>::iterator itr = board.ghosts.begin();
-	vector<ghost>::iterator itr_end = board.ghosts.end();
-	for (; itr != itr_end; itr++)
+	for (std::vector<ghost>::iterator itr = board.getGhostsBegin(); itr != board.getGhostsEnd(); ++itr)
 	{
 		if (itr->isActive())
 		{	

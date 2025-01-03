@@ -117,6 +117,7 @@ void boardGame::readBoardFromFile(const std::string &fileName)
     }
 	succOpen = true;
     boardFile.close();
+	newBoardFile = true;
 }
 
 void boardGame::newDrawBoard() const
@@ -138,19 +139,21 @@ void boardGame::newDrawBoard() const
 
 void boardGame::initBarrels()
 {
-    if (barrel::startingXPos.empty())
+    if (newBoardFile)
     {
-        if (activeBoard[monkeX + 1][monkeY + 1] == ' ')
+		barrel::startingXPos.clear(); // when new file is loaded clear the previous starting x positions
+
+        if (activeBoard[monkeX + 1][monkeY + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX + 1);
-        if (activeBoard[monkeX - 1][monkeY+1] == ' ')
+        if (activeBoard[monkeX - 1][monkeY+1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX - 1);
     }
-	for (int i = 0; i < BARRELS_NUM; i++)
+	for (auto& b : barrels)
 	{
-        barrels[i].setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
-		barrels[i].setBoard_USING_POINT(this); // set the board of the barrel
-		barrels[i].erase_USING_POINT(); // erase the barrel
-		barrels[i].resetBarrel_USING_POINT(); // reset the barrel
+		b.setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
+		b.setBoard_USING_POINT(this); // set the board of the barrel
+		b.erase_USING_POINT(); // erase the barrel
+		b.resetBarrel_USING_POINT(); // reset the barrel
 	}
 }
 
