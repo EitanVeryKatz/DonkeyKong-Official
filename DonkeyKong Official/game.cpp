@@ -3,7 +3,10 @@
 #include <windows.h>
 #include <conio.h>
 #include "gameConfig.h"
+#include <filesystem>
+#include <__msvc_filebuf.hpp>
 
+using std::string;
 
 constexpr int ESC = 27;
 constexpr int breakTime = 2000;
@@ -63,10 +66,14 @@ void game::displayMenu()
 			char key = _getch(); // get the key
 			if (key == '1') // if the user pressed '1'
             {
-				setDifficulty(); // set the diffculty
-				runGame(); // run the game
+				string fileName;
+				printAndChooseBoard(fileName); // print the board options
+				if (fileChosen)
+				{
+					setDifficulty(); // set the diffculty
+					runGame(fileName); // run the game
+				}
 				resetLives(); // reset the number of lives after the game ends
-				
 				printMenu(); // print the menu
             }
 			else if (key == '8')
@@ -89,9 +96,9 @@ void game::displayMenu()
 	}
 }
 
-void game::runGame()
+void game::runGame(const std::string& fileName)
 {
-	boardGame board("board001.screen"); // create a board
+	boardGame board(fileName); // create a board
 	board.setNewBoardFile(true); // flag that new file is loading
 	if (!board.getOpen())
 	{
@@ -262,8 +269,6 @@ void game::gameLoop(player& mario, boardGame& board)
 	}
 }
 
-
-
 void game::pauseGame()
 {
 	const int messageX = 2;
@@ -291,8 +296,8 @@ void game::pauseGame()
 void game::setDifficulty()
 {
 	system("cls");
-	int centerX = 27; // Assuming the console width is 80
-	int centerY = 11; // Assuming the console height is 25
+	int centerX = 27; 
+	int centerY = 11; 
 	gotoxy(centerX, centerY - 2);
 	std::cout << "Chose the difficulty level:" << std::endl;
 	gotoxy(centerX, centerY);
@@ -327,6 +332,54 @@ void game::setDifficulty()
 	}
 }
 
+void game::getAllBoardFiles()
+{
+	namespace fs = std::filesystem;
+	for (const auto& entry : fs::directory_iterator(fs::current_path()))
+	{
+		auto fileName = entry.path().filename();
+		auto fileNameStr = fileName.string();
+		if (fileNameStr.substr(0,5) == "board" && fileName.extension() == ".screen")
+		{
+			boardFileNames.push_back(fileNameStr);
+		}
+	}
+}
+
+void game::printAndChooseBoard(string& fileName)
+{
+	system("cls");
+	if (!boardFileNames.empty())
+	{
+		std::cout << "choose a board from the list below:" << std::endl;
+		std::cout << "\n";
+		for (int i = 1; i <= boardFileNames.size(); ++i)
+		{
+			std::cout << i << ")" << " " << boardFileNames[i - 1] << std::endl;
+		}
+		std::cout << "\n";
+		std::cout << "Press ESC to return to the menu" << std::endl;
+		while (true)
+		{
+			if (_kbhit())
+			{
+				char key = _getch();
+				if (key >= '1' && key <= '9')
+				{
+					fileName = boardFileNames[key - '1'];
+					fileChosen = true;
+					return;
+				}
+				else if (key == ESC)
+				{	
+					fileChosen = false;
+					return;
+				}
+			}
+		}
+	}
+	std::cout << "No board files found" << std::endl;
+}
 
 
 

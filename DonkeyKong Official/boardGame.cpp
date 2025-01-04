@@ -149,7 +149,7 @@ void boardGame::initBarrels()
 
         if (activeBoard[monkeY + 1][monkeX + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX + 1);
-        if (activeBoard[monkeY - 1][monkeX + 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+        if (activeBoard[monkeY + 1][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX - 1);
     }
 	for (auto& b : barrels)

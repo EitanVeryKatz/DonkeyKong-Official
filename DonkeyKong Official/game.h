@@ -3,6 +3,8 @@
 #include "boardGame.h"
 #include "utils.h"
 #include "ghost.h"
+#include <vector>
+#include <string>
 
 
 class game
@@ -20,9 +22,14 @@ class game
 	void fail(player& mario, bool &running, boardGame& board, int & barrelCounter, int &iterationCounter); // Handle player fail
 	void win(player& mario, bool& running, boardGame& board); // Handle player win
 	bool firstGame = true;
-public:
+	std::vector<std::string> boardFileNames;
+	void getAllBoardFiles();
+	void runGame(const std::string& fileName); // Run the game
 	void pauseGame(); // Pause the game
+	void printAndChooseBoard(std::string& fileName);
+	bool fileChosen = false;
+public:
 	void displayMenu(); // Display the game menu
-	void runGame(); // Run the game
+	game() { getAllBoardFiles(); }
 };
 
