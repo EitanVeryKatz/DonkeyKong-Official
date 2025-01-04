@@ -12,12 +12,10 @@ class barrel
 {
 	point position;
 	point startingPos;
-	static constexpr int FIRST_FLOOR_Y = 6;
 	static constexpr char FLOOR_DIR_LEFT = '<';
 	static constexpr int LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3, STOP = 0;
 	static constexpr char ICON = 'O';
 	bool active = true;
-	int lastFloorY = FIRST_FLOOR_Y;
 	int blastCenterX = 0;
 	int blastCenterY = 0;
 	bool blastParticlesVisable = false;

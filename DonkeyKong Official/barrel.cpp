@@ -54,7 +54,6 @@ void barrel:: updateBlowCounter() {
 
 void barrel::handleOnFloor(int currX, int currY, int &newX, int &newY, char &dirChar)
 {
-	lastFloorY = currY; // update the last floor position
 	position.setDirY(STOP); // set the Y direction of the barrel to 0
     dirChar = position.getChar(currX, currY + 1); // get the char of the floor
     if (dirChar == FLOOR_DIR_LEFT) // if the floor direction is left set the direction of the barrel to left
