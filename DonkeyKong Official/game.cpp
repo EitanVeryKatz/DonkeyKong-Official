@@ -71,9 +71,15 @@ void game::displayMenu()
 				if (fileChosen)
 				{
 					setDifficulty(); // set the diffculty
-					runGame(fileName); // run the game
+					for (int i = firstScreen; i <= boardFileNames.size(); i++) {
+						runGame(boardFileNames[i]); // run the game
+						resetLives();
+						updateScore(1000);
+					}
+					
 				}
 				resetLives(); // reset the number of lives after the game ends
+				resetScore();
 				printMenu(); // print the menu
             }
 			else if (key == '8')
@@ -163,14 +169,13 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		{
 			pBarrel.erase_USING_POINT(); // erase the barrel
 			pBarrel.barrelFall_USING_POINT(); // make the barrel fall
-			if (pBarrel.isActive())
-				if (pBarrel.checkSmash()) {
-					pBarrel.deactivateBarrel();
-					activeBarrels--;
+			if (pBarrel.isActive()) {
+				pBarrel.draw_USING_POINT(); // draw the barrel
+				if (pBarrel.wasSmashed()) {
+					updateScore(100);
+					pBarrel.resetSmash();
 				}
-				else {
-					pBarrel.draw_USING_POINT(); // draw the barrel
-				}
+			}
 			else
 				activeBarrels--; // decrement the number of active barrels
 		}
@@ -220,27 +225,28 @@ void game::updateGhosts(boardGame& board)
 		{	
 			itr->erase();
 			itr->moveGhost();
+			if (itr->isSmashed()) {
+				updateScore(150);
+				itr->resetSmashed();
+			}
 			itr->draw();
 		}
-		else
-			itr->erase();
 	}
 }
 
 
 void game::gameLoop(player& mario, boardGame& board)
 {
-	ghost ghost; // create a ghost
-	ghost.setGhostPosition(15, firstFloorY - 1); // set the ghost position
-	ghost.setGameBoard(&board); // set the board of the ghost
-	const int livesX = 9, livesY = 2;
+	
 	bool running = true;
 	int barrelCounter = 0; 
 	int iterationCounter = 0;
 	while (running) // main game loop
 	{
-		gotoxy(livesX, livesY);
-		std::cout << lives << std::endl;
+		gotoxy(board.getLx(), board.getLy());
+		std::cout << "Lives: " << lives << std::endl;
+		gotoxy(board.getLx(), board.getLy()+1);
+		std::cout << "Score: " << score << std::endl;
 		mario.draw_USING_POINT(); // draw the player
 
 
@@ -284,8 +290,7 @@ void game::pauseGame()
 			{
 				gotoxy(messageX, messageY); 
 				std::cout << "                              " << std::endl; // clear the message
-				gotoxy(messageX + 1, messageY);
-				std::cout << "Lives:";
+				
 				break;
 			}
 		}
@@ -366,6 +371,7 @@ void game::printAndChooseBoard(string& fileName)
 				char key = _getch();
 				if (key >= '1' && key <= '9')
 				{
+					setfirstScreen(key - '1');
 					fileName = boardFileNames[key - '1'];
 					fileChosen = true;
 					return;
@@ -381,6 +387,8 @@ void game::printAndChooseBoard(string& fileName)
 	std::cout << "No board files found" << std::endl;
 }
 
-
+void game::updateScore(int points) {
+	score += points;
+}
 
 

@@ -208,6 +208,9 @@
   <ItemGroup>
     <ResourceCompile Include="DonkeyKong Official.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="board002.screen" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

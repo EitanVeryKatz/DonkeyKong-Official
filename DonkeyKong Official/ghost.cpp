@@ -43,6 +43,7 @@ void ghost::moveGhost()
 	if (hammerHit())
 	{
 		active = false;
+		smashed = true;
 		ghostPosition.setFailChart(' ');
 	}
 	else

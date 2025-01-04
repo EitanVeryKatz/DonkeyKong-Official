@@ -89,6 +89,7 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
     else {
         position.setFailChart(' ');
         deactivateBarrel();
+        smashed = true;
     }
 
 

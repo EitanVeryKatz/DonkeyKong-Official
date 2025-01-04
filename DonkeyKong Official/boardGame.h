@@ -37,11 +37,14 @@ public :
 	int getMarioStartY() const { return startYMario; }
 	int getMonkeX() const { return monkeX; }
 	int getMonkeY() const { return monkeY; }
+	int getLx() const { return Lx; }
+	int getLy() const { return Ly; }
 	bool checkPlayerPos (int x, int y) const;
 	bool getValidity() const { return validPlayerPos; }
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }
+	
 	
 	vector<ghost>::iterator getGhostsBegin() { return ghosts.begin(); }
 	vector<ghost>::iterator getGhostsEnd() { return ghosts.end(); }

@@ -22,6 +22,7 @@ class barrel
 	int blastCounter = 0;
 	bool exploaded = false;
 	int fallCounter = 0;
+	bool smashed = false;
 public:
 	static vector<int> startingXPos;
 	void setBarrelPos(int x, int y) { position.setPoint(x, y); }
@@ -44,6 +45,8 @@ public:
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel_USING_POINT();
 	bool checkSmash();
+	void resetSmash() { smashed = false;}
+	bool wasSmashed() {return smashed;}
 	void updateFallCount();
 };
 

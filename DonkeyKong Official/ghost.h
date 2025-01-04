@@ -6,6 +6,7 @@ class ghost
 	static constexpr char icon = 'x';
 	point ghostPosition;
 	bool active = true;
+	bool smashed = false;
 public:
 	ghost();
 	void draw()
@@ -20,6 +21,8 @@ public:
 	{
 		ghostPosition.setPoint(x, y);
 	}
+	bool isSmashed() { return smashed; }
+	void resetSmashed() { smashed = false; }
 	bool checkFloorEdge();
 	void changeDirection();
 	void moveGhost();

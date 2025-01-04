@@ -45,7 +45,7 @@ public:
 		fallCounter = 0;
 		position.setPoint(startX, startY);
 		position.setDirFromArrayPlayer(STAY);
-		hasHammer = false;
+		hasHammer = true;
 		midswing = 0;
 		setHammerLocation();
 	}
