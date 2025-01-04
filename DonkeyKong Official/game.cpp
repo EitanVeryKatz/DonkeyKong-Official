@@ -23,6 +23,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 		{
 			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			running = false; // end the game
+			lost = true;
 			system("cls"); // clear the screen
 			printFailMessage(); // display the fail message
 			playFailSong();
@@ -71,7 +72,8 @@ void game::displayMenu()
 				if (fileChosen)
 				{
 					setDifficulty(); // set the diffculty
-					for (int i = firstScreen; i <= boardFileNames.size(); i++) {
+					lost = false;
+					for (int i = firstScreen;!lost&& i < boardFileNames.size(); i++) {
 						runGame(boardFileNames[i]); // run the game
 						resetLives();
 						updateScore(1000);
@@ -248,7 +250,11 @@ void game::gameLoop(player& mario, boardGame& board)
 		gotoxy(board.getLx(), board.getLy()+1);
 		std::cout << "Score: " << score << std::endl;
 		mario.draw_USING_POINT(); // draw the player
-
+		
+		if (!mario.doeshasHammer()) {
+			gotoxy(mario.getHammerX(), mario.getHammerY());
+			std::cout << 'p';
+		}
 
 		if(mario.isSwingingHammer())
 			mario.clearHammerSwing();

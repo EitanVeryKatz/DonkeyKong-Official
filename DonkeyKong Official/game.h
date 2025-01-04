@@ -14,6 +14,7 @@ class game
 	int activeBarrels = 0;
 	int maxBarrels;
 	int firstScreen = 0;
+	bool lost = false;
 	void setfirstScreen(int index) { firstScreen = index; }
 	void updateScore(int points);
 	void initGame(player& mario, boardGame& board); // Initialize the game

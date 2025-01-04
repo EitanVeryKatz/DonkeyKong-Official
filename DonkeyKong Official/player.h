@@ -45,7 +45,7 @@ public:
 		fallCounter = 0;
 		position.setPoint(startX, startY);
 		position.setDirFromArrayPlayer(STAY);
-		hasHammer = true;
+		hasHammer = false;
 		midswing = 0;
 		setHammerLocation();
 	}
@@ -64,7 +64,10 @@ public:
 	bool checkFail(); // Check if player failed
 	bool checkWin(); // Check if player won
 	bool isFalling(); // Check if player is falling
+	int getHammerY() { return hammerLocation.getY(); }
+	int getHammerX() { return hammerLocation.getX(); }
 	void setHammerLocation();
+	bool doeshasHammer() { return hasHammer; }
 	void drawHammer()
 	{
 		hammerLocation.draw(hammerIcon);
