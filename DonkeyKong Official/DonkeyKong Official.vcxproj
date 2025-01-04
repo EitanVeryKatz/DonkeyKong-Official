@@ -210,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="board002.screen" />
+    <None Include="board003.screen" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
