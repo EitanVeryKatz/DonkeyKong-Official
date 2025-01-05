@@ -82,7 +82,7 @@ void game::displayMenu()
 					for (int i = 0; !singleGame && !lost && i < boardFileNames.size(); i++) // if the user chose to play all the boards play all boards
 					{
 						runGame(boardFileNames[i]); // run the game
-						resetLives();
+						
 						// TODO : maybe start with 5 lives and not reset lives between games
 						level++;
 						updateScore(1000);

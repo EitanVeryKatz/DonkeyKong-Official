@@ -175,7 +175,7 @@ void player::setHammerLocation() {
 		hammerLocation.setX(rand() % BOARD_WIDTH - 1); //79
 		hammerLocation.setY(rand() % BOARD_HEIGHT - 1); //24
 	} 
-	while (hammerLocation.getChar() != ' ');
+	while (!hammerLocation.isOnFloor()|| hammerLocation.getChar() != ' ');
 }
 
 

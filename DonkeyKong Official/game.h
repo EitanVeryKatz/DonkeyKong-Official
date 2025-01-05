@@ -9,7 +9,7 @@
 
 class game
 {
-	int lives = 3;
+	int lives = 100;
 	int score = 0;
 	int activeBarrels = 0;
 	int maxBarrels;
