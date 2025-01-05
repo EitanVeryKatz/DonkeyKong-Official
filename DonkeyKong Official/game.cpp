@@ -48,12 +48,15 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 void game::win(player& mario, bool& running, boardGame& board)
 {
 	running = false; // end the game
-	system("cls"); // clear the screen
-	gotoxy(MessageX, MessageY);
-	printWinningMessage(); // display the winning message
-	playWinningSong();
-	Sleep(breakTime);
-	system("cls"); // clear the screen
+	if (level == boardFileNames.size() || singleGame)
+	{
+		system("cls"); // clear the screen
+		gotoxy(MessageX, MessageY);
+		printWinningMessage(); // display the winning message
+		playWinningSong();
+		Sleep(breakTime);
+		system("cls"); // clear the screen
+	}
 }
 
 void game::displayMenu()
@@ -66,24 +69,33 @@ void game::displayMenu()
         {
 			char key = _getch(); // get the key
 			if (key == '1') // if the user pressed '1'
-            {
+			{
 				string fileName;
 				printAndChooseBoard(fileName); // print the board options
 				if (fileChosen)
 				{
 					setDifficulty(); // set the diffculty
 					lost = false;
-					for (int i = firstScreen;!lost&& i < boardFileNames.size(); i++) {
+					for (int i = 0; !singleGame && !lost && i < boardFileNames.size(); i++) // if the user chose to play all the boards play all boards
+					{
 						runGame(boardFileNames[i]); // run the game
 						resetLives();
+						// TODO : maybe start with 5 lives and not reset lives between games
+						level++;
 						updateScore(1000);
 					}
-					
+					if (singleGame)
+					{
+						runGame(fileName); // run the game
+						if (!lost)
+							updateScore(1000);
+					}
 				}
 				resetLives(); // reset the number of lives after the game ends
 				resetScore();
+				level = 1;
 				printMenu(); // print the menu
-            }
+			}
 			else if (key == '8')
 			{
 				system("cls");
@@ -96,9 +108,11 @@ void game::displayMenu()
 			{
 				system("cls");
 				printGoodbyeMessage(); // print the goodbye message
-				Sleep(breakTime); 
+				Sleep(breakTime);
 				break; // exit the loop
 			}
+			else if (key == '2')
+				debug = !debug;
         }
 		 Sleep(100);
 	}
@@ -119,8 +133,11 @@ void game::runGame(const std::string& fileName)
 	if (!board.getValidity())
 	{
 		system("cls");
-		gotoxy(MessageX, MessageY);
-		std::cout << "player postion is invalid";
+		gotoxy(MessageX - 20, MessageY);
+		if (level != boardFileNames.size() && !singleGame)
+			std::cout << "One or more objects on board are invallid trying next board!";
+		else
+			std::cout << "One or more objects on board are invallid! returning to menu";
 		Sleep(breakTime);
 		return;
 	}
@@ -267,8 +284,8 @@ void game::gameLoop(player& mario, boardGame& board)
 		mario.checkHasHmmer();
 
 		
-
-		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
+		if (!debug)
+			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
 			break;
 		if (mario.checkWin()) // if the player won
@@ -276,7 +293,8 @@ void game::gameLoop(player& mario, boardGame& board)
 		mario.erase_USING_POINT(); // erase the player
 		mario.moveInBoard_USING_POINT(); // move the player
 		mario.draw_USING_POINT(); // draw the player
-		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
+		if (!debug)
+			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
 		std::fflush(stdin); // clear the input buffer
 	}
 }
@@ -354,6 +372,8 @@ void game::getAllBoardFiles()
 		{
 			boardFileNames.push_back(fileNameStr);
 		}
+		boardFileNames.shrink_to_fit();
+		std::sort(boardFileNames.begin(), boardFileNames.end());
 	}
 }
 
@@ -364,10 +384,12 @@ void game::printAndChooseBoard(string& fileName)
 	{
 		std::cout << "choose a board from the list below:" << std::endl;
 		std::cout << "\n";
-		for (int i = 1; i <= boardFileNames.size(); ++i)
+		int i;
+		for (i = 1; i <= boardFileNames.size(); ++i)
 		{
 			std::cout << i << ")" << " " << boardFileNames[i - 1] << std::endl;
 		}
+		std::cout << i <<')'<< " play all boards in order";
 		std::cout << "\n";
 		std::cout << "Press ESC to return to the menu" << std::endl;
 		while (true)
@@ -375,14 +397,21 @@ void game::printAndChooseBoard(string& fileName)
 			if (_kbhit())
 			{
 				char key = _getch();
-				if (key >= '1' && key <= '9')
+				if (key >= '1' && key <= '9' && key - '1' < boardFileNames.size())
 				{
-					setfirstScreen(key - '1');
 					fileName = boardFileNames[key - '1'];
 					fileChosen = true;
+					singleGame = true;
 					return;
 				}
-				else if (key == ESC)
+				int check = i + '0';
+				if (key == i + '0')
+				{
+					fileChosen = true;
+					singleGame = false;
+					return;
+				}
+				if (key == ESC)
 				{	
 					fileChosen = false;
 					return;

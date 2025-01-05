@@ -15,7 +15,10 @@ class game
 	int maxBarrels;
 	int firstScreen = 0;
 	bool lost = false;
-	void setfirstScreen(int index) { firstScreen = index; }
+	bool singleGame = false;
+	int level = 1;
+	bool debug = false;
+	//void setfirstScreen(int index) { firstScreen = index; }
 	void updateScore(int points);
 	void initGame(player& mario, boardGame& board); // Initialize the game
 	void handleInput(player& mario); // Handle user input

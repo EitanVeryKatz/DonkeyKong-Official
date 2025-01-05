@@ -15,7 +15,9 @@ class boardGame
 	int monkeX, monkeY;
 	int Lx, Ly;
 	barrel barrels[BARRELS_NUM];
-	bool validPlayerPos = false;;
+	bool validPlayerPos = false;
+	bool validMonkeyPos = false;
+	bool validPrincessPos = false;
 	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH] = {};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
@@ -39,8 +41,8 @@ public :
 	int getMonkeY() const { return monkeY; }
 	int getLx() const { return Lx; }
 	int getLy() const { return Ly; }
-	bool checkPlayerPos (int x, int y) const;
-	bool getValidity() const { return validPlayerPos; }
+	bool checkOnFloor (int x, int y) const;
+	bool getValidity() const { return (validPlayerPos && validMonkeyPos && validPrincessPos); }
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }

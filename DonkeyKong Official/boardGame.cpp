@@ -23,23 +23,24 @@ void boardGame::initActiveBoard()
 	    for (int c = 0; c < BOARD_WIDTH; c++)
 	    {
             char currChar = activeBoard[r][c];
-		    if (currChar == 'x')
-		    {
+            if (currChar == 'x' && checkOnFloor(c, r))
+            {
                 ghost temp;
                 temp.setGhostPosition(c, r);
-				temp.setGameBoard(this);
+                temp.setGameBoard(this);
                 ghosts.push_back(temp);
                 activeBoard[r][c] = ' ';
-		    }
-            else if (currChar == '@' && checkPlayerPos(c, r))
-		    {
-				validPlayerPos = true;
+            }
+            else if (currChar == '@' && checkOnFloor(c, r))
+            {
+                validPlayerPos = true;
                 startXMario = c;
                 startYMario = r;
                 activeBoard[r][c] = ' ';
-		    }
-            else if (currChar == '&')
+            }
+            else if (currChar == '&' && checkOnFloor(c, r))
             {
+                validMonkeyPos = true;
                 monkeX = c;
                 monkeY = r;
             }
@@ -48,6 +49,8 @@ void boardGame::initActiveBoard()
                 Lx = c;
                 Ly = r;
             }
+            else if (currChar == '$' && checkOnFloor(c, r))
+				validPrincessPos = true;
 	    }
     }
     ghosts.shrink_to_fit();
@@ -78,7 +81,7 @@ void boardGame::resetGhosts()
     }
 }
 
-bool boardGame::checkPlayerPos(int x, int y) const
+bool boardGame::checkOnFloor(int x, int y) const
 {
 	if (activeBoard[y + 1][x] == '=' || activeBoard[y + 1][x] == '>' || activeBoard[y + 1][x] == '<')
 		return true;
