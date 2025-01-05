@@ -38,7 +38,7 @@ void boardGame::initActiveBoard()
                 startYMario = r;
                 activeBoard[r][c] = ' ';
             }
-            else if (currChar == '&' && checkOnFloor(c, r))
+            else if (currChar == '&')
             {
                 validMonkeyPos = true;
                 monkeX = c;

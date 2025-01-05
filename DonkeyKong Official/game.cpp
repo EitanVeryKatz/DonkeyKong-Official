@@ -321,7 +321,7 @@ void game::pauseGame()
 			{
 				gotoxy(messageX, messageY); 
 				std::cout << "                              " << std::endl; // clear the message
-				
+				needToDraw = true;
 				break;
 			}
 		}
