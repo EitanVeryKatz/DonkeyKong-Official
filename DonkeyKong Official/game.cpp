@@ -29,6 +29,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
+			needToDraw = true;
 			return;
 		}
 		else // if there are more lives
@@ -40,6 +41,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 			Sleep(breakTime);
 			barrelCounter = 0, iterationCounter = 0;
+			needToDraw = true;
 			initGame(mario, board); // initialize the game
 		}
 	}
@@ -48,6 +50,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 void game::win(player& mario, bool& running, boardGame& board)
 {
 	running = false; // end the game
+	needToDraw = true;
 	if (level == boardFileNames.size() || singleGame)
 	{
 		system("cls"); // clear the screen
@@ -256,18 +259,22 @@ void game::updateGhosts(boardGame& board)
 
 void game::gameLoop(player& mario, boardGame& board)
 {
-	
 	bool running = true;
 	int barrelCounter = 0; 
 	int iterationCounter = 0;
+	int legendX = board.getLx(), legendY = board.getLy();
 	while (running) // main game loop
 	{
-		gotoxy(board.getLx(), board.getLy());
-		std::cout << "Lives: " << lives << std::endl;
-		gotoxy(board.getLx(), board.getLy()+1);
-		std::cout << "Score: " << score << std::endl;
+		if (needToDraw)
+		{
+			gotoxy(legendX, legendY);
+			std::cout << "Lives: " << lives << std::endl;
+			gotoxy(legendX, legendY + 1);
+			std::cout << "Score: " << score << std::endl;
+			needToDraw = false;
+		}
+
 		mario.draw_USING_POINT(); // draw the player
-		
 		if (!mario.doeshasHammer()) {
 			gotoxy(mario.getHammerX(), mario.getHammerY());
 			std::cout << 'p';

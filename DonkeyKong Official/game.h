@@ -18,6 +18,7 @@ class game
 	bool singleGame = false;
 	int level = 1;
 	bool debug = false;
+	bool needToDraw = true;
 	//void setfirstScreen(int index) { firstScreen = index; }
 	void updateScore(int points);
 	void initGame(player& mario, boardGame& board); // Initialize the game

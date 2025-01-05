@@ -129,9 +129,6 @@ void boardGame::readBoardFromFile(const std::string &fileName)
 
 void boardGame::newDrawBoard() const
 {
-        const int livesX = 2, livesY = 2;
-        gotoxy(livesX, livesY);
-        std::cout << "Lives: " << std::endl;
         gotoxy(0, 0);
         for (int i = 0; i < BOARD_HEIGHT;i++)
         {
