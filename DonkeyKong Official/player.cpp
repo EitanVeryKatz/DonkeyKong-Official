@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-void player::keyPressed_USING_POINT(char key)
+void player::keyPressed(char key)
 {
 	if (position.isOnFloor() && !position.isOnLadder() && tolower(key) == 'w') {
 		midjump++;
@@ -37,7 +37,7 @@ void player::keyPressed_USING_POINT(char key)
 	}
 }
 
-void player::moveInBoard_USING_POINT()
+void player::moveInBoard()
 {
 	int currX = position.getX();
 	int currY = position.getY();

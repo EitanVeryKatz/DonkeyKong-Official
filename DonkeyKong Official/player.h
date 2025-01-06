@@ -28,12 +28,12 @@ public:
 		startY = y;
 	}
 
-	void draw_USING_POINT() 
+	void draw() 
 	{
 		position.draw(icon);
 	}
 
-	void erase_USING_POINT()
+	void erase()
 	{
 		position.draw(' ');
 	}
@@ -50,9 +50,9 @@ public:
 		setHammerLocation();
 	}
 	bool isSwingingHammer() { return midswing; }
-	void keyPressed_USING_POINT(char key); // Handle player's key press
+	void keyPressed(char key); // Handle player's key press
 	void checkHasHmmer();
-	void moveInBoard_USING_POINT(); // handle player's movement
+	void moveInBoard(); // handle player's movement
 	bool isAtVerticalBorder(int currX, int dirX); // Check if player is at vertical border
 	bool isAtHorizontalBorder(int currY, int dirY); // Check if player is at horizontal border
 	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY); // Handle vertical border
@@ -60,7 +60,7 @@ public:
 	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
 	bool swingHit(int swingx, int swingy);
 	void setHemmerBoard(boardGame* gameBoard) { hammerLocation.setGameBoard(gameBoard); }
-	void setGameBoard_USING_POINT(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
+	void setGameBoard(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
 	bool checkFail(); // Check if player failed
 	bool checkWin(); // Check if player won
 	bool isFalling(); // Check if player is falling
