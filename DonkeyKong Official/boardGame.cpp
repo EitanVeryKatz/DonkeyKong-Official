@@ -107,22 +107,20 @@ void boardGame::readBoardFromFile(const std::string &fileName)
             for (int c = 0; c < BOARD_WIDTH; c++)
 				if (c < line.length())
 					activeBoard[r][c] = line[c];
-				else // if the line is shorter than the board width
-					//if (c == BOARD_WIDTH - 1)
-					//	activeBoard[r][c] = 'Q'; // set the last char to 'Q'
-					//else
-						activeBoard[r][c] = ' '; // set the rest of the chars to ' '
+				else 
+					activeBoard[r][c] = ' '; // set the rest of the chars to ' '
 	    }
         else // if there is no line put spaces
         {
 			// TODO: check if this is necessary maybe needed only spcces
             for (int c = 0; c < BOARD_WIDTH; c++)
-				if (c == BOARD_WIDTH - 1)
-					activeBoard[r][c] = 'Q'; // set the last char to 'Q'
-				else if (r != BOARD_HEIGHT - 1)
-					activeBoard[r][c] = ' '; // set the rest of the chars to ' '
-				else if (r == BOARD_HEIGHT - 1 || r == 0) // if the last row or the first row
-					activeBoard[r][c] = 'Q'; // set the last row to 'Q'
+				activeBoard[r][c] = ' ';
+				//if (c == BOARD_WIDTH - 1)
+				//	activeBoard[r][c] = 'Q'; // set the last char to 'Q'
+				//else if (r != BOARD_HEIGHT - 1)
+				//	activeBoard[r][c] = ' '; // set the rest of the chars to ' '
+				//else if (r == BOARD_HEIGHT - 1 || r == 0) // if the last row or the first row
+				//	activeBoard[r][c] = 'Q'; // set the last row to 'Q'
         }
     }
 	succOpen = true;
