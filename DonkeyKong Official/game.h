@@ -5,11 +5,12 @@
 #include "ghost.h"
 #include <vector>
 #include <string>
+#include <algorithm>
 
 
 class game
 {
-	int lives = 100;
+	int lives = 3;
 	int score = 0;
 	int activeBarrels = 0;
 	int maxBarrels;

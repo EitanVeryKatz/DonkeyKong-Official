@@ -5,6 +5,7 @@
 #include "gameConfig.h"
 #include <filesystem>
 #include <__msvc_filebuf.hpp>
+#include <algorithm> 
 
 using std::string;
 
@@ -386,48 +387,97 @@ void game::getAllBoardFiles()
 
 void game::printAndChooseBoard(string& fileName)
 {
-	system("cls");
-	if (!boardFileNames.empty())
+	const int boardsPerPage = 5;
+	int currentPage = 0;
+	int totalPages = (boardFileNames.size() + boardsPerPage - 1) / boardsPerPage;
+	bool needsRedraw = true; // Flag to control screen redraw
+	while (true)
 	{
-		std::cout << "choose a board from the list below:" << std::endl;
-		std::cout << "\n";
-		int i;
-		for (i = 1; i <= boardFileNames.size(); ++i)
+		if (needsRedraw) // Only redraw the screen when needed
 		{
-			std::cout << i << ")" << " " << boardFileNames[i - 1] << std::endl;
-		}
-		std::cout << i <<')'<< " play all boards in order";
-		std::cout << "\n";
-		std::cout << "Press ESC to return to the menu" << std::endl;
-		while (true)
-		{
-			if (_kbhit())
+			system("cls");
+			if (!boardFileNames.empty())
 			{
-				char key = _getch();
-				if (key >= '1' && key <= '9' && key - '1' < boardFileNames.size())
+				std::cout << "Choose a board from the list below:\n" << std::endl;
+
+				// Calculate the start and end indices for the current page
+				int start = currentPage * boardsPerPage;
+				int end = min(start + boardsPerPage, (int)boardFileNames.size());
+
+				// Special option for playing all boards on the first page
+				if (currentPage == 0)
 				{
-					fileName = boardFileNames[key - '1'];
-					fileChosen = true;
-					singleGame = true;
-					return;
+					std::cout << "1) Play all boards in order" << std::endl;
 				}
-				int check = i + '0';
-				if (key == i + '0')
+
+				// Display the options for the current page
+				for (int i = start; i < end; ++i)
+				{
+					std::cout << (currentPage == 0 ? (i - start + 2) : (i - start + 1)) << ") " << boardFileNames[i] << std::endl;
+				}
+
+				// Indicate navigation instructions
+				if (totalPages > 1)
+					std::cout << "\nPress 'a' for previous page, 'd' for next page, or ESC to return to the menu\n" << std::endl;
+			}
+			else
+			{
+				std::cout << "No board files found! returning to menu." << std::endl;
+				return;
+			}
+
+			needsRedraw = false; // Redraw done, no need to redraw again until triggered
+		}
+
+		// Handle user input
+		if (_kbhit())
+		{
+			char key = _getch();
+
+			// Handle numeric keys for selecting a board
+			if (key >= '1' && key <= '5')
+			{
+				int option = key - '1';
+
+				if (currentPage == 0 && option == 0) // "1" to play all boards
 				{
 					fileChosen = true;
 					singleGame = false;
 					return;
 				}
-				if (key == ESC)
-				{	
-					fileChosen = false;
+
+				int index = currentPage * boardsPerPage + (currentPage == 0 ? (option - 1) : option);
+
+				if (index >= 0 && index < boardFileNames.size()) // Check if the option corresponds to a valid index
+				{
+					fileName = boardFileNames[index];
+					fileChosen = true;
+					singleGame = true;
 					return;
 				}
 			}
+			// Navigate pages
+			if (key == 'a' && currentPage > 0)
+			{
+				currentPage--;
+				needsRedraw = true; // Trigger screen redraw
+			}
+			else if (key == 'd' && currentPage < totalPages - 1)
+			{
+				currentPage++;
+				needsRedraw = true; // Trigger screen redraw
+			}
+			else if (key == 27) // ESC key
+			{
+				fileChosen = false;
+				return;
+			}
 		}
 	}
-	std::cout << "No board files found" << std::endl;
 }
+
+
+
 
 void game::updateScore(int points) {
 	score += points;
