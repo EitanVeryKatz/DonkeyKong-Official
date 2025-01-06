@@ -31,7 +31,9 @@ void boardGame::initActiveBoard()
                 ghosts.push_back(temp);
                 activeBoard[r][c] = ' ';
             }
-            else if (currChar == '@' && checkOnFloor(c, r))
+            else if (currChar == 'x')
+				activeBoard[r][c] = ' ';
+            else if (currChar == '@')
             {
                 validPlayerPos = true;
                 startXMario = c;
@@ -106,13 +108,14 @@ void boardGame::readBoardFromFile(const std::string &fileName)
 				if (c < line.length())
 					activeBoard[r][c] = line[c];
 				else // if the line is shorter than the board width
-					if (c == BOARD_WIDTH - 1)
-						activeBoard[r][c] = 'Q'; // set the last char to 'Q'
-					else
+					//if (c == BOARD_WIDTH - 1)
+					//	activeBoard[r][c] = 'Q'; // set the last char to 'Q'
+					//else
 						activeBoard[r][c] = ' '; // set the rest of the chars to ' '
 	    }
         else // if there is no line put spaces
         {
+			// TODO: check if this is necessary maybe needed only spcces
             for (int c = 0; c < BOARD_WIDTH; c++)
 				if (c == BOARD_WIDTH - 1)
 					activeBoard[r][c] = 'Q'; // set the last char to 'Q'
