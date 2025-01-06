@@ -22,7 +22,7 @@ void barrel::barrelFall_USING_POINT()
     {
         handleExplosion();
     }
-	else if (currY >= BOARD_HEIGHT - 2) // if the barrel reached the bottom of the board deactivate the barrel
+	else if (currY >= BOARD_HEIGHT - 2 || currX <= 2 || currX >= BOARD_WIDTH - 2) // if the barrel reached the bottom of the board deactivate the barrel
     {
         deactivateBarrel();
     }
