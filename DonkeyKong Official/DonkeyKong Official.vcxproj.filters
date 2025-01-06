@@ -42,6 +42,9 @@
     <ClCompile Include="ghost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -71,10 +74,17 @@
     <ClInclude Include="ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DonkeyKong Official.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="board002.screen" />
+    <None Include="board003.screen" />
   </ItemGroup>
 </Project>

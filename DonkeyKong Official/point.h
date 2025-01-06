@@ -8,9 +8,9 @@ class boardGame;
 
 class point
 {
+	char icon = ' ';
 	int x, y;
-	struct Direction { int x, y; };
-	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+	
 	//													LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 
@@ -26,17 +26,21 @@ class point
 
 public:
 
-	void draw(char icon) 
+	void draw() const
 	{
 		drawPoint(icon);
 	}
 
-	void erase()
+	void draw(char c) const
+	{
+		drawPoint(c);
+	}
+	void erase() const
 	{
 		drawPoint(' ');
 	}
 
-	point(int x = 0, int y = 0) : x(x), y(y) {}
+	point(int x = 0, int y = 0, char c = ' ') : x(x), y(y), icon(c) {}
 	int getX() const { return x; }
 	int getY() const { return y; }
 	void setX(int x) { this->x = x; }
@@ -49,19 +53,15 @@ public:
 	int getDirY() { return dir.y; }
 	void setDirX(int x) { dir.x = x; }		
 	void setDirY(int y) { dir.y = y; }
-	void setDir(int x, int y) 
-	{ 
-		setDirX(x);
-		setDirY(y);
-	}
+	void setDir(Direction d) { dir = d; }
 	char getChar();
 	char getChar(int _x, int _y);
 	char getFailChart();
 	char getFailChart(int _x, int _y);
 	void setFailChart(char c);
 	void setFailChart(int x, int y, char c);
-	void setDirFromArrayPlayer(int i) { dir = directionsPlayer[i]; }
 	void setDirFromArrayBarrel(int i) { dir = directionsBarrel[i]; }
 	void setDirFromArrayGhost(int i) { dir = directionsGhost[i]; }
+	void setIcon(char c) { icon = c; }
 };
 

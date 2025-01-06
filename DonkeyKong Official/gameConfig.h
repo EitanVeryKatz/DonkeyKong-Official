@@ -19,6 +19,7 @@ void printInstructions(); // Print the game instructions
 void printMenu(); // Print the game menu
 void printGoodbyeMessage(); // Print the goodbye message
 
+struct Direction { int x, y; };
 
 
                                                           

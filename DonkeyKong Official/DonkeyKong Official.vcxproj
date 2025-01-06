@@ -190,6 +190,7 @@
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="ghost.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="npc.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gameConfig.h" />
     <ClInclude Include="ghost.h" />
+    <ClInclude Include="npc.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="resource.h" />

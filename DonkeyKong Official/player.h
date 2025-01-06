@@ -5,54 +5,39 @@
 #include "boardGame.h"
 #include "point.h"
 
-class player
+class player : public point
 {
+	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	static constexpr int STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2;
 	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	static constexpr char iconArr[] = { '@' ,'a'};
-	char icon = iconArr[0];
 	static constexpr char hammerIcon = 'p';
 	point hammerLocation;
 	bool hasHammer;
 	int midjump = 0;
 	bool midswing = false;
-	point position;
 	int fallCounter = 0;
 public:
 
-	player(int x, int y) : position(x, y)
-	{
-		startX = x;
-		startY = y;
-	}
-
-	void draw_USING_POINT() 
-	{
-		position.draw(icon);
-	}
-
-	void erase_USING_POINT()
-	{
-		position.draw(' ');
-	}
+	player(int x, int y) : point(x, y, iconArr[0]), startX(x), startY(y) {}
 
 	void resetPlayer()
 	{
-		icon = iconArr[0];
+		setIcon(iconArr[0]);
 		midjump = 0;
 		fallCounter = 0;
-		position.setPoint(startX, startY);
-		position.setDirFromArrayPlayer(STAY);
+		setPoint(startX, startY);
+		setDir(directionsPlayer[STAY]);
 		hasHammer = false;
 		midswing = 0;
 		setHammerLocation();
 	}
-	bool isSwingingHammer() { return midswing; }
-	void keyPressed_USING_POINT(char key); // Handle player's key press
+	bool isSwingingHammer() const { return midswing; }
+	void keyPressed(char key); // Handle player's key press
 	void checkHasHmmer();
-	void moveInBoard_USING_POINT(); // handle player's movement
+	void moveInBoard(); // handle player's movement
 	bool isAtVerticalBorder(int currX, int dirX); // Check if player is at vertical border
 	bool isAtHorizontalBorder(int currY, int dirY); // Check if player is at horizontal border
 	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY); // Handle vertical border
@@ -60,15 +45,15 @@ public:
 	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
 	bool swingHit(int swingx, int swingy);
 	void setHemmerBoard(boardGame* gameBoard) { hammerLocation.setGameBoard(gameBoard); }
-	void setGameBoard_USING_POINT(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
+	void setGameBoard_USING_POINT(boardGame* gameBoard) { setGameBoard(gameBoard); }
 	bool checkFail(); // Check if player failed
 	bool checkWin(); // Check if player won
 	bool isFalling(); // Check if player is falling
-	int getHammerY() { return hammerLocation.getY(); }
-	int getHammerX() { return hammerLocation.getX(); }
+	int getHammerY() const { return hammerLocation.getY(); }
+	int getHammerX() const { return hammerLocation.getX(); }
 	void setHammerLocation();
-	bool doeshasHammer() { return hasHammer; }
-	void drawHammer()
+	bool doeshasHammer() const { return hasHammer; }
+	void drawHammer() const
 	{
 		hammerLocation.draw(hammerIcon);
 	}
