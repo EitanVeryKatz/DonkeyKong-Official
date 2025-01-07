@@ -479,8 +479,10 @@ void game::printAndChooseBoard(string& fileName)
 
 
 
-void game::updateScore(int points) {
+void game::updateScore(int points)
+{
 	score += points;
+	needToDraw = true;
 }
 
 
