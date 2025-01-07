@@ -7,6 +7,7 @@ class ghost
 	point ghostPosition;
 	bool active = true;
 	bool smashed = false;
+	bool needChanged;
 public:
 	ghost();
 	void draw()
