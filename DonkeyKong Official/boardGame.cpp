@@ -88,6 +88,16 @@ bool boardGame::checkOnFloor(int x, int y) const
 	return false;
 }
 
+ghost* boardGame::getGhost(int x, int y)
+{
+	for (ghost& g : ghosts)
+	{
+		if (g.getX() == x && g.getY() == y)
+			return &g;
+	}
+	return nullptr;
+}
+
 void boardGame::readBoardFromFile(const std::string &fileName)
 {
     std::ifstream boardFile(fileName);
@@ -104,22 +114,18 @@ void boardGame::readBoardFromFile(const std::string &fileName)
 	    {
             for (int c = 0; c < BOARD_WIDTH; c++)
 				if (c < line.length())
+				{
+					if ((line[c] == 'Q' && c < BOARD_WIDTH - 1 && c > 1) || (line[c] == 'Q' && r < BOARD_HEIGHT - 1 && r > 0)) //  if the char is 'Q' and it is not at the edge of the board set it to ' '
+						line[c] = ' '; 
 					activeBoard[r][c] = line[c];
-				else // if the line is shorter than the board width
-					//if (c == BOARD_WIDTH - 1)
-					//	activeBoard[r][c] = 'Q'; // set the last char to 'Q'
-					//else
-						activeBoard[r][c] = ' '; // set the rest of the chars to ' '
+				}
+				else 
+                    activeBoard[r][c] = ' '; // set the rest of the chars to ' '
 	    }
         else // if there is no line put spaces
         {
             for (int c = 0; c < BOARD_WIDTH; c++)
-				//if (c == BOARD_WIDTH - 1)
-				//	activeBoard[r][c] = 'Q'; // set the last char to 'Q'
-			/*	else if (r != BOARD_HEIGHT - 1)*/
-					activeBoard[r][c] = ' '; // set the rest of the chars to ' '
-				//else if (r == BOARD_HEIGHT - 1 || r == 0) // if the last row or the first row
-				//	activeBoard[r][c] = 'Q'; // set the last row to 'Q'
+            	activeBoard[r][c] = ' '; // set the rest of the chars to ' '
         }
     }
 	succOpen = true;

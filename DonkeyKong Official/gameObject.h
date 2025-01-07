@@ -14,6 +14,7 @@ public:
 	void erase() const { position.erase(); }
 	void setPosition(int x, int y) { position.setPoint(x, y); }
 	void setGameBoard(boardGame* pBoard) { position.setGameBoard(pBoard); }
+	boardGame* getGameBoard() const { return position.getGameBoard(); }
 	void setDir(Direction dir) { position.setDir(dir); }
 	int getX() const { return position.getX(); }
 	int getY() const { return position.getY(); }

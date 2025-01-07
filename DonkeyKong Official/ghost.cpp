@@ -37,14 +37,12 @@ void ghost::move()
 		changeDirection();
 	else if ((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (getFailChart(currX - 1, currY) == icon && currDir == LEFT))
 	{
+		int otherGhostX = currDir == RIGHT ? currX + 1 : currX - 1;
+		boardGame* pBoard = getGameBoard();
+		ghost* otherGhost = pBoard->getGhost(otherGhostX, currY);
+		if (otherGhost)
+			otherGhost->changeDirection();
 		changeDirection();
-		colideY = currY;
-		needChanged = true;
-	}
-	else if (needChanged && colideY == currY)
-	{
-		changeDirection();
-		needChanged = false;
 	}
 	currDir = getDirX();
 
@@ -54,7 +52,7 @@ void ghost::move()
 	if (hammerHit())
 	{
 		active = false;
-		smashed = true;
+		smashed = true;   
 		setFailChart(' ');
 	}
 	else
