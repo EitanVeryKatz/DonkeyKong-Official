@@ -9,6 +9,7 @@ class ghost : public gameObject
 	bool active = true;
 	bool smashed = false;
 	bool needChanged;
+	int colideY;
 public:
 	ghost();
 	bool isSmashed() { return smashed; }

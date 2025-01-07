@@ -38,9 +38,10 @@ void ghost::move()
 	else if ((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (getFailChart(currX - 1, currY) == icon && currDir == LEFT))
 	{
 		changeDirection();
+		colideY = currY;
 		needChanged = true;
 	}
-	else if (needChanged)
+	else if (needChanged && colideY == currY)
 	{
 		changeDirection();
 		needChanged = false;
