@@ -9,7 +9,6 @@ class boardGame;
 class point
 {
 	int x, y;
-	struct Direction { int x, y; };
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	//													LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
@@ -26,12 +25,12 @@ class point
 
 public:
 
-	void draw(char icon) 
+	void draw(char icon) const
 	{
 		drawPoint(icon);
 	}
 
-	void erase()
+	void erase() const
 	{
 		drawPoint(' ');
 	}
@@ -45,15 +44,11 @@ public:
 	void setGameBoard(boardGame* pBoard) { this->pBoard = pBoard; }
 	bool isOnFloor();
 	bool isOnLadder();
-	int getDirX() { return dir.x; }
-	int getDirY() { return dir.y; }
+	int getDirX() const { return dir.x; }
+	int getDirY() const { return dir.y; }
 	void setDirX(int x) { dir.x = x; }		
 	void setDirY(int y) { dir.y = y; }
-	void setDir(int x, int y) 
-	{ 
-		setDirX(x);
-		setDirY(y);
-	}
+	void setDir(Direction d) { dir = d; }
 	char getChar();
 	char getChar(int _x, int _y);
 	char getFailChart();
