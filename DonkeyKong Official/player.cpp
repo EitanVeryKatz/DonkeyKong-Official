@@ -37,7 +37,7 @@ void player::keyPressed(char key)
 	}
 }
 
-void player::moveInBoard()
+void player::move()
 {
 	int currX = getX();
 	int currY = getY();

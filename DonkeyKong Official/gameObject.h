@@ -7,8 +7,9 @@ class gameObject
 	char icon;
 
 public:
-	gameObject(int x, int y, char icon) : position(x, y), icon(icon) {}
+	//gameObject(int x, int y, char icon) : position(x, y), icon(icon) {}
 	gameObject(int x, int y) : position(x, y) {}
+	gameObject(char icon) : icon(icon) {}
 	void draw() const { position.draw(icon); }
 	void erase() const { position.erase(); }
 	void setPosition(int x, int y) { position.setPoint(x, y); }
@@ -25,8 +26,10 @@ public:
 	void setDirY(int y) { position.setDirY(y); }
 	void setDirX(int x) { position.setDirX(x); }
 	void setIcon(char icon) { this->icon = icon; }
+	void setFailChart(char c) { position.setFailChart(c); }
 	char getFailChart() { return position.getFailChart(); }
-	/*virtual void move() = 0;*/
+	char getFailChart(int x, int y) { return position.getFailChart(x, y); }
+	virtual void move() = 0;
 	virtual ~gameObject() = default;
 };
 

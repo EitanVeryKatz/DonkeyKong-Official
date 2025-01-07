@@ -247,7 +247,7 @@ void game::updateGhosts(boardGame& board)
 		if (itr->isActive())
 		{	
 			itr->erase();
-			itr->moveGhost();
+			itr->move();
 			if (itr->isSmashed()) {
 				updateScore(150);
 				itr->resetSmashed();
@@ -299,7 +299,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase(); // erase the player
-		mario.moveInBoard(); // move the player
+		mario.move(); // move the player
 		mario.draw(); // draw the player
 		if (!debug)
 			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
