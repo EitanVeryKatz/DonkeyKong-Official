@@ -1,34 +1,21 @@
 #pragma once
 #include "point.h"
-class ghost
+#include "bad_guys.h"
+class ghost : protected bad_guys
 {
+	static constexpr Direction directions[] = { {-1, 0}, {1, 0} };
 	static constexpr int dir_LEFT = 0, dir_RIGHT = 1, LEFT = -1, RIGHT = 1;
 	static constexpr char icon = 'x';
-	point ghostPosition;
-	bool active = true;
-	bool smashed = false;
+	//point ghostPosition;
+	bool needChange = false;
 public:
+	
 	ghost();
-	void draw()
-	{
-		ghostPosition.draw(icon);
-	}
-	void erase()
-	{
-		ghostPosition.erase();
-	}
-	void setGhostPosition(int x, int y)
-	{
-		ghostPosition.setPoint(x, y);
-	}
-	bool isSmashed() { return smashed; }
 	void resetSmashed() { smashed = false; }
 	bool checkFloorEdge();
 	void changeDirection();
 	void moveGhost();
-	void setGameBoard(boardGame* gameBoard) { ghostPosition.setGameBoard(gameBoard); }
 	bool hammerHit();
-	bool isActive() { return active; }
 	void activate() { active = true; }
 	int getX() { return ghostPosition.getX(); }
 };

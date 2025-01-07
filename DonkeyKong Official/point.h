@@ -9,12 +9,10 @@ class boardGame;
 class point
 {
 	int x, y;
-	struct Direction { int x, y; };
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	//													LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 
-	static constexpr Direction directionsGhost[] = { {-1, 0}, {1, 0} };
 	Direction dir{ 0,0 };
 	void drawPoint(char c) const
 	{
@@ -26,12 +24,12 @@ class point
 
 public:
 
-	void draw(char icon) 
+	void draw(char icon) const
 	{
 		drawPoint(icon);
 	}
 
-	void erase()
+	void erase() const
 	{
 		drawPoint(' ');
 	}
@@ -49,11 +47,7 @@ public:
 	int getDirY() { return dir.y; }
 	void setDirX(int x) { dir.x = x; }		
 	void setDirY(int y) { dir.y = y; }
-	void setDir(int x, int y) 
-	{ 
-		setDirX(x);
-		setDirY(y);
-	}
+	void setDir(Direction d) { dir = d; }
 	char getChar();
 	char getChar(int _x, int _y);
 	char getFailChart();
@@ -62,6 +56,5 @@ public:
 	void setFailChart(int x, int y, char c);
 	void setDirFromArrayPlayer(int i) { dir = directionsPlayer[i]; }
 	void setDirFromArrayBarrel(int i) { dir = directionsBarrel[i]; }
-	void setDirFromArrayGhost(int i) { dir = directionsGhost[i]; }
 };
 
