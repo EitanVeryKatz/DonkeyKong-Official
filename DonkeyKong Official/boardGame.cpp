@@ -115,7 +115,7 @@ void boardGame::readBoardFromFile(const std::string &fileName)
             for (int c = 0; c < BOARD_WIDTH; c++)
 				if (c < line.length())
 				{
-					if ((line[c] == 'Q' && c < BOARD_WIDTH - 1 && c > 1) || (line[c] == 'Q' && r < BOARD_HEIGHT - 1 && r > 0)) //  if the char is 'Q' and it is not at the edge of the board set it to ' '
+                    if (line[c] == 'Q' && c > 1 && c < BOARD_WIDTH - 1 && r > 0 && r < BOARD_HEIGHT - 1)
 						line[c] = ' '; 
 					activeBoard[r][c] = line[c];
 				}
