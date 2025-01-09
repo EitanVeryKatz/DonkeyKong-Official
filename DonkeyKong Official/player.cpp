@@ -134,9 +134,9 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 		}
 	}
 
-	if (isFalling() && (isOnLadder()||isOnFloor())) {
+	/*if (isFalling() && (isOnLadder()||isOnFloor())) {
 		dirY = STOP;
-	}
+	}*/
 
 	newX = currX + dirX; // Calculate new horizontal position	
 	newY = currY + dirY; // Calculate new vertical position
