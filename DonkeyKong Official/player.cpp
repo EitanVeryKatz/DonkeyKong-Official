@@ -5,7 +5,7 @@ void player::keyPressed(char key)
 	if (isOnFloor() && !isOnLadder() && tolower(key) == 'w') {
 		midjump++;
 	}
-	if (hasHammer && getDirY() == 0) {//if mario holds hammer and looking sideways.
+	if (hasHammer) {//if mario holds hammer and looking sideways.
 		if (tolower(key) == 'p') {
 			swingHammer();
 		}
@@ -20,6 +20,8 @@ void player::keyPressed(char key)
 				{//if player not currently on ladder 
 					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && getChar(getX(), getY() + 2) == 'H')) {
 						//allow change to only x axis movenemt unless wanting to go down existing ladder
+						if (keys[i] == 'a' || keys[i] == 'd')
+							hammerLocation.setDir(directions[i]);
 						move(directions[i]);
 					}
 					return;
@@ -184,11 +186,12 @@ void player::checkHasHmmer() {
 
 
 void player::swingHammer() {
-	hammerLocation.setPosition(getX() + hammerLocation.getDirX(), getY() + hammerLocation.getDirY());
+	hammerLocation.move(getX(),getY());
 	gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	std::cout << '#';
-	setFailChart('#');
+	hammerLocation.setFailChart('#');
 	midswing = true;
+	
 
 
 

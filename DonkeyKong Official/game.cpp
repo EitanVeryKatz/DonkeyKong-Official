@@ -282,8 +282,7 @@ void game::gameLoop(player& mario, boardGame& board)
 			std::cout << 'p';
 		}
 
-		if(mario.isSwingingHammer())
-			mario.clearHammerSwing();
+		
 
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		updateGhosts(board);
@@ -299,6 +298,10 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase(); // erase the player
+
+		if (mario.isSwingingHammer())
+			mario.clearHammerSwing();
+
 		handleInput(mario); // handle the user input
 		mario.playerMovement(); // move the player
 		mario.draw(); // draw the player

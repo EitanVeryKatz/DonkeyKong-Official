@@ -5,6 +5,7 @@
 #include "boardGame.h"
 #include "point.h"
 #include "gameObject.h"
+#include "hammer.h"
 
 class player : public gameObject
 {
@@ -16,7 +17,7 @@ class player : public gameObject
 	static constexpr char iconArr[] = { '@' ,'a'};
 	//char currIcon = iconArr[0];
 	static constexpr char hammerIcon = 'p';
-	gameObject hammerLocation; // need to change hammer to the new moving point
+	hammer hammerLocation; // need to change hammer to the new moving point
 	bool hasHammer = false;
 	int midjump = 0;
 	bool midswing = false;
