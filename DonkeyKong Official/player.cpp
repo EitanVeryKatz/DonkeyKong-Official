@@ -20,9 +20,6 @@ void player::keyPressed(char key)
 				{//if player not currently on ladder 
 					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && getChar(getX(), getY() + 2) == 'H')) {
 						//allow change to only x axis movenemt unless wanting to go down existing ladder
-						if (keys[i] == 'a' || keys[i] == 'd')
-							hammerLocation.setDirFromArrayPlayer(i);
-						//setDir(directions[i]);
 						move(directions[i]);
 					}
 					return;
@@ -112,7 +109,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 		}
 	}
 
-	if (isOnFloor() && dirY != -1) //if on floor
+	if (isOnFloor() && dirY != UP) //if on floor
 	{
 		if (midjump) //if jump pressed
 		{
@@ -172,8 +169,7 @@ bool player::isFalling()
 void player::setHammerLocation() {
 	do 
 	{
-		hammerLocation.setX(rand() % BOARD_WIDTH - 1); //79
-		hammerLocation.setY(rand() % BOARD_HEIGHT - 1); //24
+		hammerLocation.setPosition(rand() % BOARD_WIDTH - 1, rand() % BOARD_HEIGHT - 1);
 	} 
 	while (!hammerLocation.isOnFloor()|| hammerLocation.getChar() != ' ');
 }
@@ -188,11 +184,10 @@ void player::checkHasHmmer() {
 
 
 void player::swingHammer() {
-	hammerLocation.setX(getX() + hammerLocation.getDirX())  ;
-	hammerLocation.setY(getY() + hammerLocation.getDirY());
+	hammerLocation.setPosition(getX() + hammerLocation.getDirX(), getY() + hammerLocation.getDirY());
 	gotoxy(hammerLocation.getX(), hammerLocation.getY());
-	hammerLocation.setFailChart(hammerIcon);
 	std::cout << '#';
+	setFailChart('#');
 	midswing = true;
 
 
@@ -208,7 +203,7 @@ void player::clearHammerSwing() {
 	else {
 		std::cout << hammerLocation.getChar();
 	}
-	hammerLocation.setFailChart(' ');
+	setFailChart(' ');
 	midswing = false;
 }
 

@@ -16,7 +16,7 @@ class player : public gameObject
 	static constexpr char iconArr[] = { '@' ,'a'};
 	//char currIcon = iconArr[0];
 	static constexpr char hammerIcon = 'p';
-	point hammerLocation; // need to change hammer to the new moving point
+	gameObject hammerLocation; // need to change hammer to the new moving point
 	bool hasHammer = false;
 	int midjump = 0;
 	bool midswing = false;
@@ -24,7 +24,7 @@ class player : public gameObject
 	int fallCounter = 0;
 public:
 
-	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y) {}
+	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y),hammerLocation(hammerIcon) {}
 
 	void resetPlayer()
 	{
@@ -33,7 +33,7 @@ public:
 		fallCounter = 0;
 		setPosition(startX, startY);
 		stop();
-		hasHammer = false;
+		hasHammer = true;
 		midswing = 0;
 		setHammerLocation();
 	}
@@ -57,7 +57,7 @@ public:
 	bool doeshasHammer() { return hasHammer; }
 	void drawHammer()
 	{
-		hammerLocation.draw(hammerIcon);
+		hammerLocation.draw();
 	}
 	void swingHammer();
 	void clearHammerSwing();

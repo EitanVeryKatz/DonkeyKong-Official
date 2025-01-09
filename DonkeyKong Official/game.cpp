@@ -163,6 +163,7 @@ void game::initGame(player& mario, boardGame& board)
 		board.resetGhosts();
 	mario.setGameBoard(&board); // set the board of the player
 	mario.setHemmerBoard(&board);
+	
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
 	mario.drawHammer(); // draw the hammer

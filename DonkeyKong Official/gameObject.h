@@ -7,14 +7,17 @@ class gameObject
 {
 	movingPoint position;
 	boardGame* pBoard = nullptr;
+	
 	char icon;
 
 public:
+
 	gameObject(char icon) : icon(icon) {}
 	gameObject(int x, int y, char icon) : position(x, y)
 	{
 		this->icon = icon;
 	}
+	void setFailChart(char c);
 	void setPosition(int x, int y) { position.setPoint(x, y); }
 	void setGameBoard(boardGame* pBoard) { this->pBoard = pBoard; }
 	void draw() const { position.draw(icon); }

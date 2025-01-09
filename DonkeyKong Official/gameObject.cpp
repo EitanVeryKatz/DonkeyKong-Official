@@ -46,3 +46,6 @@ direction gameObject::calcDir(int newX, int newY) const
 	return d;
 }
 
+void gameObject::setFailChart(char c) {
+	pBoard->UpdateFailChart(getX(), getY(), c);
+}
