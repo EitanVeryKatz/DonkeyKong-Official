@@ -247,7 +247,7 @@ void game::updateGhosts(boardGame& board)
 		if (itr->isActive())
 		{	
 			itr->erase();
-			itr->move();
+			itr->moveGhost();
 			if (itr->isSmashed()) {
 				updateScore(150);
 				itr->resetSmashed();
@@ -275,7 +275,7 @@ void game::gameLoop(player& mario, boardGame& board)
 			needToDraw = false;
 		}
 
-		mario.draw(); // draw the player
+		//mario.draw(); // draw the player
 		if (!mario.doeshasHammer()) {
 			gotoxy(mario.getHammerX(), mario.getHammerY());
 			std::cout << 'p';
@@ -284,7 +284,6 @@ void game::gameLoop(player& mario, boardGame& board)
 		if(mario.isSwingingHammer())
 			mario.clearHammerSwing();
 
-		handleInput(mario); // handle the user input
 		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
 		updateGhosts(board);
 		Sleep(GAME_SPEED);
@@ -299,7 +298,8 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase(); // erase the player
-		mario.move(); // move the player
+		handleInput(mario); // handle the user input
+		mario.playerMovement(); // move the player
 		mario.draw(); // draw the player
 		if (!debug)
 			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
@@ -389,7 +389,7 @@ void game::printAndChooseBoard(string& fileName)
 {
 	const int boardsPerPage = 5;
 	int currentPage = 0;
-	int totalPages = (boardFileNames.size() + boardsPerPage - 1) / boardsPerPage;
+	size_t totalPages = (boardFileNames.size() + boardsPerPage - 1) / boardsPerPage;
 	bool needsRedraw = true; // Flag to control screen redraw
 	while (true)
 	{

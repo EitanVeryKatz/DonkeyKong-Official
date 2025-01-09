@@ -44,7 +44,7 @@ public:
 	bool isAtVerticalBorder(int currX, int dirX); // Check if player is at vertical border
 	bool isAtHorizontalBorder(int currY, int dirY); // Check if player is at horizontal border
 	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY); // Handle vertical border
-	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY); // Handle horizontal border
+	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY, int& dirY); // Handle horizontal border
 	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
 	bool swingHit(int swingx, int swingy);
 	void setHemmerBoard(boardGame* gameBoard) { hammerLocation.setGameBoard(gameBoard); }
@@ -61,6 +61,6 @@ public:
 	}
 	void swingHammer();
 	void clearHammerSwing();
-	direction calcDir(int newX, int newY) const;
+	
 };
 

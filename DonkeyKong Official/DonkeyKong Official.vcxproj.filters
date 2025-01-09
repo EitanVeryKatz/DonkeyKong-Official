@@ -45,7 +45,7 @@
     <ClCompile Include="gameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bad_guys.cpp">
+    <ClCompile Include="movingPoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,10 @@
     <ClInclude Include="gameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bad_guys.h">
+    <ClInclude Include="movingPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="direction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

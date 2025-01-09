@@ -184,10 +184,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bad_guys.cpp" />
     <ClCompile Include="barrel.cpp" />
     <ClCompile Include="boardGame.cpp" />
-    <ClCompile Include="dir.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="gameObject.cpp" />
@@ -199,7 +197,6 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bad_guys.h" />
     <ClInclude Include="barrel.h" />
     <ClInclude Include="boardGame.h" />
     <ClInclude Include="direction.h" />

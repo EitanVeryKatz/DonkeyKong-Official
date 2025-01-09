@@ -8,6 +8,10 @@ class boardGame;
 
 class point
 {
+	struct Direction
+	{
+		int x, y;
+	};
 	int x, y;
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	//													LEFT    DOWN    RIGHT   STAY 

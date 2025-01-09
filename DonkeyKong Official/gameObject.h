@@ -2,7 +2,7 @@
 #include "movingPoint.h"
 #include "boardGame.h"
 
-class direction;
+struct direction;
 class gameObject
 {
 	movingPoint position;
@@ -24,8 +24,8 @@ public:
 	bool isOnLadder() const;
 	// only npc need to have setFailChart
 	char getFailChart() const;
-	int getDirX() const;
-	int getDirY() const;
+	int getDirX() const { return position.getDirX(); };
+	int getDirY() const { return position.getDirY(); };
 	void stop() { position.setDir({ 0,0 }); }
 	void move(direction d);
 	void restoreBoardChar(int x, int y) const;
@@ -33,5 +33,6 @@ public:
 	int getY() const { return position.getY(); }
 	char getChar() const { return pBoard->getChar(position.getX(), position.getY()); }
 	char getChar(int x, int y) const { return pBoard->getChar(x, y); }
+	direction calcDir(int newX, int newY) const;
 };
 

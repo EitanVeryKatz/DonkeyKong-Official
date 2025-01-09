@@ -5,7 +5,7 @@
 class movingPoint
 {
 	int x, y;
-	direction dir;
+	direction dir = { 0,0 };
 	void drawPoint(char c) const
 	{
 		gotoxy(x, y);
@@ -23,12 +23,14 @@ public:
 	{
 		drawPoint(' ');
 	}
-	const movingPoint getNextPos() const
+	/*const movingPoint getNextPos() const
 	{
 		return movingPoint(x + dir.x, y + dir.y);
-	}
+	}*/
 	int getX() const { return x; }
 	int getY() const { return y; }
+	int getDirX() const { return dir.x; }
+	int getDirY() const { return dir.y; }
 	void setNewPos(direction d);
 	void setDir(direction d) { dir = d; }
 };

@@ -24,24 +24,25 @@ char gameObject::getFailChart() const
 	return pBoard->getFailChart(position.getX(), position.getY());
 }
 
-int gameObject::getDirX() const
-{
-	return position.getNextPos().getX() - position.getX();
-}
-
-int gameObject::getDirY() const
-{
-	return position.getNextPos().getY() - position.getY();
-}
-
 void gameObject::move(direction d)
 {
 	position.setNewPos(d);
+	restoreBoardChar(getX() - d.x, getY() - d.y);
 }
 
 void gameObject::restoreBoardChar(int x, int y) const
 {
 	gotoxy(x, y);
 	std::cout << pBoard->getChar(x, y);
+}
+
+direction gameObject::calcDir(int newX, int newY) const
+{
+	direction d;
+	int dirX = newX - getX();
+	int dirY = newY - getY();
+	d.x = dirX;
+	d.y = dirY;
+	return d;
 }
 

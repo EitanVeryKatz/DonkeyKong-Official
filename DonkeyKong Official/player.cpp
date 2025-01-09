@@ -22,13 +22,15 @@ void player::keyPressed(char key)
 						//allow change to only x axis movenemt unless wanting to go down existing ladder
 						if (keys[i] == 'a' || keys[i] == 'd')
 							hammerLocation.setDirFromArrayPlayer(i);
-						setDir(directions[i]);
+						//setDir(directions[i]);
+						move(directions[i]);
 					}
 					return;
 				}
 				else 
 				{ // if on ladder move to any direction
-					setDir(directions[i]);
+					//setDir(directions[i]);
+					move(directions[i]);
 					return;
 				}
 			}
@@ -48,7 +50,7 @@ void player::playerMovement()
 	}
 	else if (isAtHorizontalBorder(currY, dirY))
 	{
-		handleHorizontalBorder(currX, currY, dirX, newX, newY);
+		handleHorizontalBorder(currX, currY, dirX, newX, newY,dirY);
 	}
 	else
 	{
@@ -64,7 +66,6 @@ void player::playerMovement()
 		fallCounter = 0;
 	}
 	move(calcDir(newX, newY)); // Update player's position
-	restoreBoardChar(currX, currY); // Restore the previous character on the screen
 }
 
 bool player::isAtVerticalBorder(int currX, int dirX)
@@ -80,15 +81,17 @@ bool player::isAtHorizontalBorder(int currY, int dirY)
 void player::handleVerticalBorder(int currX, int currY, int dirY, int &newX, int &newY)
 {
 	newX = currX;
-	newY = currY + dirY;
+	
 	if (!isOnFloor())
-		newY++;
+		dirY = DOWN;
+
+	newY = currY + dirY;
 }
 
-void player::handleHorizontalBorder(int currX, int currY, int dirX, int &newX, int &newY)
+void player::handleHorizontalBorder(int currX, int currY, int dirX, int &newX, int &newY, int &dirY)
 {
 	newX = currX + dirX;
-	newY = currY;
+	dirY = STOP;
 }
 
 void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &newX, int &newY)
@@ -98,7 +101,6 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	if (!isOnLadder() && dirX == STOP)  //if not on ladder moving vertically
 	{
 		if (getChar(currX, currY + 2) != 'H' || dirY == -1) {//if not standing above ladder or going up
-			setDirY(STOP); //stop climbing
 			dirY = STOP;
 		}
 	}
@@ -106,33 +108,33 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	if (dirY == DOWN && isOnFloor()) //if going down and reaching floor
 	{
 		if (getChar(currX, currY + 2) != 'H') {
-			setDirY(STOP); //stop
 			dirY = STOP;
 		}
 	}
 
-	
-	newX = currX + dirX; // Calculate new horizontal position	
-	newY = currY + dirY; // Calculate new vertical position
-
-	if (isOnFloor()) //if on floor
+	if (isOnFloor() && dirY != -1) //if on floor
 	{
 		if (midjump) //if jump pressed
 		{
-			newY--; //update Y to be one higher
+			dirY = -1; //start jumping
 			midjump++;
 		}
 	}
-	else //if not on floor
+	else if (isOnFloor() || (isOnLadder() && midjump))
+		dirY = STOP;
+
+	else 
 	{
 		if (!isOnLadder() && midjump == STOP) //if not on ladder and not jumping
-			newY++; //continue to fall
+			dirY = DOWN; //start falling
 		if (!isOnLadder() && midjump >= JUMPING_FARME)//if on second frame of jumping
 		{
-			newY--;//start falling
+			dirY = -1; // jump one more then start falling
 			midjump = STOP; // stop jumping
 		}
 	}
+	newX = currX + dirX; // Calculate new horizontal position	
+	newY = currY + dirY; // Calculate new vertical position
 }
 
 bool player::checkFail()
@@ -160,7 +162,7 @@ bool player::checkWin()
 
 bool player::isFalling()
 {
-	if ((!isOnFloor() && !isOnLadder() && !midjump) || getDirY() == DOWN)//not on ladder or floor or if going down
+	if (getDirY() == DOWN)//not on ladder or floor or if going down
 	{
 		return true;
 	}
@@ -180,8 +182,7 @@ void player::setHammerLocation() {
 void player::checkHasHmmer() {
 	if (getX() == hammerLocation.getX() && getY() == hammerLocation.getY()) {
 		hasHammer = true;
-		currIcon = iconArr[1];
-		setIcon(currIcon);
+		changeIcon(iconArr[1]);
 	}
 }
 
@@ -202,7 +203,7 @@ void player::clearHammerSwing() {
 	gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	
 	if (hammerLocation.getX() == getX() && hammerLocation.getY() == getY()) {
-		std::cout << currIcon;
+		draw();
 	}
 	else {
 		std::cout << hammerLocation.getChar();
@@ -211,18 +212,5 @@ void player::clearHammerSwing() {
 	midswing = false;
 }
 
-direction player::calcDir(int newX, int newY) const
-{
-	int dirX = newX - getX();
-	int dirY = newY - getY();
-	if (dirX == 0 && dirY == -1)
-		return directions[0];
-	if (dirX == -1 && dirY == 0)
-		return directions[1];
-	if (dirX == 0 && dirY == 1)
-		return directions[2];
-	if (dirX == 1 && dirY == 0)
-		return directions[3];
-	return directions[4];
-}
+
 
