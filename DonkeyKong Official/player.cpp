@@ -122,6 +122,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	else if (isOnFloor() || (isOnLadder() && midjump))
 		dirY = STOP;
 
+
 	else 
 	{
 		if (!isOnLadder() && midjump == STOP) //if not on ladder and not jumping
@@ -132,6 +133,11 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 			midjump = STOP; // stop jumping
 		}
 	}
+
+	if (isFalling() && (isOnLadder()||isOnFloor())) {
+		dirY = STOP;
+	}
+
 	newX = currX + dirX; // Calculate new horizontal position	
 	newY = currY + dirY; // Calculate new vertical position
 }
