@@ -1,6 +1,5 @@
 #include "player.h"
 
-
 void player::keyPressed(char key)
 {
 	if (isOnFloor() && !isOnLadder() && tolower(key) == 'w') {
@@ -37,7 +36,7 @@ void player::keyPressed(char key)
 	}
 }
 
-void player::move()
+void player::playerMovement()
 {
 	int currX = getX();
 	int currY = getY();
@@ -64,9 +63,8 @@ void player::move()
 	{
 		fallCounter = 0;
 	}
-	setPosition(newX, newY); // Update player's position
-	gotoxy(currX, currY);
-	std::cout << getChar(currX, currY);
+	move(calcDir(newX, newY)); // Update player's position
+	restoreBoardChar(currX, currY); // Restore the previous character on the screen
 }
 
 bool player::isAtVerticalBorder(int currX, int dirX)
@@ -211,5 +209,20 @@ void player::clearHammerSwing() {
 	}
 	hammerLocation.setFailChart(' ');
 	midswing = false;
+}
+
+direction player::calcDir(int newX, int newY) const
+{
+	int dirX = newX - getX();
+	int dirY = newY - getY();
+	if (dirX == 0 && dirY == -1)
+		return directions[0];
+	if (dirX == -1 && dirY == 0)
+		return directions[1];
+	if (dirX == 0 && dirY == 1)
+		return directions[2];
+	if (dirX == 1 && dirY == 0)
+		return directions[3];
+	return directions[4];
 }
 

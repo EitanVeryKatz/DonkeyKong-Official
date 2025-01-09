@@ -187,11 +187,13 @@
     <ClCompile Include="bad_guys.cpp" />
     <ClCompile Include="barrel.cpp" />
     <ClCompile Include="boardGame.cpp" />
+    <ClCompile Include="dir.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="ghost.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="movingPoint.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -200,10 +202,12 @@
     <ClInclude Include="bad_guys.h" />
     <ClInclude Include="barrel.h" />
     <ClInclude Include="boardGame.h" />
+    <ClInclude Include="direction.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameConfig.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="ghost.h" />
+    <ClInclude Include="movingPoint.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="resource.h" />

@@ -10,7 +10,6 @@ constexpr int diffculty[3] = { 3, 5, 7 };
 constexpr int BARREL_SPAWN_RATE = 20;
 constexpr int GAME_SPEED = 65;
 constexpr int FALL_TO_DEATH = 5;
-struct Direction { int x, y; };
 
 void playWinningSong();
 void playFailSong();
