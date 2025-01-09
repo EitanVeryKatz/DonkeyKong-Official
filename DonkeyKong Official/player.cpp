@@ -116,7 +116,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	{
 		if (midjump) //if jump pressed
 		{
-			dirY = -1; //start jumping
+			dirY = UP; //start jumping
 			midjump++;
 		}
 	}
@@ -129,7 +129,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 			dirY = DOWN; //start falling
 		if (!isOnLadder() && midjump >= JUMPING_FARME)//if on second frame of jumping
 		{
-			dirY = -1; // jump one more then start falling
+			dirY = UP; // jump one more then start falling
 			midjump = STOP; // stop jumping
 		}
 	}

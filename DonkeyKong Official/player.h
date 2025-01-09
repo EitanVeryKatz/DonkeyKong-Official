@@ -9,7 +9,7 @@
 class player : public gameObject
 {
 	static constexpr direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	static constexpr int STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2;
+	static constexpr int STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2, UP = -1;
 	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
