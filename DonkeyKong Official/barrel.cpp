@@ -44,10 +44,6 @@ void barrel::handleExplosion()
     exploaded = true;
 }
 
-void barrel::deactivateBarrel()
-{
-    active = false;
-}
 
 void barrel:: updateBlowCounter() {
     blastCounter++;
@@ -55,42 +51,42 @@ void barrel:: updateBlowCounter() {
 
 void barrel::handleOnFloor(int currX, int currY, int &newX, int &newY, char &dirChar)
 {
-	position.setDirY(STOP); // set the Y direction of the barrel to 0
-    dirChar = position.getChar(currX, currY + 1); // get the char of the floor
+	setDirY(STOP); // set the Y direction of the barrel to 0
+    dirChar = getChar(currX, currY + 1); // get the char of the floor
     if (dirChar == FLOOR_DIR_LEFT) // if the floor direction is left set the direction of the barrel to left
     {
-       position.setDirFromArrayBarrel(LEFT);
+        setDir(directionsBarrel[LEFT]);
     }
     else if (dirChar != '=') // if the floor direction is not '=' set the direction of the barrel to right
     {
-       position.setDirFromArrayBarrel(RIGHT);
+        setDir(directionsBarrel[RIGHT]);
     } 
 	// if '=' the same x direction of the barrel
-	newX = currX + position.getDirX(); // update the new X position
-	newY = currY + position.getDirY(); // update the new Y position
+	newX = currX + getDirX(); // update the new X position
+	newY = currY + getDirY(); // update the new Y position
 }
 
 void barrel::handleInAir(int currX, int currY, int &newX, int &newY)
 {
-	position.setDirY(DOWN); // set the Y direction of the barrel to down
-	newY = currY + position.getDirY(); // update the new Y position
-	newX = currX + position.getDirX(); // update the new X position
+	setDirY(DOWN); // set the Y direction of the barrel to down
+	newY = currY + getDirY(); // update the new Y position
+	newX = currX + getDirX(); // update the new X position
 }
 
 void barrel::updatePosition(int currX, int currY, int newX, int newY)
 {
 	if (!isBlastShowing()) // if the barrel is not exploded erase the barrel from the fail chart
     {
-        position.setFailChart(' '); 
+        setFailChart(' '); 
     }
-	position.setPoint(newX, newY); // update the position of the barrel
-    if (position.getFailChart() != 'p') {
-        position.setFailChart(ICON); // draw the barrel on the fail chart
+	setPosition(newX, newY); // update the position of the barrel
+    if (getFailChart() != 'p') {
+        setFailChart(ICON); // draw the barrel on the fail chart
     }
     else {
-        position.setFailChart(' ');
+        setFailChart(' ');
         deactivateBarrel();
-        smashed = true;
+        setSmash();
     }
 
 
@@ -98,13 +94,13 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
     if (!isBlastShowing() && getBlowCount() < 2) 
     {
         gotoxy(currX, currY);
-        std::cout << position.getChar(currX, currY);
+        std::cout << getChar(currX, currY);
     }
 }
 
 void barrel::explode()
 {
-    int x = position.getX(), y = position.getY();
+    int x = getX(), y = getY();
     if (blastCounter == 0)//first frame of exlposion:
     {
         //draw 3x3 square using '*' around barrel location
@@ -116,7 +112,7 @@ void barrel::explode()
             {
                 if (y + blowRadiusY < 1 || y + blowRadiusY > BOARD_HEIGHT - 2)//if reached border - skip
                     continue;
-                position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');//update fail chart for explosion particals
+                setFailChart(x + blowRadiusX, y + blowRadiusY, '*');//update fail chart for explosion particals
                 gotoxy(x + blowRadiusX, y + blowRadiusY);
                 std::cout << '*';
             }
@@ -125,7 +121,7 @@ void barrel::explode()
         blastCenterX = x;
         blastCenterY = y;
         blastParticlesVisable = true;
-        active = false;
+        deactivate();
     }
     if (blastCounter == 1) //second frame of explosion
     {
@@ -140,7 +136,7 @@ void barrel::explode()
             {
                 if (y + blowRadiusY < 1 || y + blowRadiusY > BOARD_HEIGHT - 2)//if reached border - skip
                     continue;
-                position.setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
+                setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
 
                 gotoxy(x + blowRadiusX, y + blowRadiusY);
                 if (blowRadiusX == -2 || blowRadiusX == 2 || blowRadiusY == -2 || blowRadiusY == 2) {
@@ -168,10 +164,10 @@ void barrel::clearBlast()
 			if (blastCenterY + blowRadiusY < 1 || blastCenterY + blowRadiusY > BOARD_HEIGHT - 2)
 				continue;
             //update fail chart
-			position.setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
+			setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
             //restore erased parts of game map
 			gotoxy(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
-			std::cout << position.getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+			std::cout << getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
 		}
 	}
 
@@ -184,7 +180,7 @@ void barrel::clearBlast()
 void barrel::resetBarrel()
 {
 	setPosition(startingPos.getX(), startingPos.getY()); // set the position of the barrel to the starting position
-	setDirFromArrayBarrel(STAY); // set the direction of the barrel to stay
+    setDir(directionsBarrel[STAY]);
 	makeActive(); // set the barrel to active
 	blastCenterX = 0; // set the center of the blast to 0
 	blastCenterY = 0; // set the center of the blast to 0
@@ -195,13 +191,13 @@ void barrel::resetBarrel()
 }
 
 bool barrel::checkSmash(){
-    return position.getFailChart() == 'p';
+    return getFailChart() == 'p';
     
 }
 
 void barrel::updateFallCount()
 {
-	if (position.getDirY() == DOWN)
+	if (getDirY() == DOWN)
 	{
 		fallCounter++;
 	}

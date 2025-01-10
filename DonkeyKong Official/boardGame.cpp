@@ -26,7 +26,7 @@ void boardGame::initActiveBoard()
             if (currChar == 'x' && checkOnFloor(c, r))
             {
                 ghost temp;
-                temp.setGhostPosition(c, r);
+                temp.setPosition(c, r);
                 temp.setGameBoard(this);
                 ghosts.push_back(temp);
                 activeBoard[r][c] = ' ';
@@ -152,12 +152,12 @@ void boardGame::initBarrels(barrel* barrelArr)
         if (activeBoard[monkeY + 1][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX - 1);
     }
-	for (barrel& b : barrelArr)
+	for (int i = 0; i < BARRELS_NUM; i++)
 	{
-		b.setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
-		b.setBoard(this); // set the board of the barrel
-		b.erase(); // erase the barrel
-		b.resetBarrel(); // reset the barrel
+		barrelArr[i].setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
+        barrelArr[i].setGameBoard(this); // set the board of the barrel
+        barrelArr[i].erase(); // erase the barrel
+        barrelArr[i].resetBarrel(); // reset the barrel
 	}
 }
 

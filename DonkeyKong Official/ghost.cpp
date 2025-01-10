@@ -1,6 +1,5 @@
 #include "ghost.h"
-
-ghost::ghost()
+ghost::ghost() : npc(icon)
 {
 	int i = rand() % 2; // random number between 0 and 2
 	ghostPosition.setDirFromArrayGhost(i); // set the direction of the ghost randomly

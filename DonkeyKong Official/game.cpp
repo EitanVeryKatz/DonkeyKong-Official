@@ -158,7 +158,7 @@ void game::initGame(player& mario, boardGame& board)
 	clear_key_buffer(); // clear the input buffer
 	activeBarrels = 0; // reset the number of active barrels
 	board.initFailChart(); // initialize the fail chart
-	board.initBarrels();  // initialize the barrels
+	board.initBarrels(barrels);  // initialize the barrels
 	if (!firstGame)
 		board.resetGhosts();
 	mario.setGameBoard(&board); // set the board of the player
@@ -185,7 +185,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 {
 	for (int i = 0; i < barrelCounter; i++) // update all barrels
 	{
-		barrel& pBarrel = board.getBarrel(i); // get the barrel
+		barrel& pBarrel = barrels[i]; // get the barrel
 
 		if (pBarrel.isActive()) // if barrel is active
 		{
@@ -232,7 +232,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 	}
 	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel and there are less than the maximum number of barrels
 		{
-			barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
+			barrel* pBarrel = &barrels[barrelCounter]; // get the barrel
 			pBarrel->draw(); // draw the barrel
 			barrelCounter++; // increment the barrel counter
 			activeBarrels++; // increment the number of active barrels

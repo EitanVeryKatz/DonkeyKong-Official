@@ -9,11 +9,7 @@ class boardGame;
 class point
 {
 	int x, y;
-	
-	//													LEFT    DOWN    RIGHT   STAY 
-	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 
-	static constexpr Direction directionsGhost[] = { {-1, 0}, {1, 0} };
 	Direction dir{ 0,0 };
 	void drawPoint(char c) const
 	{
@@ -47,7 +43,5 @@ public:
 	{ 
 		dir = d;
 	}
-	void setDirFromArrayBarrel(int i) { dir = directionsBarrel[i]; }
-	void setDirFromArrayGhost(int i) { dir = directionsGhost[i]; }
 };
 
