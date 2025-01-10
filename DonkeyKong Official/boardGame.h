@@ -56,8 +56,7 @@ public :
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }
-	
-	
+	void colidedGhost(int x, int y);
 	vector<ghost>::iterator getGhostsBegin() { return ghosts.begin(); }
 	vector<ghost>::iterator getGhostsEnd() { return ghosts.end(); }
 };
