@@ -31,7 +31,6 @@ public:
 	void setStartPos(int x, int y) { startingPos.setPoint(x, y); }
 	void barrelFall(); // handles barrel movement
 	void handleExplosion();
-	void deactivateBarrel();
 	void handleOnFloor(int currX, int currY, int& newX, int& newY, char& dirChar); // handles barrel movement on floor
 	void handleInAir(int currX, int currY, int& newX, int& newY); // handles barrel movement in air
 	void updatePosition(int currX, int currY, int newX, int newY); // updates the position of the barrel

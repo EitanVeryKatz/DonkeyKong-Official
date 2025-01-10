@@ -2,16 +2,16 @@
 ghost::ghost() : npc(icon)
 {
 	int i = rand() % 2; // random number between 0 and 2
-	ghostPosition.setDirFromArrayGhost(i); // set the direction of the ghost randomly
+	setDir(directionsGhost[i]);
 }
 
 bool ghost::checkFloorEdge()
 {
-    int currX = ghostPosition.getX(), currY = ghostPosition.getY();
-    if ((ghostPosition.getChar(currX + 1, currY + 1) != '<' && ghostPosition.getChar(currX + 1, currY + 1) != '>' && ghostPosition.getChar(currX + 1, currY + 1) != '=') && ghostPosition.getDirX() == RIGHT) // if the ghost is at the edge of the floor and moving right
+    int currX = getX(), currY = getY();
+    if ((getChar(currX + 1, currY + 1) != '<' && getChar(currX + 1, currY + 1) != '>' && getChar(currX + 1, currY + 1) != '=') && getDirX() == RIGHT) // if the ghost is at the edge of the floor and moving right
         return true;
 
-    if ((ghostPosition.getChar(currX - 1, currY + 1) != '<' && ghostPosition.getChar(currX - 1, currY + 1) != '>' && ghostPosition.getChar(currX - 1, currY + 1) != '=') && ghostPosition.getDirX() == LEFT) // if the ghost is at the edge of the floor and moving left
+    if ((getChar(currX - 1, currY + 1) != '<' && getChar(currX - 1, currY + 1) != '>' && getChar(currX - 1, currY + 1) != '=') && getDirX() == LEFT) // if the ghost is at the edge of the floor and moving left
         return true;
     
     return false;
@@ -19,42 +19,41 @@ bool ghost::checkFloorEdge()
 
 void ghost::changeDirection()
 {
-	if (ghostPosition.getDirX() == LEFT)
-		ghostPosition.setDirFromArrayGhost(dir_RIGHT);
+	if (getDirX() == LEFT)
+		setDir(directionsGhost[dir_RIGHT]);
 	else
-		ghostPosition.setDirFromArrayGhost(dir_LEFT);
+		setDir(directionsGhost[dir_LEFT]);
 }
 
 void ghost::moveGhost()
 {
-	int currX = ghostPosition.getX(), currY = ghostPosition.getY();
+	int currX = getX(), currY = getY();
 	int newX = currX, newY = currY;
 	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
 
-	int currDir = ghostPosition.getDirX();
-	if (randChangeDir <= 5 || checkFloorEdge() || (ghostPosition.getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (ghostPosition.getFailChart(currX - 1, currY) == icon && currDir == LEFT)) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
+	int currDir = getDirX();
+	if (randChangeDir <= 5 || checkFloorEdge() || (getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (getFailChart(currX - 1, currY) == icon && currDir == LEFT)) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
 		changeDirection();
-	currDir = ghostPosition.getDirX();
+	currDir = getDirX();
 
 	newX = currX + currDir; // update the new X position
-	ghostPosition.setFailChart(' '); // erase the ghost from the fail chart	
-	ghostPosition.setPoint(newX, newY); // update the position of the ghost
+	setFailChart(' '); // erase the ghost from the fail chart	
+	setPosition(newX, newY); // update the position of the ghost
 	if (hammerHit())
 	{
-		active = false;
-		smashed = true;
-		ghostPosition.setFailChart(' ');
+		
+		setFailChart(' ');
 	}
 	else
-		ghostPosition.setFailChart(icon);
+		setFailChart(icon);
 
 	gotoxy(currX, currY);
-	std::cout << ghostPosition.getChar(currX, currY); // restore the previous character on the screen
+	std::cout << getChar(currX, currY); // restore the previous character on the screen
 }
 
 bool ghost::hammerHit()
 {
-	if (ghostPosition.getFailChart() == 'p')
+	if (getFailChart() == 'p')
 	{
 		return true;
 	}

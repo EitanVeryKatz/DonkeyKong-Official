@@ -77,7 +77,7 @@ void boardGame::resetGhosts()
     vector<ghost>::iterator itr_end = ghosts.end(); // initialize iterator to the end of floors_coord
     for (; itr != itr_end; ++itr) // iterate over each floor in floors_coord
     {
-        itr->activate();
+        itr->makeActive();
     }
 }
 

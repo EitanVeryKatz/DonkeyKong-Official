@@ -25,7 +25,7 @@ void barrel::barrelFall()
     }
 	else if (currY >= BOARD_HEIGHT - 2 || currX <= 2 || currX >= BOARD_WIDTH - 2) // if the barrel reached the bottom of the board deactivate the barrel
     {
-        deactivateBarrel();
+        deactivate();
     }
 	else if (onFloor) // if the barrel is on floor handle the movement on floor
     {
@@ -85,7 +85,7 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
     }
     else {
         setFailChart(' ');
-        deactivateBarrel();
+        deactivate();
         setSmash();
     }
 

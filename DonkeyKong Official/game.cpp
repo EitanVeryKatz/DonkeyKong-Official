@@ -247,7 +247,7 @@ void game::updateGhosts(boardGame& board)
 		{	
 			itr->erase();
 			itr->moveGhost();
-			if (itr->isSmashed()) {
+			if (itr->wasSmashed()) {
 				updateScore(150);
 				itr->resetSmashed();
 			}
