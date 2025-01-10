@@ -161,8 +161,7 @@ void game::initGame(player& mario, boardGame& board)
 	board.initBarrels();  // initialize the barrels
 	if (!firstGame)
 		board.resetGhosts();
-	mario.setGameBoard_USING_POINT(&board); // set the board of the player
-	mario.setHemmerBoard(&board);
+	mario.setGameBoard(&board); // set the board of the player
 	mario.resetPlayer(); // reset player's position
 	board.newDrawBoard(); // draw the board
 	mario.drawHammer(); // draw the hammer
@@ -275,7 +274,7 @@ void game::gameLoop(player& mario, boardGame& board)
 			needToDraw = false;
 		}
 
-		mario.draw_USING_POINT(); // draw the player
+		mario.draw(); // draw the player
 		if (!mario.doeshasHammer()) {
 			gotoxy(mario.getHammerX(), mario.getHammerY());
 			std::cout << 'p';
@@ -298,9 +297,9 @@ void game::gameLoop(player& mario, boardGame& board)
 			break;
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
-		mario.erase_USING_POINT(); // erase the player
+		mario.erase(); // erase the player
 		mario.moveInBoard_USING_POINT(); // move the player
-		mario.draw_USING_POINT(); // draw the player
+		mario.draw(); // draw the player
 		if (!debug)
 			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
 		std::fflush(stdin); // clear the input buffer

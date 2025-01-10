@@ -4,47 +4,36 @@
 #include "gameConfig.h"
 #include "boardGame.h"
 #include "point.h"
+#include "gameObject.h"
 
-class player
+class player : public gameObject
 {
+	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	static constexpr int STAY = 4, STOP = 0, DOWN = 1, JUMPING_FARME = 2;
 	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	static constexpr char iconArr[] = { '@' ,'a'};
-	char icon = iconArr[0];
+	char currIcon = iconArr[0];
 	static constexpr char hammerIcon = 'p';
 	point hammerLocation;
-	bool hasHammer;
+	bool hasHammer = false;
 	int midjump = 0;
 	bool midswing = false;
-	point position;
 	int fallCounter = 0;
 public:
 
-	player(int x, int y) : position(x, y)
-	{
-		startX = x;
-		startY = y;
-	}
+	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y) {}
 
-	void draw_USING_POINT() 
-	{
-		position.draw(icon);
-	}
-
-	void erase_USING_POINT()
-	{
-		position.draw(' ');
-	}
 
 	void resetPlayer()
 	{
-		icon = iconArr[0];
+		changeIcon(iconArr[0]);
+		currIcon = iconArr[0];
 		midjump = 0;
 		fallCounter = 0;
-		position.setPoint(startX, startY);
-		position.setDirFromArrayPlayer(STAY);
+		setPosition(startX, startY);
+		setDir(directionsPlayer[STAY]);
 		hasHammer = false;
 		midswing = 0;
 		setHammerLocation();
@@ -59,8 +48,6 @@ public:
 	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY); // Handle horizontal border
 	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
 	bool swingHit(int swingx, int swingy);
-	void setHemmerBoard(boardGame* gameBoard) { hammerLocation.setGameBoard(gameBoard); }
-	void setGameBoard_USING_POINT(boardGame* gameBoard) { position.setGameBoard(gameBoard); }
 	bool checkFail(); // Check if player failed
 	bool checkWin(); // Check if player won
 	bool isFalling(); // Check if player is falling

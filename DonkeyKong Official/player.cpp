@@ -3,33 +3,33 @@
 
 void player::keyPressed_USING_POINT(char key)
 {
-	if (position.isOnFloor() && !position.isOnLadder() && tolower(key) == 'w') {
+	if (isOnFloor() && !isOnLadder() && tolower(key) == 'w') {
 		midjump++;
 	}
-	if (hasHammer && position.getDirY() == 0) {//if mario holds hammer and looking sideways.
+	if (hasHammer && getDirY() == 0) {//if mario holds hammer and looking sideways.
 		if (tolower(key) == 'p') {
 			swingHammer();
 		}
 	}
-	if (position.isOnFloor()||position.isOnLadder()) 
+	if (isOnFloor()||isOnLadder()) 
 	{//as long as player not in the air
 		for (int i = 0; i < numKeys; i++) 
 		{
 			if (std::tolower(key) == keys[i]) 
 			{//find chosen direction in direction array
-				if (!position.isOnLadder()) 
+				if (!isOnLadder()) 
 				{//if player not currently on ladder 
-					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && position.getChar(position.getX(), position.getY() + 2) == 'H')) {
+					if (keys[i] == 'a' || keys[i] == 'd' || keys[i] == 's' || (keys[i] == 'x' && getChar(getX(), getY() + 2) == 'H')) {
 						//allow change to only x axis movenemt unless wanting to go down existing ladder
 						if (keys[i] == 'a' || keys[i] == 'd')
-							hammerLocation.setDirFromArrayPlayer(i);
-						position.setDirFromArrayPlayer(i);//update direction
+							hammerLocation.setDir(directionsPlayer[i]);
+						setDir(directionsPlayer[i]);
 					}
 					return;
 				}
 				else 
 				{ // if on ladder move to any direction
-					position.setDirFromArrayPlayer(i);
+					setDir(directionsPlayer[i]);
 					return;
 				}
 			}
@@ -39,9 +39,9 @@ void player::keyPressed_USING_POINT(char key)
 
 void player::moveInBoard_USING_POINT()
 {
-	int currX = position.getX();
-	int currY = position.getY();
-	int newX, newY, dirX = position.getDirX(), dirY = position.getDirY();
+	int currX = getX();
+	int currY = getY();
+	int newX, newY, dirX = getDirX(), dirY = getDirY();
 
 	if (isAtVerticalBorder(currX, dirX))
 	{
@@ -64,9 +64,8 @@ void player::moveInBoard_USING_POINT()
 	{
 		fallCounter = 0;
 	}
-	position.setPoint(newX, newY); // Update player's position
-	gotoxy(currX, currY);
-	std::cout << position.getChar(currX, currY);
+	setPosition(newX, newY); // Update player's position
+	restoreBoardChar(currX, currY);
 }
 
 bool player::isAtVerticalBorder(int currX, int dirX)
@@ -83,7 +82,7 @@ void player::handleVerticalBorder(int currX, int currY, int dirY, int &newX, int
 {
 	newX = currX;
 	newY = currY + dirY;
-	if (!position.isOnFloor())
+	if (!isOnFloor())
 		newY++;
 }
 
@@ -97,18 +96,18 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 {
 	
 
-	if (!position.isOnLadder() && dirX == STOP)  //if not on ladder moving vertically
+	if (!isOnLadder() && dirX == STOP)  //if not on ladder moving vertically
 	{
-		if (position.getChar(currX, currY + 2) != 'H' || dirY == -1) {//if not standing above ladder or going up
-			position.setDirY(STOP); //stop climbing
+		if (getChar(currX, currY + 2) != 'H' || dirY == -1) {//if not standing above ladder or going up
+			setDirY(STOP); //stop climbing
 			dirY = STOP;
 		}
 	}
 
-	if (dirY == DOWN && position.isOnFloor()) //if going down and reaching floor
+	if (dirY == DOWN && isOnFloor()) //if going down and reaching floor
 	{
-		if (position.getChar(currX, currY + 2) != 'H') {
-			position.setDirY(STOP); //stop
+		if (getChar(currX, currY + 2) != 'H') {
+			setDirY(STOP); //stop
 			dirY = STOP;
 		}
 	}
@@ -117,7 +116,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	newX = currX + dirX; // Calculate new horizontal position	
 	newY = currY + dirY; // Calculate new vertical position
 
-	if (position.isOnFloor()) //if on floor
+	if (isOnFloor()) //if on floor
 	{
 		if (midjump) //if jump pressed
 		{
@@ -127,9 +126,9 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	}
 	else //if not on floor
 	{
-		if (!position.isOnLadder() && midjump == STOP) //if not on ladder and not jumping
+		if (!isOnLadder() && midjump == STOP) //if not on ladder and not jumping
 			newY++; //continue to fall
-		if (!position.isOnLadder() && midjump >= JUMPING_FARME)//if on second frame of jumping
+		if (!isOnLadder() && midjump >= JUMPING_FARME)//if on second frame of jumping
 		{
 			newY--;//start falling
 			midjump = STOP; // stop jumping
@@ -139,12 +138,12 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 
 bool player::checkFail()
 {
-	char failChar = position.getFailChart();
+	char failChar = getFailChart();
 	if (failChar == 'O' || failChar == '*' || failChar == 'x')//if touched barrel or explosion particale
 	{
 		return true;
 	}
-	if (fallCounter >= FALL_TO_DEATH && position.isOnFloor() && !position.isOnLadder())//if fallen from hight of 5 characters and landed on floor
+	if (fallCounter >= FALL_TO_DEATH && isOnFloor() && !isOnLadder())//if fallen from hight of 5 characters and landed on floor
 	{
 		return true;
 	}
@@ -153,7 +152,7 @@ bool player::checkFail()
 
 bool player::checkWin()
 {
-	if (position.getChar() == '$')//if reached the princess
+	if (getChar() == '$')//if reached the princess
 	{
 		return true;
 	}
@@ -162,7 +161,7 @@ bool player::checkWin()
 
 bool player::isFalling()
 {
-	if ((!position.isOnFloor() && !position.isOnLadder() && !midjump) || position.getDirY() == DOWN)//not on ladder or floor or if going down
+	if ((!isOnFloor() && !isOnLadder() && !midjump) || getDirY() == DOWN)//not on ladder or floor or if going down
 	{
 		return true;
 	}
@@ -175,23 +174,24 @@ void player::setHammerLocation() {
 		hammerLocation.setX(rand() % BOARD_WIDTH - 1); //79
 		hammerLocation.setY(rand() % BOARD_HEIGHT - 1); //24
 	} 
-	while (!hammerLocation.isOnFloor()|| hammerLocation.getChar() != ' ');
+	while (!isOnFloor(hammerLocation.getX(), hammerLocation.getY())|| getChar(hammerLocation.getX(), hammerLocation.getY()) != ' ');
 }
 
 
 void player::checkHasHmmer() {
-	if (position.getX() == hammerLocation.getX() && position.getY() == hammerLocation.getY()) {
+	if (getX() == hammerLocation.getX() && getY() == hammerLocation.getY()) {
 		hasHammer = true;
-		icon = iconArr[1];
+		changeIcon(iconArr[1]);
+		currIcon = iconArr[1];
 	}
 }
 
 
 void player::swingHammer() {
-	hammerLocation.setX(position.getX() + hammerLocation.getDirX())  ;
-	hammerLocation.setY(position.getY() + hammerLocation.getDirY());
+	hammerLocation.setX(getX() + hammerLocation.getDirX())  ;
+	hammerLocation.setY(getY() + hammerLocation.getDirY());
 	gotoxy(hammerLocation.getX(), hammerLocation.getY());
-	hammerLocation.setFailChart(hammerIcon);
+	setFailChart(hammerLocation.getX(), hammerLocation.getY(), hammerIcon);
 	std::cout << '#';
 	midswing = true;
 
@@ -202,13 +202,13 @@ void player::swingHammer() {
 void player::clearHammerSwing() {
 	gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	
-	if (hammerLocation.getX() == position.getX() && hammerLocation.getY() == position.getY()) {
-		std::cout << icon;
+	if (hammerLocation.getX() == getX() && hammerLocation.getY() == getY()) {
+		std::cout << currIcon;
 	}
 	else {
-		std::cout << hammerLocation.getChar();
+		std::cout << getChar(hammerLocation.getX(), hammerLocation.getY());
 	}
-	hammerLocation.setFailChart(' ');
+	setFailChart(hammerLocation.getX(), hammerLocation.getY(), ' ');
 	midswing = false;
 }
 

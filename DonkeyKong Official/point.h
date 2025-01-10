@@ -9,8 +9,7 @@ class boardGame;
 class point
 {
 	int x, y;
-	struct Direction { int x, y; };
-	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+	
 	//													LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 
@@ -21,17 +20,15 @@ class point
 		gotoxy(x, y);
 		std::cout << c;
 	}
-	boardGame* pBoard = nullptr;
-	char*** pFailChart = nullptr;
 
 public:
 
-	void draw(char icon) 
+	void draw(char icon) const
 	{
 		drawPoint(icon);
 	}
 
-	void erase()
+	void erase() const
 	{
 		drawPoint(' ');
 	}
@@ -42,25 +39,14 @@ public:
 	void setX(int x) { this->x = x; }
 	void setY(int y) { this->y = y; }
 	void setPoint(int x, int y) { this->x = x; this->y = y; }
-	void setGameBoard(boardGame* pBoard) { this->pBoard = pBoard; }
-	bool isOnFloor();
-	bool isOnLadder();
 	int getDirX() { return dir.x; }
 	int getDirY() { return dir.y; }
 	void setDirX(int x) { dir.x = x; }		
 	void setDirY(int y) { dir.y = y; }
-	void setDir(int x, int y) 
+	void setDir(Direction d) 
 	{ 
-		setDirX(x);
-		setDirY(y);
+		dir = d;
 	}
-	char getChar();
-	char getChar(int _x, int _y);
-	char getFailChart();
-	char getFailChart(int _x, int _y);
-	void setFailChart(char c);
-	void setFailChart(int x, int y, char c);
-	void setDirFromArrayPlayer(int i) { dir = directionsPlayer[i]; }
 	void setDirFromArrayBarrel(int i) { dir = directionsBarrel[i]; }
 	void setDirFromArrayGhost(int i) { dir = directionsGhost[i]; }
 };
