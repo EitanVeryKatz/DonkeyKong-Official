@@ -12,6 +12,7 @@ public:
 	bool checkFloorEdge();
 	void changeDirection();
 	void move() override;
+	void update(int& barrelCounter, int iterationCounter,int maxBarrels) override;
 	
 };
 

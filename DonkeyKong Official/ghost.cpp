@@ -1,5 +1,7 @@
 #include "ghost.h"
 #include "boardGame.h"
+
+
 ghost::ghost() : npc(icon)
 {
 	int i = rand() % 2; // random number between 0 and 2
@@ -24,6 +26,21 @@ void ghost::changeDirection()
 		setDir(directionsGhost[dir_RIGHT]);
 	else
 		setDir(directionsGhost[dir_LEFT]);
+}
+
+void ghost::update(int& barrelCounter, int iterationCounter, int maxBarrels) {
+	{
+		if (isActive())
+		{
+			erase();
+			move();
+			if (wasSmashed()) {
+				//updateScore(150);
+				setSmash();
+			}
+			draw();
+		}
+	}
 }
 
 void ghost::move()

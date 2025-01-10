@@ -14,10 +14,10 @@ boardGame::boardGame(const std::string& fileName)
 
 void boardGame::initActiveBoard()
 {
-    if (newBoardFile)
-        ghosts.clear(); // clear the ghosts vector when new file is loaded
-
-    ghosts.reserve(20);
+    if (newBoardFile) {
+        npcVector.clear(); // clear the ghosts vector when new file is loaded
+    }
+    npcVector.reserve(20);
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
 	    for (int c = 0; c < BOARD_WIDTH; c++)
@@ -25,10 +25,11 @@ void boardGame::initActiveBoard()
             char currChar = activeBoard[r][c];
             if (currChar == 'x' && checkOnFloor(c, r))
             {
-                ghost temp;
-                temp.setPosition(c, r);
-                temp.setGameBoard(this);
-                ghosts.push_back(temp);
+                ghost* temp = new ghost;
+                temp->setPosition(c, r);
+                temp->setGameBoard(this);
+                
+                npcVector.push_back(temp);
                 activeBoard[r][c] = ' ';
             }
             else if (currChar == '@' && checkOnFloor(c, r))
@@ -53,7 +54,28 @@ void boardGame::initActiveBoard()
 				validPrincessPos = true;
 	    }
     }
-    ghosts.shrink_to_fit();
+    
+        npcVector.reserve(BARRELS_NUM);
+        for (int i = 0; i < BARRELS_NUM; i++) {
+            barrel* temp = new(barrel);
+
+
+            if (activeBoard[monkeY + 1][monkeX + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+                barrel::startingXPos.push_back(monkeX + 1);
+            if (activeBoard[monkeY + 1][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+                barrel::startingXPos.push_back(monkeX - 1);
+
+            temp->setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
+            temp->setGameBoard(this); // set the board of the barrel
+            temp->erase(); // erase the barrel
+            temp->resetBarrel(); // reset the barrel
+
+
+            npcVector.push_back(temp);
+        }
+
+    
+    npcVector.shrink_to_fit();
 }
 
 void boardGame::initFailChart()
@@ -73,11 +95,11 @@ void boardGame::initFailChart()
 
 void boardGame::resetGhosts()
 {
-    vector<ghost>::iterator itr = ghosts.begin(); // initialize iterator to the beginning of floors_coord
-    vector<ghost>::iterator itr_end = ghosts.end(); // initialize iterator to the end of floors_coord
+    vector<npc*>::iterator itr = npcVector.begin(); // initialize iterator to the beginning of floors_coord
+    vector<npc*>::iterator itr_end = npcVector.end(); // initialize iterator to the end of floors_coord
     for (; itr != itr_end; ++itr) // iterate over each floor in floors_coord
     {
-        itr->makeActive();
+        (*itr)->makeActive();
     }
 }
 
@@ -90,11 +112,11 @@ bool boardGame::checkOnFloor(int x, int y) const
 
 void boardGame::colidedGhost(int x, int y)
 {
-	for (vector<ghost>::iterator itr = ghosts.begin(); itr != ghosts.end(); ++itr)
+	for (vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end(); ++itr)
 	{
-		if (itr->getX() == x && itr->getY() == y)
+		if ((*itr)->getX() == x && (*itr)->getY() == y)
 		{
-            itr->changeDirection();
+            (*itr)->changeDirection();
             break;
 		}
 	}

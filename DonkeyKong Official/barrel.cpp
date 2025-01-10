@@ -206,4 +206,57 @@ void barrel::updateFallCount()
 
 
 
+void barrel::update(int& barrelCounter, int iterationCounter, int maxBarrels) {
 
+
+    if (isActive()) // if barrel is active
+    {
+        erase(); // erase the barrel
+        move(); // make the barrel fall
+        if (isActive()) {
+            draw(); // draw the barrel
+            if (wasSmashed()) {
+                //updateScore(100);
+                resetSmash();
+            }
+        }
+        else {
+            barrelCounter--; // decrement the number of active barrels
+        }
+    }
+    else if (!isActive() && barrelCounter < maxBarrels && !isBlastShowing()) // if the barrel is not active and there are less than the maximum number of barrels and the barrel is not exploding
+    {
+        resetBarrel(); // reset the barrel
+        barrelCounter++; // increment the number of active barrels
+    }
+
+
+
+
+    if (isBlastShowing()) // if the barrel is exploding
+    {
+        if (getBlowCount() == 2) // if the explosion is over
+        {
+            clearBlast(); // clear the explosion
+            barrelCounter--; // decrement the number of active barrels
+
+        }
+        else if (getBlowCount() == 1)//if explosion ongoing
+        {
+            explode();//continue explosion
+            updateBlowCounter(); // update the explosion counter
+
+        }//if explosion just began on this iteration
+        else {
+            updateBlowCounter();//update the explosion counter
+        }
+    }
+
+    if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel and there are less than the maximum number of barrels
+    {
+        
+        draw(); // draw the barrel
+        barrelCounter++; // increment the barrel counter
+        barrelCounter++; // increment the number of active barrels
+    }
+}

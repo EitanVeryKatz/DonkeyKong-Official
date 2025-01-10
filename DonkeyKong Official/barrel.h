@@ -35,13 +35,14 @@ public:
 	void handleInAir(int currX, int currY, int& newX, int& newY); // handles barrel movement in air
 	void updatePosition(int currX, int currY, int newX, int newY); // updates the position of the barrel
 	void explode();
-	
+	void changeDirection() { return; }
 	void clearBlast();
 	bool isBlastShowing() { return blastParticlesVisable; }
 	int getBlowCount() { return blastCounter; }
 	void updateBlowCounter();
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel();
+	void update(int& barrelCounter, int iterationCounter, int maxBarrels) override;
 	
 	
 	void updateFallCount();

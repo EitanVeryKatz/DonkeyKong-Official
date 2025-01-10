@@ -27,8 +27,8 @@ class boardGame
 	bool succOpen = false;
 	bool newBoardFile = false;
 	barrel barrels[BARRELS_NUM];
-	vector <ghost> ghosts;
-	vector <npc*> npsVector;
+	
+	vector <npc*> npcVector;
 public :
 	boardGame(const std::string& fileName);
 	char getChar(int x, int y) { return activeBoard[y][x]; } // get the char of the board at the given coordinates
@@ -57,7 +57,7 @@ public :
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }
 	void colidedGhost(int x, int y);
-	vector<ghost>::iterator getGhostsBegin() { return ghosts.begin(); }
-	vector<ghost>::iterator getGhostsEnd() { return ghosts.end(); }
+	vector<npc*>::iterator getNPCVectorBegin() { return npcVector.begin(); }
+	vector<npc*>::iterator getNPCVectorEnd() { return npcVector.end(); }
 };
 
