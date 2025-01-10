@@ -24,6 +24,7 @@ class boardGame
 	void readBoardFromFile(const std::string& fileName);
 	bool succOpen = false;
 	bool newBoardFile = false;
+	barrel barrels[BARRELS_NUM];
 	vector <ghost> ghosts;
 public :
 	boardGame(const std::string& fileName);

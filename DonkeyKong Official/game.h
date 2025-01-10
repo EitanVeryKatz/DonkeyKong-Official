@@ -11,7 +11,7 @@
 class game
 {
 private:
-	barrel barrels[BARRELS_NUM];
+	
 public:
 	int lives = 3;
 	int score = 0;
