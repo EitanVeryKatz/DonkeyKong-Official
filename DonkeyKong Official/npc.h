@@ -7,7 +7,8 @@ class npc : public gameObject
 	bool active = true;
 	bool smashed = false;
 public:
-	using gameObject::gameObject;
+	npc(int x, int y, char icon): gameObject(x,y,icon) {}
+	npc(char icon):gameObject(icon){}
 	bool isActive() const { return active; }
 	void resetSmash() { smashed = false; }
 	void setSmash() { smashed = true; }
