@@ -16,6 +16,8 @@ public:
 	void makeActive() { active = true; }
 	void deactivate() { active = false; }
 	bool checkSmash() {return getFailChart() == 'p';}
+	virtual void move() = 0;
+	virtual ~npc() {};
 
 };
 

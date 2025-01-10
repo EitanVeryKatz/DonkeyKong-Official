@@ -7,7 +7,7 @@ vector<int> barrel::startingXPos = {};
 
 
 
-void barrel::barrelFall()
+void barrel::move()
 {
 	int currX = getX(), currY = getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
     char dirChar;

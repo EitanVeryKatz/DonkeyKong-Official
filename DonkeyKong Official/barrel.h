@@ -29,7 +29,7 @@ public:
 	barrel() : npc(ICON) {}
 	static vector<int> startingXPos;
 	void setStartPos(int x, int y) { startingPos.setPoint(x, y); }
-	void barrelFall(); // handles barrel movement
+	void move() override; // handles barrel movement
 	void handleExplosion();
 	void handleOnFloor(int currX, int currY, int& newX, int& newY, char& dirChar); // handles barrel movement on floor
 	void handleInAir(int currX, int currY, int& newX, int& newY); // handles barrel movement in air

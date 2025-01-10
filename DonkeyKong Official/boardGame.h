@@ -5,8 +5,10 @@
 #include "npc.h"
 #include <vector>
 
+
 using std::vector;
 
+class npc;
 class barrel;
 class ghost;
 
@@ -26,6 +28,7 @@ class boardGame
 	bool newBoardFile = false;
 	barrel barrels[BARRELS_NUM];
 	vector <ghost> ghosts;
+	vector <npc*> npsVector;
 public :
 	boardGame(const std::string& fileName);
 	char getChar(int x, int y) { return activeBoard[y][x]; } // get the char of the board at the given coordinates
@@ -33,18 +36,22 @@ public :
 	
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; } // update the fail chart at the given coordinates
 	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates
+	
 	void initBarrels(); // initialize the barrels
 	void initFailChart(); // initialize the fail chart
 	barrel& getBarrel(int i) { return barrels[i]; }
 	void initActiveBoard();
 	void resetGhosts();
+	
 	int getMarioStartX() const { return startXMario; }
 	int getMarioStartY() const { return startYMario; }
 	int getMonkeX() const { return monkeX; }
 	int getMonkeY() const { return monkeY; }
 	int getLx() const { return Lx; }
 	int getLy() const { return Ly; }
+	
 	bool checkOnFloor (int x, int y) const;
+	
 	bool getValidity() const { return (validPlayerPos && validMonkeyPos && validPrincessPos); }
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }

@@ -190,7 +190,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		if (pBarrel.isActive()) // if barrel is active
 		{
 			pBarrel.erase(); // erase the barrel
-			pBarrel.barrelFall(); // make the barrel fall
+			pBarrel.move(); // make the barrel fall
 			if (pBarrel.isActive()) {
 				pBarrel.draw(); // draw the barrel
 				if (pBarrel.wasSmashed()) {
@@ -246,7 +246,7 @@ void game::updateGhosts(boardGame& board)
 		if (itr->isActive())
 		{	
 			itr->erase();
-			itr->moveGhost();
+			itr->move();
 			if (itr->wasSmashed()) {
 				updateScore(150);
 				itr->setSmash();

@@ -25,7 +25,7 @@ void ghost::changeDirection()
 		setDir(directionsGhost[dir_LEFT]);
 }
 
-void ghost::moveGhost()
+void ghost::move()
 {
 	int currX = getX(), currY = getY();
 	int newX = currX, newY = currY;

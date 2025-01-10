@@ -11,7 +11,7 @@ public:
 	ghost();
 	bool checkFloorEdge();
 	void changeDirection();
-	void moveGhost();
+	void move() override;
 	
 };
 
