@@ -88,6 +88,18 @@ bool boardGame::checkOnFloor(int x, int y) const
 	return false;
 }
 
+void boardGame::colidedGhost(int x, int y)
+{
+	for (vector<ghost>::iterator itr = ghosts.begin(); itr != ghosts.end(); ++itr)
+	{
+		if (itr->getX() == x && itr->getY() == y)
+		{
+            itr->changeDirection();
+            break;
+		}
+	}
+}
+
 void boardGame::readBoardFromFile(const std::string &fileName)
 {
     std::ifstream boardFile(fileName);

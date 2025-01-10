@@ -1,4 +1,5 @@
 #include "ghost.h"
+#include "boardGame.h"
 ghost::ghost() : npc(icon)
 {
 	int i = rand() % 2; // random number between 0 and 2
@@ -32,8 +33,13 @@ void ghost::moveGhost()
 	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
 
 	int currDir = getDirX();
-	if (randChangeDir <= 5 || checkFloorEdge() || (getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (getFailChart(currX - 1, currY) == icon && currDir == LEFT)) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
+	if (randChangeDir <= 5 || checkFloorEdge())  // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
 		changeDirection();
+	if ((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (getFailChart(currX - 1, currY) == icon && currDir == LEFT))
+	{
+		changeDirection();
+		colidedGhost((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
+	}
 	currDir = getDirX();
 
 	newX = currX + currDir; // update the new X position

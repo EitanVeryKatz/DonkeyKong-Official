@@ -63,3 +63,8 @@ char gameObject::getChar(int x, int y) const
 {
 	return pBoard->getChar(x, y);
 }
+
+void gameObject::colidedGhost(int x, int y)
+{
+	pBoard->colidedGhost(x, y);
+}
