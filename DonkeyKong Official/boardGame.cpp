@@ -57,7 +57,7 @@ void boardGame::initActiveBoard()
     
         npcVector.reserve(BARRELS_NUM);
         for (int i = 0; i < BARRELS_NUM; i++) {
-            barrel* temp = new(barrel);
+            barrel* temp = new barrel;
 
 
             if (activeBoard[monkeY + 1][monkeX + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
@@ -119,6 +119,14 @@ void boardGame::colidedGhost(int x, int y)
             (*itr)->changeDirection();
             break;
 		}
+	}
+}
+
+boardGame::~boardGame()
+{
+	for (vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end(); ++itr)
+	{
+		delete* itr;
 	}
 }
 

@@ -59,5 +59,6 @@ public :
 	void colidedGhost(int x, int y);
 	vector<npc*>::iterator getNPCVectorBegin() { return npcVector.begin(); }
 	vector<npc*>::iterator getNPCVectorEnd() { return npcVector.end(); }
+	~boardGame();
 };
 

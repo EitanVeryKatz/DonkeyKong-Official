@@ -254,7 +254,6 @@ void barrel::update(int& barrelCounter, int iterationCounter, int maxBarrels) {
 
     if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel and there are less than the maximum number of barrels
     {
-        
         draw(); // draw the barrel
         barrelCounter++; // increment the barrel counter
         barrelCounter++; // increment the number of active barrels
