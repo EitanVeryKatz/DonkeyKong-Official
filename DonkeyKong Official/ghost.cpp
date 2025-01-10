@@ -43,6 +43,8 @@ void ghost::moveGhost()
 	{
 		
 		setFailChart(' ');
+		setSmash();
+		deactivate();
 	}
 	else
 		setFailChart(icon);
