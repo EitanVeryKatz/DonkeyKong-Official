@@ -177,7 +177,7 @@ void game::handleInput(player& mario)
 			pauseGame(); // pause the game
 		}
 		else
-			mario.keyPressed_USING_POINT(key); // handle the key
+			mario.keyPressed(key); // handle the key
 	}
 }
 
@@ -189,10 +189,10 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 
 		if (pBarrel.isActive()) // if barrel is active
 		{
-			pBarrel.erase_USING_POINT(); // erase the barrel
-			pBarrel.barrelFall_USING_POINT(); // make the barrel fall
+			pBarrel.erase(); // erase the barrel
+			pBarrel.barrelFall(); // make the barrel fall
 			if (pBarrel.isActive()) {
-				pBarrel.draw_USING_POINT(); // draw the barrel
+				pBarrel.draw(); // draw the barrel
 				if (pBarrel.wasSmashed()) {
 					updateScore(100);
 					pBarrel.resetSmash();
@@ -203,7 +203,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 		}
 		else if (!pBarrel.isActive() && activeBarrels < maxBarrels && !pBarrel.isBlastShowing()) // if the barrel is not active and there are less than the maximum number of barrels and the barrel is not exploding
 		{
-			pBarrel.resetBarrel_USING_POINT(); // reset the barrel
+			pBarrel.resetBarrel(); // reset the barrel
 			activeBarrels++; // increment the number of active barrels
 		}
 			
@@ -233,7 +233,7 @@ void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCoun
 	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel and there are less than the maximum number of barrels
 		{
 			barrel* pBarrel = &board.getBarrel(barrelCounter); // get the next barrel
-			pBarrel->draw_USING_POINT(); // draw the barrel
+			pBarrel->draw(); // draw the barrel
 			barrelCounter++; // increment the barrel counter
 			activeBarrels++; // increment the number of active barrels
 		}
@@ -298,7 +298,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase(); // erase the player
-		mario.moveInBoard_USING_POINT(); // move the player
+		mario.moveInBoard(); // move the player
 		mario.draw(); // draw the player
 		if (!debug)
 			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement

@@ -1,16 +1,17 @@
 #include "barrel.h"
 #include "boardGame.h"
 #include "gameConfig.h"
+#include "gameObject.h"
 
 vector<int> barrel::startingXPos = {};
 
 
 
-void barrel::barrelFall_USING_POINT()
+void barrel::barrelFall()
 {
-	int currX = position.getX(), currY = position.getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
+	int currX = getX(), currY = getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
     char dirChar;
-    bool onFloor = position.isOnFloor();
+    bool onFloor = isOnFloor();
     updateFallCount();
 	if (exploaded) // if the barrel has exploded clear the explosion and set the explosion flag to false
     {
@@ -180,11 +181,11 @@ void barrel::clearBlast()
 	blastCenterY = 0;
 }
 
-void barrel::resetBarrel_USING_POINT()
+void barrel::resetBarrel()
 {
-	position.setPoint(startingPos.getX(), startingPos.getY()); // set the position of the barrel to the starting position
-	position.setDirFromArrayBarrel(STAY); // set the direction of the barrel to stay
-	active = true; // set the barrel to active
+	setPosition(startingPos.getX(), startingPos.getY()); // set the position of the barrel to the starting position
+	setDirFromArrayBarrel(STAY); // set the direction of the barrel to stay
+	makeActive(); // set the barrel to active
 	blastCenterX = 0; // set the center of the blast to 0
 	blastCenterY = 0; // set the center of the blast to 0
 	blastParticlesVisable = false; // set the blast particles to not visible

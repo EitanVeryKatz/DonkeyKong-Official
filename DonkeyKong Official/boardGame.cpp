@@ -141,7 +141,7 @@ void boardGame::newDrawBoard() const
     }
 }
 
-void boardGame::initBarrels()
+void boardGame::initBarrels(barrel* barrelArr)
 {
     if (newBoardFile)
     {
@@ -152,12 +152,12 @@ void boardGame::initBarrels()
         if (activeBoard[monkeY + 1][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX - 1);
     }
-	for (auto& b : barrels)
+	for (barrel& b : barrelArr)
 	{
 		b.setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
-		b.setBoard_USING_POINT(this); // set the board of the barrel
-		b.erase_USING_POINT(); // erase the barrel
-		b.resetBarrel_USING_POINT(); // reset the barrel
+		b.setBoard(this); // set the board of the barrel
+		b.erase(); // erase the barrel
+		b.resetBarrel(); // reset the barrel
 	}
 }
 

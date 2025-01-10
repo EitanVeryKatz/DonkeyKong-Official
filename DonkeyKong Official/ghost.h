@@ -1,6 +1,8 @@
 #pragma once
 #include "point.h"
-class ghost
+#include "npc.h"
+
+class ghost:public npc
 {
 	static constexpr int dir_LEFT = 0, dir_RIGHT = 1, LEFT = -1, RIGHT = 1;
 	static constexpr char icon = 'x';
@@ -26,7 +28,7 @@ public:
 	bool checkFloorEdge();
 	void changeDirection();
 	void moveGhost();
-	void setGameBoard(boardGame* gameBoard) { ghostPosition.setGameBoard(gameBoard); }
+	void setGameBoard(boardGame* gameBoard) { setGameBoard(gameBoard); }
 	bool hammerHit();
 	bool isActive() { return active; }
 	void activate() { active = true; }
