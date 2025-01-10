@@ -15,6 +15,6 @@ public:
 	bool checkFloorEdge();
 	void changeDirection();
 	void moveGhost();
-	bool hammerHit();
+	
 };
 

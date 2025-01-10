@@ -190,10 +190,7 @@ void barrel::resetBarrel()
 	fallCounter = 0;
 }
 
-bool barrel::checkSmash(){
-    return getFailChart() == 'p';
-    
-}
+
 
 void barrel::updateFallCount()
 {

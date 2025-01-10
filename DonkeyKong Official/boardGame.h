@@ -33,9 +33,9 @@ public :
 	
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; } // update the fail chart at the given coordinates
 	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates
-	void initBarrels(barrel* barrelArr); // initialize the barrels
+	void initBarrels(); // initialize the barrels
 	void initFailChart(); // initialize the fail chart
-	
+	barrel& getBarrel(int i) { return barrels[i]; }
 	void initActiveBoard();
 	void resetGhosts();
 	int getMarioStartX() const { return startXMario; }

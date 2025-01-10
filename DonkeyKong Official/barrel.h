@@ -42,7 +42,7 @@ public:
 	void updateBlowCounter();
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel();
-	bool checkSmash();
+	
 	
 	void updateFallCount();
 };

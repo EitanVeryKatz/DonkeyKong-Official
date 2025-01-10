@@ -141,7 +141,7 @@ void boardGame::newDrawBoard() const
     }
 }
 
-void boardGame::initBarrels(barrel* barrelArr)
+void boardGame::initBarrels()
 {
     if (newBoardFile)
     {
@@ -154,10 +154,10 @@ void boardGame::initBarrels(barrel* barrelArr)
     }
 	for (int i = 0; i < BARRELS_NUM; i++)
 	{
-		barrelArr[i].setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
-        barrelArr[i].setGameBoard(this); // set the board of the barrel
-        barrelArr[i].erase(); // erase the barrel
-        barrelArr[i].resetBarrel(); // reset the barrel
+		barrels[i].setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
+        barrels[i].setGameBoard(this); // set the board of the barrel
+        barrels[i].erase(); // erase the barrel
+        barrels[i].resetBarrel(); // reset the barrel
 	}
 }
 

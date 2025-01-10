@@ -39,7 +39,7 @@ void ghost::moveGhost()
 	newX = currX + currDir; // update the new X position
 	setFailChart(' '); // erase the ghost from the fail chart	
 	setPosition(newX, newY); // update the position of the ghost
-	if (hammerHit())
+	if (checkSmash())
 	{
 		
 		setFailChart(' ');
@@ -51,11 +51,4 @@ void ghost::moveGhost()
 	std::cout << getChar(currX, currY); // restore the previous character on the screen
 }
 
-bool ghost::hammerHit()
-{
-	if (getFailChart() == 'p')
-	{
-		return true;
-	}
-	return false;
-}
+

@@ -15,6 +15,7 @@ public:
 	bool wasSmashed() { return smashed; }
 	void makeActive() { active = true; }
 	void deactivate() { active = false; }
+	bool checkSmash() {return getFailChart() == 'p';}
 
 };
 
