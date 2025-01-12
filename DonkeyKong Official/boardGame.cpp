@@ -46,6 +46,7 @@ void boardGame::initActiveBoard()
             }
             else if (currChar == 'L')
             {
+				//TODO: add checks for valid position
                 Lx = c;
                 Ly = r;
             }
@@ -104,22 +105,19 @@ void boardGame::readBoardFromFile(const std::string &fileName)
 	    {
             for (int c = 0; c < BOARD_WIDTH; c++)
 				if (c < line.length())
-					activeBoard[r][c] = line[c];
-				else // if the line is shorter than the board width
-					if (c == BOARD_WIDTH - 1)
-						activeBoard[r][c] = 'Q'; // set the last char to 'Q'
+				{
+                    if (c != BOARD_WIDTH - 1 && c != 0 && r != 0 && r != BOARD_HEIGHT - 1 && line[c] == 'Q')
+						activeBoard[r][c] = ' ';
 					else
-						activeBoard[r][c] = ' '; // set the rest of the chars to ' '
+                        activeBoard[r][c] = line[c]; // set the char of the board to the char of the line
+				}
+				else // if the line is shorter than the board width
+					activeBoard[r][c] = ' '; // set the rest of the chars to ' '
 	    }
         else // if there is no line put spaces
         {
             for (int c = 0; c < BOARD_WIDTH; c++)
-				if (c == BOARD_WIDTH - 1)
-					activeBoard[r][c] = 'Q'; // set the last char to 'Q'
-				else if (r != BOARD_HEIGHT - 1)
-					activeBoard[r][c] = ' '; // set the rest of the chars to ' '
-				else if (r == BOARD_HEIGHT - 1 || r == 0) // if the last row or the first row
-					activeBoard[r][c] = 'Q'; // set the last row to 'Q'
+            	activeBoard[r][c] = ' '; // set the rest of the chars to ' '
         }
     }
 	succOpen = true;
