@@ -427,6 +427,11 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 			}
 			else if (dynamic_cast<barrel*>(*itr))
 				activeBarrels--;
+			else
+			{
+				delete pNPC;
+				itr = npcVector.erase(itr);
+			}
 		}
 		else
 		{
