@@ -155,6 +155,7 @@ void game::runGame(const std::string& fileName)
 
 void game::initGame(player& mario, boardGame& board)
 {
+	needsRedraw = true;
 	clear_key_buffer(); // clear the input buffer
 	activeBarrels = 0; // reset the number of active barrels
 	board.initFailChart(); // initialize the fail chart
@@ -265,11 +266,13 @@ void game::gameLoop(player& mario, boardGame& board)
 	int legendX = board.getLx(), legendY = board.getLy();
 	while (running) // main game loop
 	{
-		
+		if (needsRedraw)
+		{
 			gotoxy(legendX, legendY);
 			std::cout << "Lives: " << lives << std::endl;
 			gotoxy(legendX, legendY + 1);
 			std::cout << "Score: " << score << std::endl;
+		}
 		
 
 		mario.draw(); // draw the player
@@ -477,6 +480,7 @@ void game::printAndChooseBoard(string& fileName)
 
 void game::updateScore(int points) {
 	score += points;
+	needsRedraw = true;
 }
 
 

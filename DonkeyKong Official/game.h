@@ -22,6 +22,7 @@ public:
 	bool singleGame = false;
 	int level = 1;
 	bool debug = false;
+	bool needsRedraw = true;
 	
 	//void setfirstScreen(int index) { firstScreen = index; }
 	void updateScore(int points);

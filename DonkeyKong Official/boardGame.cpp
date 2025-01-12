@@ -31,7 +31,7 @@ void boardGame::initActiveBoard()
                 ghosts.push_back(temp);
                 activeBoard[r][c] = ' ';
             }
-            else if (currChar == '@' && checkOnFloor(c, r))
+            else if (currChar == '@')
             {
                 validPlayerPos = true;
                 startXMario = c;
@@ -49,6 +49,7 @@ void boardGame::initActiveBoard()
 				//TODO: add checks for valid position
                 Lx = c;
                 Ly = r;
+				checkLegendValidity(Lx, Ly);
             }
             else if (currChar == '$' && checkOnFloor(c, r))
 				validPrincessPos = true;
@@ -80,6 +81,22 @@ void boardGame::resetGhosts()
     {
         itr->makeActive();
     }
+}
+
+void boardGame::checkLegendValidity(int x, int y)
+{
+    for (int i = y; i < y + L_HEIGHT; i++)
+    {
+		for (int j = x; j < x + L_LENGTH; j++)
+		{
+			if (!(i == y && j == x) && activeBoard[j][i] != ' ')
+			{
+				validLPos = false;
+				return;
+			}
+		}
+    }
+	validLPos = true;
 }
 
 bool boardGame::checkOnFloor(int x, int y) const
