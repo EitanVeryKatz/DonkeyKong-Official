@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 
+using std::vector;
 boardGame::boardGame(const std::string& fileName)
 {
 	readBoardFromFile(fileName);
@@ -12,12 +13,20 @@ boardGame::boardGame(const std::string& fileName)
     initActiveBoard();
 }
 
+boardGame::~boardGame()
+{
+	for (vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end(); ++itr)
+	{
+		delete* itr;
+	}
+}
+
 void boardGame::initActiveBoard()
 {
     if (newBoardFile)
-        ghosts.clear(); // clear the ghosts vector when new file is loaded
+		npcVector.clear();
 
-    ghosts.reserve(20);
+    npcVector.reserve(20);
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
 	    for (int c = 0; c < BOARD_WIDTH; c++)
@@ -25,10 +34,10 @@ void boardGame::initActiveBoard()
             char currChar = activeBoard[r][c];
             if (currChar == 'x' && checkOnFloor(c, r))
             {
-                ghost temp;
-                temp.setPosition(c, r);
-                temp.setGameBoard(this);
-                ghosts.push_back(temp);
+				ghost* temp = new ghost();
+                temp->setPosition(c, r);
+                temp->setGameBoard(this);
+                npcVector.push_back(temp);
                 activeBoard[r][c] = ' ';
             }
             else if (currChar == '@')
@@ -55,7 +64,7 @@ void boardGame::initActiveBoard()
 				validPrincessPos = true;
 	    }
     }
-    ghosts.shrink_to_fit();
+    npcVector.shrink_to_fit();
 }
 
 void boardGame::initFailChart()
@@ -75,11 +84,13 @@ void boardGame::initFailChart()
 
 void boardGame::resetGhosts()
 {
-    vector<ghost>::iterator itr = ghosts.begin(); // initialize iterator to the beginning of floors_coord
-    vector<ghost>::iterator itr_end = ghosts.end(); // initialize iterator to the end of floors_coord
-    for (; itr != itr_end; ++itr) // iterate over each floor in floors_coord
+    for (vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end(); ++itr)
     {
-        itr->makeActive();
+        ghost* pGhost = dynamic_cast<ghost*>(*itr);
+        if (pGhost)
+        {
+            pGhost->makeActive();
+        }
     }
 }
 
@@ -105,6 +116,7 @@ bool boardGame::checkOnFloor(int x, int y) const
 		return true;
 	return false;
 }
+
 
 void boardGame::readBoardFromFile(const std::string &fileName)
 {
@@ -167,13 +179,6 @@ void boardGame::initBarrels()
         if (activeBoard[monkeY + 1][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
             barrel::startingXPos.push_back(monkeX - 1);
     }
-	for (int i = 0; i < BARRELS_NUM; i++)
-	{
-		barrels[i].setStartPos(barrel::startingXPos[rand() % barrel::startingXPos.size()], monkeY + 1);
-        barrels[i].setGameBoard(this); // set the board of the barrel
-        barrels[i].erase(); // erase the barrel
-        barrels[i].resetBarrel(); // reset the barrel
-	}
 }
 
 

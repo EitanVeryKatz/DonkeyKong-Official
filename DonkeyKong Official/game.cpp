@@ -139,9 +139,9 @@ void game::runGame(const std::string& fileName)
 		system("cls");
 		gotoxy(MessageX - 20, MessageY);
 		if (level != boardFileNames.size() && !singleGame)
-			std::cout << "One or more objects on board are invallid trying next board!";
+			std::cout << "One or more objects on board are invalid trying next board!";
 		else
-			std::cout << "One or more objects on board are invallid! returning to menu";
+			std::cout << "One or more objects on board are invalid! returning to menu";
 		Sleep(breakTime);
 		return;
 	}
@@ -182,82 +182,6 @@ void game::handleInput(player& mario)
 	}
 }
 
-void game::updateBarrels(boardGame& board, int& barrelCounter, int iterationCounter)
-{
-	for (int i = 0; i < barrelCounter; i++) // update all barrels
-	{
-		barrel& pBarrel = board.getBarrel(i); // get the barrel
-
-		if (pBarrel.isActive()) // if barrel is active
-		{
-			pBarrel.erase(); // erase the barrel
-			pBarrel.move(); // make the barrel fall
-			if (pBarrel.isActive()) {
-				pBarrel.draw(); // draw the barrel
-				if (pBarrel.wasSmashed()) {
-					updateScore(100);
-					pBarrel.resetSmash();
-				}
-			}
-			else
-				activeBarrels--; // decrement the number of active barrels
-		}
-		else if (!pBarrel.isActive() && activeBarrels < maxBarrels && !pBarrel.isBlastShowing()) // if the barrel is not active and there are less than the maximum number of barrels and the barrel is not exploding
-		{
-			pBarrel.resetBarrel(); // reset the barrel
-			activeBarrels++; // increment the number of active barrels
-		}
-			
-
-
-		
-		if (pBarrel.isBlastShowing()) // if the barrel is exploding
-		{
-			if (pBarrel.getBlowCount() == 2) // if the explosion is over
-			{
-				pBarrel.clearBlast(); // clear the explosion
-				activeBarrels--; // decrement the number of active barrels
-
-			}
-			else if(pBarrel.getBlowCount() == 1)//if explosion ongoing
-			{
-				pBarrel.explode();//continue explosion
-				pBarrel.updateBlowCounter(); // update the explosion counter
-				
-			}//if explosion just began on this iteration
-			else {
-				pBarrel.updateBlowCounter();//update the explosion counter
-			}
-		}
-			
-	}
-	if (iterationCounter % BARREL_SPAWN_RATE == 0 && barrelCounter < BARRELS_NUM && barrelCounter < maxBarrels) // if it's time to add a new barrel and there are less than the maximum number of barrels
-		{
-			barrel* pBarrel = &board.getBarrel(barrelCounter); // get the barrel
-			pBarrel->draw(); // draw the barrel
-			barrelCounter++; // increment the barrel counter
-			activeBarrels++; // increment the number of active barrels
-		}
-	}
-
-void game::updateGhosts(boardGame& board)
-{
-	for (std::vector<ghost>::iterator itr = board.getGhostsBegin(); itr != board.getGhostsEnd(); ++itr)
-	{
-		if (itr->isActive())
-		{	
-			itr->erase();
-			itr->move();
-			if (itr->wasSmashed()) {
-				updateScore(150);
-				itr->setSmash();
-			}
-			itr->draw();
-		}
-	}
-}
-
-
 void game::gameLoop(player& mario, boardGame& board)
 {
 	bool running = true;
@@ -285,8 +209,7 @@ void game::gameLoop(player& mario, boardGame& board)
 			mario.clearHammerSwing();
 
 		handleInput(mario); // handle the user input
-		updateBarrels(board, barrelCounter, iterationCounter); // update the barrels
-		updateGhosts(board);
+		updateNPCs(iterationCounter, board);
 		Sleep(GAME_SPEED);
 		iterationCounter++;
 		mario.checkHasHmmer();
@@ -476,11 +399,76 @@ void game::printAndChooseBoard(string& fileName)
 }
 
 
-
-
 void game::updateScore(int points) {
 	score += points;
 	needsRedraw = true;
 }
 
 
+void game::updateNPCs(int iterationCounter, boardGame& board)
+{
+	auto& npcVector = board.getNPCVector();
+	for (std::vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end();)
+	{
+		npc* pNPC = *itr;
+		if (pNPC->isActive())
+		{
+			pNPC->erase();
+			pNPC->move();
+			if (pNPC->isActive())
+			{
+				pNPC->draw();
+				if (pNPC->wasSmashed())
+				{
+					updateScore(150);
+					pNPC->resetSmash();
+				}
+				++itr;
+			}
+			else
+			{
+				delete pNPC;
+				itr = npcVector.erase(itr);
+				if (dynamic_cast<barrel*>(*itr))
+					activeBarrels--;
+			}
+		}
+		else
+		{
+			barrel* pBarrel = dynamic_cast<barrel*>(pNPC);
+			if (pBarrel)
+			{
+				if (pBarrel->isBlastShowing())
+				{
+					if (pBarrel->getBlowCount() == 2)
+					{
+						pBarrel->clearBlast();
+						activeBarrels--;
+					}
+					else if (pBarrel->getBlowCount() == 1)
+					{
+						pBarrel->explode();
+						pBarrel->updateBlowCounter();
+					}
+					else
+						pBarrel->updateBlowCounter();
+				}
+			}
+			++itr;
+		}
+	}
+	handleBarrelSpawn(board, iterationCounter);
+}
+
+void game::handleBarrelSpawn(boardGame& board, int iterationCounter)
+{
+	if (iterationCounter % BARREL_SPAWN_RATE == 0 && activeBarrels < maxBarrels)
+	{
+		barrel* pBarrel = new barrel(board.getMonkeY());
+		pBarrel->setGameBoard(&board);
+		pBarrel->resetBarrel();
+		pBarrel->draw();
+		board.getNPCVector().push_back(pBarrel);
+		activeBarrels++;
+	}
+}

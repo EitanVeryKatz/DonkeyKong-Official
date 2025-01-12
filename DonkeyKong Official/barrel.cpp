@@ -6,7 +6,11 @@
 vector<int> barrel::startingXPos = {};
 
 
-
+barrel::barrel(int monkeY) : npc(ICON)
+{
+	startX = startingXPos[rand() % startingXPos.size()];
+    startY = monkeY + 1;
+}
 void barrel::move()
 {
 	int currX = getX(), currY = getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
@@ -89,12 +93,9 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
         setSmash();
     }
 
-
-    // comment this
     if (!isBlastShowing() && getBlowCount() < 2) 
     {
-        gotoxy(currX, currY);
-        std::cout << getChar(currX, currY);
+		restoreBoardChar(currX, currY); // restore the board char
     }
 }
 
@@ -179,7 +180,7 @@ void barrel::clearBlast()
 
 void barrel::resetBarrel()
 {
-	setPosition(startingPos.getX(), startingPos.getY()); // set the position of the barrel to the starting position
+	setPosition(startX, startY); // set the position of the barrel to the starting position
     setDir(directionsBarrel[STAY]);
 	makeActive(); // set the barrel to active
 	blastCenterX = 0; // set the center of the blast to 0
