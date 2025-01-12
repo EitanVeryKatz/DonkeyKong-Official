@@ -309,7 +309,7 @@ void game::getAllBoardFiles()
 
 void game::printAndChooseBoard(string& fileName)
 {
-	const int boardsPerPage = 5;
+	const int boardsPerPage = 9;
 	int currentPage = 0;
 	int totalPages = (boardFileNames.size() + boardsPerPage - 1) / boardsPerPage;
 	bool needsRedraw = true; // Flag to control screen redraw
@@ -389,7 +389,7 @@ void game::printAndChooseBoard(string& fileName)
 				currentPage++;
 				needsRedraw = true; // Trigger screen redraw
 			}
-			else if (key == 27) // ESC key
+			else if (key == ESC) // ESC key
 			{
 				fileChosen = false;
 				return;
