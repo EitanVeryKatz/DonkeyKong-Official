@@ -167,8 +167,7 @@ void barrel::clearBlast()
             //update fail chart
 			setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
             //restore erased parts of game map
-			gotoxy(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
-			std::cout << getChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+            restoreBoardChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
 		}
 	}
 
