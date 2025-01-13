@@ -17,6 +17,7 @@ public:
 	void deactivate() { active = false; }
 	bool checkSmash() {return getFailChart() == 'p';}
 	virtual void move() = 0;
+	void update(int &score, bool& needToRedraw);
 	virtual ~npc() {};
 
 };

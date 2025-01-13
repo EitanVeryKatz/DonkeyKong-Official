@@ -205,6 +205,24 @@ void barrel::updateFallCount()
 	}
 }
 
+void barrel::expHandler()
+{
+    if (isBlastShowing())
+    {
+    	if (getBlowCount() == 2)
+    	{
+    		clearBlast();
+    	}
+    	else if (getBlowCount() == 1)
+    	{
+    		explode();
+    		updateBlowCounter();
+    	}
+    	else
+    		updateBlowCounter();
+    }
+}
+
 
 
 

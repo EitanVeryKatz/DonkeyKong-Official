@@ -414,16 +414,9 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 		npc* pNPC = *itr;
 		if (pNPC->isActive())
 		{
-			pNPC->erase();
-			pNPC->move();
+			pNPC->update(score,needsRedraw);
 			if (pNPC->isActive())
 			{
-				pNPC->draw();
-				if (pNPC->wasSmashed())
-				{
-					updateScore(150);
-					pNPC->resetSmash();
-				}
 				++itr;
 			}
 			else if (dynamic_cast<barrel*>(*itr))
@@ -439,21 +432,7 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 			barrel* pBarrel = dynamic_cast<barrel*>(pNPC);
 			if (pBarrel)
 			{
-				if (pBarrel->isBlastShowing())
-				{
-					if (pBarrel->getBlowCount() == 2)
-					{
-						pBarrel->clearBlast();
-						//activeBarrels--;
-					}
-					else if (pBarrel->getBlowCount() == 1)
-					{
-						pBarrel->explode();
-						pBarrel->updateBlowCounter();
-					}
-					else
-						pBarrel->updateBlowCounter();
-				}
+				pBarrel->expHandler();
 			}
 			++itr;
 		}

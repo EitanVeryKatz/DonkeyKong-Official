@@ -42,7 +42,6 @@ void boardGame::initActiveBoard()
                 temp->setPosition(c, r);
                 temp->setGameBoard(this);
                 npcVector.push_back(temp);
-                //activeBoard[r][c] = ' ';
             }
             else if (currChar == '@')
             {

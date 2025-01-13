@@ -41,5 +41,6 @@ public:
 	void resetBarrel();
 	void updateFallCount();
 	int genStartX() const { return startingXPos[rand() % startingXPos.size()]; }
+	void expHandler();
 };
 
