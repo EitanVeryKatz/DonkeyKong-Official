@@ -420,7 +420,15 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 				++itr;
 			}
 			else if (dynamic_cast<barrel*>(*itr))
+			{
+				barrel* pBarrel = dynamic_cast<barrel*>(pNPC);
+				if (!pBarrel->isBlastShowing())
+				{
+					delete pNPC;
+					itr = npcVector.erase(itr);
+				}
 				activeBarrels--;
+			}
 			else
 			{
 				delete pNPC;
