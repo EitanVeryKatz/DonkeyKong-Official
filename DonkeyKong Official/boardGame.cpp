@@ -29,7 +29,7 @@ void boardGame::initActiveBoard()
 {
 
     resetNPCVector();
-
+    int numOfL = 0;
     npcVector.reserve(20);
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
@@ -58,7 +58,12 @@ void boardGame::initActiveBoard()
             }
             else if (currChar == 'L')
             {
-				//TODO: add checks for valid position
+				numOfL++;
+				if (numOfL > 1)
+				{
+					validLPos = false;
+					break;
+				}
                 Lx = c;
                 Ly = r;
 				checkLegendValidity(Lx, Ly);
