@@ -33,7 +33,7 @@ class boardGame
 public :
 	boardGame(const std::string& fileName);
 	~boardGame();
-	char getChar(int x, int y) { return activeBoard[y][x]; } // get the char of the board at the given coordinates
+	char getChar(int x, int y) const; // get the char of the board at the given coordinates
 	void newDrawBoard() const; // draw the board
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; } // update the fail chart at the given coordinates
 	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates
@@ -52,6 +52,7 @@ public :
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }
+	void resetNPCVector();
 	vector<npc*>& getNPCVector() { return npcVector; }
 	vector<npc*>::iterator getNPCVectorBegin() { return npcVector.begin(); }
 	vector<npc*>::iterator getNPCVectorEnd() { return npcVector.end(); }

@@ -15,16 +15,20 @@ boardGame::boardGame(const std::string& fileName)
 
 boardGame::~boardGame()
 {
-	for (vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end(); ++itr)
-	{
-		delete* itr;
-	}
+	resetNPCVector();
+}
+
+char boardGame::getChar(int x, int y) const
+{
+	if (activeBoard[y][x] == 'x')
+		return ' ';
+	return activeBoard[y][x];
 }
 
 void boardGame::initActiveBoard()
 {
-    if (newBoardFile)
-		npcVector.clear();
+
+    resetNPCVector();
 
     npcVector.reserve(20);
     for (int r = 0; r < BOARD_HEIGHT; r++)
@@ -38,7 +42,7 @@ void boardGame::initActiveBoard()
                 temp->setPosition(c, r);
                 temp->setGameBoard(this);
                 npcVector.push_back(temp);
-                activeBoard[r][c] = ' ';
+                //activeBoard[r][c] = ' ';
             }
             else if (currChar == '@')
             {
@@ -115,6 +119,15 @@ bool boardGame::checkOnFloor(int x, int y) const
 	if (activeBoard[y + 1][x] == '=' || activeBoard[y + 1][x] == '>' || activeBoard[y + 1][x] == '<')
 		return true;
 	return false;
+}
+
+void boardGame::resetNPCVector()
+{
+    for (vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end(); ++itr)
+    {
+        delete* itr;
+    }
+    npcVector.clear();
 }
 
 

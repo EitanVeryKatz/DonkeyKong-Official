@@ -155,6 +155,7 @@ void game::runGame(const std::string& fileName)
 
 void game::initGame(player& mario, boardGame& board)
 {
+	board.initActiveBoard(); // initialize the active board
 	needsRedraw = true;
 	clear_key_buffer(); // clear the input buffer
 	activeBarrels = 0; // reset the number of active barrels
@@ -443,7 +444,7 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 					if (pBarrel->getBlowCount() == 2)
 					{
 						pBarrel->clearBlast();
-						activeBarrels--;
+						//activeBarrels--;
 					}
 					else if (pBarrel->getBlowCount() == 1)
 					{
