@@ -4,7 +4,7 @@
 #include "point.h"
 #include "gameObject.h"
 
-class player : public gameObject
+class player : protected gameObject
 {
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	enum directions { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3, STAY = 4 };
@@ -21,10 +21,10 @@ class player : public gameObject
 	bool midswing = false;
 	int fallCounter = 0;
 public:
-
+	using gameObject::setGameBoard;
+	using gameObject::draw;
+	using gameObject::erase;
 	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y) {}
-
-
 	void resetPlayer()
 	{
 		changeIcon(iconArr[0]);
