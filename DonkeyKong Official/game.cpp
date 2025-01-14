@@ -60,7 +60,7 @@ void game::win(player& mario, bool& running, boardGame& board)
 
 		// Calculate the position to center the score
 		std::string scoreMessage = "Your final score is: " + std::to_string(score);
-		int centerX = (BOARD_WIDTH - scoreMessage.length()) / 2;
+		int centerX = static_cast<int>((BOARD_WIDTH - scoreMessage.length()) / 2);
 		int centerY = BOARD_HEIGHT / 2;
 
 		gotoxy(centerX, centerY + 5); // Move to the calculated position
@@ -299,6 +299,10 @@ void game::setDifficulty()
 	}
 }
 
+/// @brief Retrieves all board files from the current directory.
+/// This function iterates through the current directory and collects all files
+/// that start with "board" and have a ".screen" extension. The collected file names
+/// are stored in the boardFileNames vector. The vector is then sorted in alphabetical order.
 void game::getAllBoardFiles()
 {
 	namespace fs = std::filesystem;
@@ -315,77 +319,89 @@ void game::getAllBoardFiles()
 	}
 }
 
+/// @brief Displays the board selection menu and allows the user to choose a board.
+/// This function presents a paginated list of available board files to the user.
+/// The user can navigate through the pages using 'a' and 'd' keys and select a board
+/// by pressing the corresponding numeric key. The user can also choose to play all boards
+/// or return to the menu by pressing the ESC key.
+/// @param fileName Reference to a string where the chosen board file name will be stored.
 void game::printAndChooseBoard(string& fileName)
 {
-	const int boardsPerPage = 9; // Keep 9 to display 9 screens per page
-	int currentPage = 0;
-	int totalPages = (boardFileNames.size() + boardsPerPage - 2) / (boardsPerPage - 1); // Adjust total pages calculation
-	bool needsRedraw = true; // Flag to control screen redraw
-	while (true)
-	{
-		if (needsRedraw) // Only redraw the screen when needed
-		{
-			system("cls");
-			if (!boardFileNames.empty())
-			{
-				printBoardOptions(currentPage, boardsPerPage, totalPages);
-			}
-			else
-			{
-				std::cout << "No board files found! returning to menu." << std::endl;
-				return;
-			}
+    const int boardsPerPage = 9; // Keep 9 to display 9 screens per page
+    int currentPage = 0;
+    int totalPages = (static_cast<int>(boardFileNames.size()) + boardsPerPage - 2) / (boardsPerPage - 1); // Adjust total pages calculation
+    bool needsRedraw = true; // Flag to control screen redraw
+    while (true)
+    {
+        if (needsRedraw) // Only redraw the screen when needed
+        {
+            system("cls");
+            if (!boardFileNames.empty())
+            {
+                printBoardOptions(currentPage, boardsPerPage, totalPages);
+            }
+            else
+            {
+                std::cout << "No board files found! returning to menu." << std::endl;
+                return;
+            }
 
-			needsRedraw = false; // Redraw done, no need to redraw again until triggered
-		}
+            needsRedraw = false; // Redraw done, no need to redraw again until triggered
+        }
 
-		// Handle user input
-		if (_kbhit())
-		{
-			char key = _getch();
+        // Handle user input
+        if (_kbhit())
+        {
+            char key = _getch();
 
-			// Handle numeric keys for selecting a board
-			if (key >= '1' && key <= '9')
-			{
-				int option = key - '1';
+            // Handle numeric keys for selecting a board
+            if (key >= '1' && key <= '9')
+            {
+                int option = key - '1';
 
-				if (currentPage == 0 && option == 0) // "1" to play all boards
-				{
-					fileChosen = true;
-					singleGame = false;
-					return;
-				}
+                if (currentPage == 0 && option == 0) // "1" to play all boards
+                {
+                    fileChosen = true;
+                    singleGame = false;
+                    return;
+                }
 
-				int index = currentPage * (boardsPerPage - 1) + (currentPage == 0 ? (option - 1) : option);
+                int index = currentPage * (boardsPerPage - 1) + (currentPage == 0 ? (option - 1) : option);
 
-				if (index >= 0 && index < boardFileNames.size()) // Check if the option corresponds to a valid index
-				{
-					fileName = boardFileNames[index];
-					fileChosen = true;
-					singleGame = true;
-					return;
-				}
-			}
-			// Navigate pages
-			if (key == 'a' && currentPage > 0)
-			{
-				currentPage--;
-				needsRedraw = true; // Trigger screen redraw
-			}
-			else if (key == 'd' && currentPage < totalPages - 1)
-			{
-				currentPage++;
-				needsRedraw = true; // Trigger screen redraw
-			}
-			else if (key == ESC) // ESC key
-			{
-				fileChosen = false;
-				return;
-			}
-		}
-	}
+                if (index >= 0 && index < boardFileNames.size()) // Check if the option corresponds to a valid index
+                {
+                    fileName = boardFileNames[index];
+                    fileChosen = true;
+                    singleGame = true;
+                    return;
+                }
+            }
+            // Navigate pages
+            if (key == 'a' && currentPage > 0)
+            {
+                currentPage--;
+                needsRedraw = true; // Trigger screen redraw
+            }
+            else if (key == 'd' && currentPage < totalPages - 1)
+            {
+                currentPage++;
+                needsRedraw = true; // Trigger screen redraw
+            }
+            else if (key == ESC) // ESC key
+            {
+                fileChosen = false;
+                return;
+            }
+        }
+    }
 }
 
+/// @brief Prints the board options for the user to choose from.
+/// This function displays a list of available board files, allowing the user to select one.
+/// It also provides navigation instructions for moving between pages of board options.
+/// @param currentPage The current page number being displayed.
+/// @param boardsPerPage The number of boards to display per page.
+/// @param totalPages The total number of pages available.
 void game::printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const
 {
 	const int centerX = 35; // Adjust as needed for your console width
@@ -424,6 +440,14 @@ void game::updateScore(int points) {
 }
 
 
+/// @brief Updates the state of all NPCs (non-player characters) in the game.
+/// This function iterates through the vector of NPCs and updates their state.
+/// If an NPC is active, it calls its update method. If the NPC becomes inactive
+/// and is a barrel, it handles the barrel's explosion and removes it from the vector.
+/// If the NPC is not a barrel, it simply removes it from the vector.
+/// The function also handles the spawning of new barrels at regular intervals.
+/// @param iterationCounter The current iteration count of the game loop.
+/// @param board Reference to the boardGame object containing the NPCs.
 void game::updateNPCs(int iterationCounter, boardGame& board)
 {
 	auto& npcVector = board.getNPCVector();
@@ -432,7 +456,7 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 		npc* pNPC = *itr;
 		if (pNPC->isActive())
 		{
-			pNPC->update(score,needsRedraw);
+			pNPC->update(score, needsRedraw);
 			if (pNPC->isActive())
 			{
 				++itr;

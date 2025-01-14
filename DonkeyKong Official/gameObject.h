@@ -20,9 +20,9 @@ public:
 	bool isOnLadder() const;
 	char getFailChart() const;
 	char getFailChart(int x, int y) const;
-	void setFailChart(char c);
-	void setFailChart(int x, int y, char c);
-	void restoreBoardChar(int x, int y);
+	void setFailChart(char c) const;
+	void setFailChart(int x, int y, char c) const;
+	void restoreBoardChar(int x, int y) const;
 	void changeIcon(char c) { icon = c; }
 	void setPosition(int x, int y) { position.setPoint(x, y); }
 	void setDir(Direction dir) { position.setDir(dir); }
@@ -30,8 +30,8 @@ public:
 	int getY() const { return position.getY(); }
 	void setX(int x) { position.setX(x); }
 	void setY(int y) { position.setY(y); }
-	int getDirX() { return position.getDirX(); }
-	int getDirY() { return position.getDirY(); }
+	int getDirX() const { return position.getDirX(); }
+	int getDirY() const { return position.getDirY(); }
 	void setDirX(int x) { position.setDirX(x); }
 	void setDirY(int y) { position.setDirY(y); }
 	char getChar() const;

@@ -39,17 +39,17 @@ char gameObject::getFailChart(int x, int y) const
 	return pBoard->getFailChart(x, y);
 }
 
-void gameObject::setFailChart(char c)
+void gameObject::setFailChart(char c) const
 {
 	pBoard->UpdateFailChart(position.getX(), position.getY(), c);
 }
 
-void gameObject::setFailChart(int x, int y, char c)
+void gameObject::setFailChart(int x, int y, char c) const
 {
 	pBoard->UpdateFailChart(x, y, c);
 }
 
-void gameObject::restoreBoardChar(int x, int y)
+void gameObject::restoreBoardChar(int x, int y) const
 {
 	gotoxy(x, y);
 	std::cout << pBoard->getChar(x, y);
