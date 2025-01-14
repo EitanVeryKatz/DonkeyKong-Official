@@ -23,6 +23,7 @@ class boardGame
 	bool validMonkeyPos = false;
 	bool validPrincessPos = false;
 	bool validLPos = false;
+	bool validBarrelSpawningPos = false;
 	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH] = {};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
@@ -39,7 +40,7 @@ public :
 	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates
 	void initBarrels(); // initialize the barrels
 	void initFailChart(); // initialize the fail chart
-	void initActiveBoard();
+	void initActiveBoard(); 
 	void resetGhosts();
 	int getMarioStartX() const { return startXMario; }
 	int getMarioStartY() const { return startYMario; }
@@ -48,7 +49,7 @@ public :
 	int getLx() const { return Lx; }
 	int getLy() const { return Ly; }
 	bool checkOnFloor (int x, int y) const;
-	bool getValidity() const { return (validPlayerPos && validMonkeyPos && validPrincessPos && validLPos);}
+	bool getValidity() const { return validPlayerPos && validMonkeyPos && validPrincessPos && validLPos && validBarrelSpawningPos;}
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }
@@ -56,5 +57,6 @@ public :
 	vector<npc*>& getNPCVector() { return npcVector; }
 	vector<npc*>::iterator getNPCVectorBegin() { return npcVector.begin(); }
 	vector<npc*>::iterator getNPCVectorEnd() { return npcVector.end(); }
+	bool checkValidChar(int x, int y) const;
 };
 

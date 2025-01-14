@@ -50,13 +50,22 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 
 void game::win(player& mario, bool& running, boardGame& board)
 {
+	updateScore(1000);
 	running = false; // end the game
-	
-	if (level == boardFileNames.size() || singleGame)
+	if (level == static_cast<int>(boardFileNames.size()) || singleGame)
 	{
 		system("cls"); // clear the screen
 		gotoxy(MessageX, MessageY);
 		printWinningMessage(); // display the winning message
+
+		// Calculate the position to center the score
+		std::string scoreMessage = "Your final score is: " + std::to_string(score);
+		int centerX = (BOARD_WIDTH - scoreMessage.length()) / 2;
+		int centerY = BOARD_HEIGHT / 2;
+
+		gotoxy(centerX, centerY + 5); // Move to the calculated position
+		std::cout << scoreMessage; // display the score
+
 		playWinningSong();
 		Sleep(breakTime);
 		system("cls"); // clear the screen
@@ -86,13 +95,11 @@ void game::displayMenu()
 						
 						// TODO : maybe start with 5 lives and not reset lives between games
 						level++;
-						updateScore(1000);
+						resetLives();
 					}
 					if (singleGame)
 					{
 						runGame(fileName); // run the game
-						if (!lost)
-							updateScore(1000);
 					}
 				}
 				resetLives(); // reset the number of lives after the game ends
@@ -310,9 +317,9 @@ void game::getAllBoardFiles()
 
 void game::printAndChooseBoard(string& fileName)
 {
-	const int boardsPerPage = 9;
+	const int boardsPerPage = 9; // Keep 9 to display 9 screens per page
 	int currentPage = 0;
-	int totalPages = (boardFileNames.size() + boardsPerPage - 1) / boardsPerPage;
+	int totalPages = (boardFileNames.size() + boardsPerPage - 2) / (boardsPerPage - 1); // Adjust total pages calculation
 	bool needsRedraw = true; // Flag to control screen redraw
 	while (true)
 	{
@@ -321,27 +328,7 @@ void game::printAndChooseBoard(string& fileName)
 			system("cls");
 			if (!boardFileNames.empty())
 			{
-				std::cout << "Choose a board from the list below:\n" << std::endl;
-
-				// Calculate the start and end indices for the current page
-				int start = currentPage * boardsPerPage;
-				int end = min(start + boardsPerPage, (int)boardFileNames.size());
-
-				// Special option for playing all boards on the first page
-				if (currentPage == 0)
-				{
-					std::cout << "1) Play all boards in order" << std::endl;
-				}
-
-				// Display the options for the current page
-				for (int i = start; i < end; ++i)
-				{
-					std::cout << (currentPage == 0 ? (i - start + 2) : (i - start + 1)) << ") " << boardFileNames[i] << std::endl;
-				}
-
-				// Indicate navigation instructions
-				if (totalPages > 1)
-					std::cout << "\nPress 'a' for previous page, 'd' for next page, or ESC to return to the menu\n" << std::endl;
+				printBoardOptions(currentPage, boardsPerPage, totalPages);
 			}
 			else
 			{
@@ -358,7 +345,7 @@ void game::printAndChooseBoard(string& fileName)
 			char key = _getch();
 
 			// Handle numeric keys for selecting a board
-			if (key >= '1' && key <= '5')
+			if (key >= '1' && key <= '9')
 			{
 				int option = key - '1';
 
@@ -369,7 +356,7 @@ void game::printAndChooseBoard(string& fileName)
 					return;
 				}
 
-				int index = currentPage * boardsPerPage + (currentPage == 0 ? (option - 1) : option);
+				int index = currentPage * (boardsPerPage - 1) + (currentPage == 0 ? (option - 1) : option);
 
 				if (index >= 0 && index < boardFileNames.size()) // Check if the option corresponds to a valid index
 				{
@@ -397,6 +384,37 @@ void game::printAndChooseBoard(string& fileName)
 			}
 		}
 	}
+}
+
+void game::printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const
+{
+	const int centerX = 35; // Adjust as needed for your console width
+	std::cout << std::string(centerX - 10, ' ') << "Choose a board from the list below:\n" << std::endl;
+
+	// Calculate the start and end indices for the current page
+	int start = currentPage * (boardsPerPage - 1);
+	int end = min(start + (currentPage == 0 ? (boardsPerPage - 1) : boardsPerPage), (int)boardFileNames.size());
+
+	// Special option for playing all boards on the first page
+	if (currentPage == 0)
+	{
+		std::cout << std::string(centerX - 10, ' ') << "1) Play all boards in order" << std::endl;
+	}
+
+	// Display the options for the current page
+	for (int i = start; i < end; ++i)
+	{
+		std::cout << std::string(centerX - 10, ' ') << (currentPage == 0 ? (i - start + 2) : (i - start + 1)) << ") " <<
+			boardFileNames[i] << std::endl;
+	}
+
+	// Indicate navigation instructions
+	if (totalPages > 1)
+		std::cout << std::string(centerX - 10, ' ') <<
+			"\nPress 'a' for previous page, 'd' for next page, or ESC to return to the menu\n" << std::endl;
+
+	// Display the current page number
+	std::cout << std::string(centerX - 10, ' ') << "Page " << (currentPage + 1) << " of " << totalPages << std::endl;
 }
 
 

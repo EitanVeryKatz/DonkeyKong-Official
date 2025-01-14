@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "gameConfig.h"
-#include "iostream"
 #include "point.h"
 #include "npc.h"
 
@@ -13,8 +12,9 @@ class barrel:public npc
 {
 	//													LEFT    DOWN    RIGHT   STAY 
 	static constexpr Direction directionsBarrel[] = { {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+	enum directions { LEFT, DOWN, RIGHT, STAY };
 	static constexpr char FLOOR_DIR_LEFT = '<';
-	static constexpr int LEFT = 0, DOWN = 1, RIGHT = 2, STAY = 3, STOP = 0;
+	static constexpr int STOP = 0;
 	static constexpr char ICON = 'O';
 	int startX, startY;
 	int blastCenterX = 0;
@@ -34,8 +34,8 @@ public:
 	void updatePosition(int currX, int currY, int newX, int newY); // updates the position of the barrel
 	void explode();
 	void clearBlast();
-	bool isBlastShowing() { return blastParticlesVisable; }
-	int getBlowCount() { return blastCounter; }
+	bool isBlastShowing() const { return blastParticlesVisable; }
+	int getBlowCount() const { return blastCounter; }
 	void updateBlowCounter();
 	void resetBlowCounter() { blastCounter = 0; }
 	void resetBarrel();

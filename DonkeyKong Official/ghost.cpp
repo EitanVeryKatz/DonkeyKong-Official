@@ -1,4 +1,5 @@
 #include "ghost.h"
+#include "boardGame.h"
 ghost::ghost() : npc(icon)
 {
 	int i = rand() % 2; // random number between 0 and 2
@@ -36,7 +37,7 @@ void ghost::move()
 		changeDirection();
 
 	if (getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT)
-		ghostColide((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
+		handleGhostCollision((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
 
 	currDir = getDirX();
 
@@ -54,6 +55,18 @@ void ghost::move()
 		setFailChart(icon);
 
 	restoreBoardChar(currX, currY);
+}
+
+void ghost::handleGhostCollision(int x, int y) const
+{
+	for (auto itr = pBoard->getNPCVectorBegin(); itr != pBoard->getNPCVectorEnd(); ++itr)
+	{
+		if ((*itr)->getX() == x && (*itr)->getY() == y && dynamic_cast<ghost*>(*itr))
+		{
+			ghost* pGhost = dynamic_cast<ghost*>(*itr);
+			pGhost->changeDirection();
+		}
+	}
 }
 
 

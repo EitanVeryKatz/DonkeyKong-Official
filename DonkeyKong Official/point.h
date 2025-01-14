@@ -35,8 +35,8 @@ public:
 	void setX(int x) { this->x = x; }
 	void setY(int y) { this->y = y; }
 	void setPoint(int x, int y) { this->x = x; this->y = y; }
-	int getDirX() { return dir.x; }
-	int getDirY() { return dir.y; }
+	int getDirX() const { return dir.x; }
+	int getDirY() const { return dir.y; }
 	void setDirX(int x) { dir.x = x; }		
 	void setDirY(int y) { dir.y = y; }
 	void setDir(Direction d) 

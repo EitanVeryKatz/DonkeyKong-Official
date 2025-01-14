@@ -38,6 +38,7 @@ class game
 	void pauseGame(); // Pause the game
 	void printAndChooseBoard(std::string& fileName);
 	bool fileChosen = false;
+	void printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const;
 public:
 	void displayMenu(); // Display the game menu
 	game() { getAllBoardFiles(); }

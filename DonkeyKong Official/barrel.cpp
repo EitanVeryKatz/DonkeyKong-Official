@@ -65,7 +65,10 @@ void barrel::handleOnFloor(int currX, int currY, int &newX, int &newY, char &dir
     {
         setDir(directionsBarrel[RIGHT]);
     } 
-	// if '=' the same x direction of the barrel
+	else if (dirChar == '=' && getDirX() == 0)
+	{
+		setDir(directionsBarrel[LEFT]);
+	}
 	newX = currX + getDirX(); // update the new X position
 	newY = currY + getDirY(); // update the new Y position
 }

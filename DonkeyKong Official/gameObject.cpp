@@ -65,15 +65,3 @@ char gameObject::getChar(int x, int y) const
 	return pBoard->getChar(x, y);
 }
 
-void gameObject::ghostColide(int x, int y)
-{
-	for (auto itr = pBoard->getNPCVectorBegin(); itr != pBoard->getNPCVectorEnd(); ++itr)
-	{
-		if ((*itr)->getX() == x && (*itr)->getY() == y && dynamic_cast<ghost*>(*itr))
-		{
-			ghost* pGhost = dynamic_cast<ghost*>(*itr);
-			pGhost->changeDirection();
-		}
-		
-	}
-}

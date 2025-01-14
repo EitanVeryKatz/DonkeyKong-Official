@@ -6,6 +6,7 @@ class gameObject
 {
 	point position;
 	char icon;
+protected:
 	boardGame* pBoard = nullptr;
 
 public:
@@ -35,7 +36,6 @@ public:
 	void setDirY(int y) { position.setDirY(y); }
 	char getChar() const;
 	char getChar(int x, int y) const;
-	void ghostColide(int x, int y);
 	virtual ~gameObject() = default;
 };
 
