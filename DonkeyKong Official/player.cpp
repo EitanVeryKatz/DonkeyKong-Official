@@ -212,3 +212,6 @@ void player::clearHammerSwing() {
 	midswing = false;
 }
 
+void player::setHammerLocation(int x, int y){
+	hammerLocation.setPoint(x, y);
+}

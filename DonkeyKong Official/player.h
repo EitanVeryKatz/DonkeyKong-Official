@@ -52,6 +52,7 @@ public:
 	int getHammerY() const { return hammerLocation.getY(); }
 	int getHammerX() const { return hammerLocation.getX(); }
 	void setHammerLocation();
+	void setHammerLocation(int x, int y);
 	bool doeshasHammer() const { return hasHammer; }
 	void drawHammer() const
 	{

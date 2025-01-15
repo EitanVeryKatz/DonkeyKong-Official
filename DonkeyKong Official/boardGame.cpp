@@ -1,6 +1,7 @@
 #include "boardGame.h"
 #include <iostream>
 #include "ghost.h"
+#include "player.h"
 #include <algorithm>
 #include <fstream>
 #include <string>
@@ -56,6 +57,11 @@ void boardGame::initActiveBoard()
             else if (currChar == 'x' && !checkOnFloor(c, r))
             {
                 activeBoard[r][c] = ' ';
+            }
+            else if (currChar == 'p') {
+                activeBoard[r][c] = ' ';
+                startHammerX = c;
+                startHammerY = r;
             }
             else if (currChar == '@')
             {

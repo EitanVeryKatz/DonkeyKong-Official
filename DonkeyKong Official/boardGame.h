@@ -19,6 +19,7 @@ class boardGame
 	int startXMario, startYMario;
 	int monkeX, monkeY;
 	int Lx, Ly;
+	int startHammerX, startHammerY;
 	bool validPlayerPos = false;
 	bool validMonkeyPos = false;
 	bool validPrincessPos = false;
@@ -48,7 +49,9 @@ public :
 	int getMonkeY() const { return monkeY; }
 	int getLx() const { return Lx; }
 	int getLy() const { return Ly; }
-	bool checkOnFloor (int x, int y) const;
+	int getStartHammerX() const { return startHammerX; }
+	int getStartHammerY() const { return startHammerY; }
+	bool checkOnFloor (int x, int y)const;
 	bool getValidity() const { return validPlayerPos && validMonkeyPos && validPrincessPos && validLPos && validBarrelSpawningPos;}
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
