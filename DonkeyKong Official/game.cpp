@@ -330,23 +330,27 @@ void game::printAndChooseBoard(string& fileName)
     const int boardsPerPage = 9; // Keep 9 to display 9 screens per page
     int currentPage = 0;
     int totalPages = (static_cast<int>(boardFileNames.size()) + boardsPerPage - 2) / (boardsPerPage - 1); // Adjust total pages calculation
-    bool needsRedraw = true; // Flag to control screen redraw
+    bool redrawRequired = true; // Flag to control screen redraw
     while (true)
     {
-        if (needsRedraw) // Only redraw the screen when needed
+        if (redrawRequired) // Only redraw the screen when needed
         {
             system("cls");
-            if (!boardFileNames.empty())
+			if (!boardFileNames.empty()) // Check if there are board files available
             {
                 printBoardOptions(currentPage, boardsPerPage, totalPages);
             }
-            else
+			else // No board files found in the directory display a message and return to the menu
             {
-                std::cout << "No board files found! returning to menu." << std::endl;
+				string message = "No board files found! returning to menu.";
+                int centerX = (BOARD_WIDTH - static_cast<int>(message.length())) / 2; 
+                gotoxy(centerX, MessageY);
+				std::cout << message << std::endl;
+				Sleep(breakTime);
                 return;
             }
 
-            needsRedraw = false; // Redraw done, no need to redraw again until triggered
+            redrawRequired = false; // Redraw done, no need to redraw again until triggered
         }
 
         // Handle user input
@@ -380,12 +384,12 @@ void game::printAndChooseBoard(string& fileName)
             if (key == 'a' && currentPage > 0)
             {
                 currentPage--;
-                needsRedraw = true; // Trigger screen redraw
+                redrawRequired = true; // Trigger screen redraw
             }
             else if (key == 'd' && currentPage < totalPages - 1)
             {
                 currentPage++;
-                needsRedraw = true; // Trigger screen redraw
+                redrawRequired = true; // Trigger screen redraw
             }
             else if (key == ESC) // ESC key
             {
