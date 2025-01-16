@@ -92,10 +92,7 @@ void game::displayMenu()
 					for (int i = 0; !singleGame && !lost && i < boardFileNames.size(); i++) // if the user chose to play all the boards play all boards
 					{
 						runGame(boardFileNames[i]); // run the game
-						
-						// TODO : maybe start with 5 lives and not reset lives between games
 						level++;
-						resetLives();
 					}
 					if (singleGame)
 					{
@@ -224,7 +221,6 @@ void game::gameLoop(player& mario, boardGame& board)
 		iterationCounter++;
 		mario.checkHasHmmer();
 
-		
 		if (!debug)
 			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
@@ -493,7 +489,7 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 			++itr;
 		}
 	}
-	if (board.getValidBarrelSpawningPos())
+	if (board.getValidBarrelSpawningPos()) // if there are not any valid position to spawn on the board it will not spawn any barrels
 		handleBarrelSpawn(board, iterationCounter);
 }
 
