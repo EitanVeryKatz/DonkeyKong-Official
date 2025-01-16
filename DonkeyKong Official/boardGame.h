@@ -24,7 +24,7 @@ class boardGame
 	bool validMonkeyPos = false;
 	bool validPrincessPos = false;
 	bool validLPos = false;
-	bool validBarrelSpawningPos = false;
+	bool validBarrelSpawningPos = true;
 	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH] = {};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
@@ -52,7 +52,8 @@ public :
 	int getStartHammerX() const { return startHammerX; }
 	int getStartHammerY() const { return startHammerY; }
 	bool checkOnFloor (int x, int y)const;
-	bool getValidity() const { return validPlayerPos && validMonkeyPos && validPrincessPos && validLPos && validBarrelSpawningPos;}
+	bool getValidity() const { return validPlayerPos && validMonkeyPos && validPrincessPos && validLPos;}
+	bool getValidBarrelSpawningPos() const { return validBarrelSpawningPos; }
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }

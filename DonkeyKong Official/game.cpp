@@ -493,7 +493,8 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 			++itr;
 		}
 	}
-	handleBarrelSpawn(board, iterationCounter);
+	if (board.getValidBarrelSpawningPos())
+		handleBarrelSpawn(board, iterationCounter);
 }
 
 void game::handleBarrelSpawn(boardGame& board, int iterationCounter)
