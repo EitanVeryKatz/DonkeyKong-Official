@@ -40,6 +40,7 @@ class game
 	void printAndChooseBoard(std::string& fileName);
 	bool fileChosen = false;
 	void printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const;
+	void drawLegend(boardGame& b) const;
 public:
 	void displayMenu(); // Display the game menu
 	game() { getAllBoardFiles(); }

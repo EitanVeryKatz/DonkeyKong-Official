@@ -8,7 +8,7 @@ class player : protected gameObject
 {
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	enum directions { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3, STAY = 4 };
-	static constexpr int STOP = 0, JUMPING_FARME = 2;
+	static constexpr int STOP = 0, JUMPING_FARME = 2, DIR_DOWN = 1;
 	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;

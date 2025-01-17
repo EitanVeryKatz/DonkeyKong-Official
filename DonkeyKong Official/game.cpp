@@ -194,18 +194,12 @@ void game::gameLoop(player& mario, boardGame& board)
 	bool running = true;
 	int barrelCounter = 0; 
 	int iterationCounter = 0;
-	int legendX = board.getLx(), legendY = board.getLy();
 	while (running) // main game loop
 	{
 		if (needsRedraw)
 		{
-			gotoxy(legendX, legendY);
-			std::cout << "Lives: " << lives << std::endl;
-			gotoxy(legendX, legendY + 1);
-			std::cout << "Score: " << score << std::endl;
+			drawLegend(board);
 		}
-		
-
 		mario.draw(); // draw the player
 		if (!mario.doeshasHammer()) {
 			gotoxy(mario.getHammerX(), mario.getHammerY());
@@ -434,6 +428,15 @@ void game::printBoardOptions(int currentPage, int boardsPerPage, int totalPages)
 
 	// Display the current page number
 	std::cout << std::string(centerX - 10, ' ') << "Page " << (currentPage + 1) << " of " << totalPages << std::endl;
+}
+
+void game::drawLegend(boardGame& b) const
+{
+	int lx = b.getLx(),ly = b.getLy();
+	gotoxy(lx, ly);
+	std::cout << "Lives: " << lives << std::endl;
+	gotoxy(lx, ly + 1);
+	std::cout << "Score: " << score << std::endl;
 }
 
 

@@ -104,7 +104,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 		}
 	}
 
-	if (dirY == DOWN && isOnFloor()) //if going down and reaching floor
+	if (dirY == DIR_DOWN && isOnFloor()) //if going down and reaching floor
 	{
 		if (getChar(currX, currY + 2) != 'H') {
 			setDirY(STOP); //stop
