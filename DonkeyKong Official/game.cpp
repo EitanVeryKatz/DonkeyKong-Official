@@ -298,7 +298,7 @@ void game::getAllBoardFiles()
 	{
 		auto fileName = entry.path().filename();
 		auto fileNameStr = fileName.string();
-		if (fileNameStr.substr(0,5) == "board" && fileName.extension() == ".screen")
+		if (fileNameStr.substr(0,6) == "dkong_" && fileName.extension() == ".screen")
 		{
 			boardFileNames.push_back(fileNameStr);
 		}
