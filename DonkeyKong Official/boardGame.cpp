@@ -40,8 +40,8 @@ char boardGame::getChar(int x, int y) const
 void boardGame::initActiveBoard()
 {
     resetNPCVector();
-    int numOfL = 0;
     npcVector.reserve(20);
+    int numOfMonkeys = 0, numOfPrincesses = 0, numOfL = 0;
     for (int r = 0; r < BOARD_HEIGHT; r++)
     {
         for (int c = 0; c < BOARD_WIDTH; c++)
@@ -72,6 +72,12 @@ void boardGame::initActiveBoard()
             }
             else if (currChar == '&')
             {
+                numOfMonkeys++;
+				if (numOfMonkeys > 1)
+				{
+					validMonkeyPos = false;
+					break;
+				}
                 validMonkeyPos = true;
                 monkeX = c;
                 monkeY = r;
@@ -89,7 +95,15 @@ void boardGame::initActiveBoard()
                 checkLegendValidity(Lx, Ly);
             }
             else if (currChar == '$' && checkOnFloor(c, r))
-                validPrincessPos = true;
+            {
+				numOfPrincesses++;
+                if (numOfPrincesses > 1)
+                {
+                    validPrincessPos = false;
+                    break;
+                }
+	            validPrincessPos = true;
+            }
             else if (!checkValidChar(c, r))
             {
                 activeBoard[r][c] = ' ';
