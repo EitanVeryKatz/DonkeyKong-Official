@@ -23,6 +23,7 @@ class boardGame
 	bool validPrincessPos = false;
 	bool validLPos = false;
 	bool validBarrelSpawningPos = true;
+	bool randomHammerLocation = true;
 	char activeBoard[BOARD_HEIGHT][BOARD_WIDTH] = {};
 	char failChart[BOARD_WIDTH][BOARD_HEIGHT];
 	void readBoardFromFile(const std::string& fileName);
@@ -34,6 +35,7 @@ public :
 	boardGame(const std::string& fileName);
 	~boardGame();
 	char getChar(int x, int y) const; // get the char of the board at the given coordinates
+	bool wasHammerLocationSetInBoard() const { return !randomHammerLocation; }
 	void newDrawBoard() const; // draw the board
 	void UpdateFailChart(int x, int y, char c) { failChart[x][y] = c; } // update the fail chart at the given coordinates
 	char getFailChart(int x, int y) const { return failChart[x][y]; } // get the char of the fail chart at the given coordinates

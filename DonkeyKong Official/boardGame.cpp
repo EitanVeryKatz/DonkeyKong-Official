@@ -62,6 +62,7 @@ void boardGame::initActiveBoard()
                 activeBoard[r][c] = ' ';
                 startHammerX = c;
                 startHammerY = r;
+                randomHammerLocation = false;
             }
             else if (currChar == '@')
             {
