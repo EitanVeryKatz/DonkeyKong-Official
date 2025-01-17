@@ -19,7 +19,6 @@ class game
 	bool lost = false;
 	bool singleGame = false;
 	int level = 1;
-	bool debug = false;
 	bool needsRedraw = true;
 	void updateScore(int points);
 	void initGame(player& mario, boardGame& board); // Initialize the game

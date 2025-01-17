@@ -119,8 +119,6 @@ void game::displayMenu()
 				Sleep(breakTime);
 				break; // exit the loop
 			}
-			else if (key == '2')
-				debug = !debug;
         }
 		 Sleep(100);
 	}
@@ -214,9 +212,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		Sleep(GAME_SPEED);
 		iterationCounter++;
 		mario.checkHasHmmer();
-
-		if (!debug)
-			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
+		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
 		if (!running) // after fail break the loop if player failed
 			break;
 		if (mario.checkWin()) // if the player won
@@ -225,8 +221,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		mario.move(); // move the player
 		mario.inLegend(needsRedraw);
 		mario.draw(); // draw the player
-		if (!debug)
-			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
+		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
 		std::fflush(stdin); // clear the input buffer
 	}
 }
