@@ -181,8 +181,8 @@ void player::setHammerLocation() {
 void player::checkHasHmmer() {
 	if (getX() == hammerLocation.getX() && getY() == hammerLocation.getY()) {
 		hasHammer = true;
-		changeIcon(iconArr[1]);
-		currIcon = iconArr[1];
+		changeIcon(iconArr[WITH_HAMMER]);
+		currIcon = iconArr[WITH_HAMMER];
 	}
 }
 

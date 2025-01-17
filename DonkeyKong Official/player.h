@@ -7,13 +7,14 @@
 class player : protected gameObject
 {
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+	enum icons {WITHOUT_HAMMER, WITH_HAMMER};
 	enum directions { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3, STAY = 4 };
 	static constexpr int STOP = 0, JUMPING_FARME = 2, DIR_DOWN = 1;
 	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
 	static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);;
 	static constexpr char iconArr[] = { '@' ,'a'};
-	char currIcon = iconArr[0];
+	char currIcon = iconArr[WITHOUT_HAMMER];
 	static constexpr char hammerIcon = 'p';
 	point hammerLocation;
 	bool hasHammer = false;
@@ -28,8 +29,8 @@ public:
 	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y) {}
 	void resetPlayer()
 	{
-		changeIcon(iconArr[0]);
-		currIcon = iconArr[0];
+		changeIcon(iconArr[WITHOUT_HAMMER]);
+		currIcon = iconArr[WITHOUT_HAMMER];
 		midjump = 0;
 		fallCounter = 0;
 		setPosition(startX, startY);
