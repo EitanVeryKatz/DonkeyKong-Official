@@ -41,15 +41,15 @@ public:
 	bool isSwingingHammer() const { return midswing; }
 	void keyPressed(char key); // Handle player's key press
 	void checkHasHmmer();
-	void moveInBoard(); // handle player's movement
-	bool isAtVerticalBorder(int currX, int dirX); // Check if player is at vertical border
-	bool isAtHorizontalBorder(int currY, int dirY); // Check if player is at horizontal border
-	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY); // Handle vertical border
-	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY); // Handle horizontal border
+	void move() override; // handle player's movement
+	bool isAtVerticalBorder(int currX, int dirX) const; // Check if player is at vertical border
+	bool isAtHorizontalBorder(int currY, int dirY) const; // Check if player is at horizontal border
+	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY) const; // Handle vertical border
+	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY) const; // Handle horizontal border
 	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
-	bool checkFail(); // Check if player failed
-	bool checkWin(); // Check if player won
-	bool isFalling(); // Check if player is falling
+	bool checkFail() const; // Check if player failed
+	bool checkWin() const; // Check if player won
+	bool isFalling() const; // Check if player is falling
 	int getHammerY() const { return hammerLocation.getY(); }
 	int getHammerX() const { return hammerLocation.getX(); }
 	void setHammerLocation();

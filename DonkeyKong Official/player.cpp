@@ -37,7 +37,7 @@ void player::keyPressed(char key)
 	}
 }
 
-void player::moveInBoard()
+void player::move()
 {
 	int currX = getX();
 	int currY = getY();
@@ -68,17 +68,17 @@ void player::moveInBoard()
 	restoreBoardChar(currX, currY);
 }
 
-bool player::isAtVerticalBorder(int currX, int dirX)
+bool player::isAtVerticalBorder(int currX, int dirX) const
 {
 	return (currX == 1 && dirX <= -1) || (currX == BOARD_WIDTH - 2 && dirX >= 1);
 }
 
-bool player::isAtHorizontalBorder(int currY, int dirY)
+bool player::isAtHorizontalBorder(int currY, int dirY) const
 {
 	return (currY == 1 && dirY <= -1) || (currY == BOARD_HEIGHT - 2 && dirY < 1);
 }
 
-void player::handleVerticalBorder(int currX, int currY, int dirY, int &newX, int &newY)
+void player::handleVerticalBorder(int currX, int currY, int dirY, int &newX, int &newY) const
 {
 	newX = currX;
 	newY = currY + dirY;
@@ -86,7 +86,7 @@ void player::handleVerticalBorder(int currX, int currY, int dirY, int &newX, int
 		newY++;
 }
 
-void player::handleHorizontalBorder(int currX, int currY, int dirX, int &newX, int &newY)
+void player::handleHorizontalBorder(int currX, int currY, int dirX, int &newX, int &newY) const
 {
 	newX = currX + dirX;
 	newY = currY;
@@ -136,7 +136,7 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	}
 }
 
-bool player::checkFail()
+bool player::checkFail() const
 {
 	char failChar = getFailChart();
 	if (failChar == 'O' || failChar == '*' || failChar == 'x')//if touched barrel or explosion particale
@@ -150,7 +150,7 @@ bool player::checkFail()
 	return false;	
 }
 
-bool player::checkWin()
+bool player::checkWin() const
 {
 	if (getChar() == '$')//if reached the princess
 	{
@@ -159,7 +159,7 @@ bool player::checkWin()
 	return false;
 }
 
-bool player::isFalling()
+bool player::isFalling() const
 {
 	if ((!isOnFloor() && !isOnLadder() && !midjump) || getDirY() == DOWN)//not on ladder or floor or if going down
 	{

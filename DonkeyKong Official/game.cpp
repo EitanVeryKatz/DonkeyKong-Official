@@ -228,7 +228,7 @@ void game::gameLoop(player& mario, boardGame& board)
 		if (mario.checkWin()) // if the player won
 			win(mario, running, board); // handle player win
 		mario.erase(); // erase the player
-		mario.moveInBoard(); // move the player
+		mario.move(); // move the player
 		mario.inLegend(needsRedraw);
 		mario.draw(); // draw the player
 		if (!debug)
