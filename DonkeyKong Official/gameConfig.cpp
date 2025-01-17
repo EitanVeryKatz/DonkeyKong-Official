@@ -138,8 +138,12 @@ void printInstructions()
     std::cout << "- Avoid the barrels thrown by Donkey Kong (&).\n";
     std::cout << "- Barrels can explode after falling a few floors, so\n"
         "  be careful as they may change the course of your journey!\n";
-    std::cout << "- Use ladders to climb up and save the princess ($) at the top.\n\n";
-
+    std::cout << "- Use ladders to climb up and save the princess ($) at the top.\n";
+    std::cout << "- Collect hammers to smash barrels and ghosts to earn extra points.\n";
+    std::cout << "- The hammer direction is the last direction you moved in.\n";
+    std::cout << "- Avoid the ghosts (x) that roam the board.\n";
+    std::cout << "- Ghosts can change direction unexpectedly!\n\n";
+    
     std::cout << "You have 3 lives. Use them wisely. Good luck!\n\n";
 
     std::cout << "Controls:\n";
@@ -148,6 +152,7 @@ void printInstructions()
     std::cout << "  'w' - Jump or climb up a ladder\n";
     std::cout << "  's' - Stop\n";
     std::cout << "  'x' - Climb down a ladder\n";
+    std::cout << "  'p' - Swing the hammer\n";
     std::cout << "  'esc' - Pause the game\n\n";
 
     std::cout << "Press any key to return to the menu...\n";
