@@ -188,11 +188,20 @@ void player::checkHasHmmer() {
 
 
 void player::swingHammer() {
-	hammerLocation.setX(getX() + hammerLocation.getDirX())  ;
+	hammerLocation.setX(getX() + hammerLocation.getDirX());
 	hammerLocation.setY(getY() + hammerLocation.getDirY());
-	gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	setFailChart(hammerLocation.getX(), hammerLocation.getY(), hammerIcon);
+
+	gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	std::cout << '#';
+
+	hammerLocationSecondary.setX(getX() + 2*hammerLocation.getDirX());
+	hammerLocationSecondary.setY(getY() + hammerLocation.getDirY());
+	setFailChart(hammerLocationSecondary.getX(), hammerLocationSecondary.getY(), hammerIcon);
+
+	gotoxy(hammerLocationSecondary.getX(), hammerLocationSecondary.getY());
+	std::cout << '#';
+
 	midswing = true;
 
 
@@ -208,9 +217,17 @@ void player::clearHammerSwing() {
 	else {
 		std::cout << getChar(hammerLocation.getX(), hammerLocation.getY());
 	}
+
+	gotoxy(hammerLocationSecondary.getX(), hammerLocationSecondary.getY());
+	std::cout << getChar(hammerLocationSecondary.getX(), hammerLocationSecondary.getY());
+
 	setFailChart(hammerLocation.getX(), hammerLocation.getY(), ' ');
+	setFailChart(hammerLocationSecondary.getX(), hammerLocationSecondary.getY(), ' ');
+
 	midswing = false;
 }
+
+
 
 void player::setHammerLocation(int x, int y){
 	hammerLocation.setPoint(x, y);

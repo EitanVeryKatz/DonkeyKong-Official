@@ -17,6 +17,7 @@ class player : protected gameObject
 	char currIcon = iconArr[WITHOUT_HAMMER];
 	static constexpr char hammerIcon = 'p';
 	point hammerLocation;
+	point hammerLocationSecondary;
 	bool hasHammer = false;
 	int midjump = 0;
 	bool midswing = false;
