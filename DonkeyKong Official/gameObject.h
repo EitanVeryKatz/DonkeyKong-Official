@@ -35,6 +35,7 @@ public:
 	int getDirY() const { return position.getDirY(); }
 	char getChar() const;
 	char getChar(int x, int y) const;
+	void inLegend(bool &needToRedraw) const;
 	virtual ~gameObject() = default;
 };
 

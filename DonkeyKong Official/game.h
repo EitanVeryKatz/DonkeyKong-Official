@@ -10,6 +10,7 @@
 
 class game
 {
+	static constexpr int MAX_SCORE = 10000;
 	int lives = 3;
 	int score = 0;
 	int activeBarrels = 0;

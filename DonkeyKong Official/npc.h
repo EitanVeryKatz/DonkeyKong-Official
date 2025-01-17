@@ -10,6 +10,7 @@ public:
 	using gameObject::setPosition;
 	using gameObject::setGameBoard;
 	using gameObject::draw;
+	using gameObject::inLegend;
 	npc(int x, int y, char icon): gameObject(x,y,icon) {}
 	npc(char icon):gameObject(icon){}
 	bool isActive() const { return active; }

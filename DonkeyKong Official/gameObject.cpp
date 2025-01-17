@@ -65,3 +65,13 @@ char gameObject::getChar(int x, int y) const
 	return pBoard->getChar(x, y);
 }
 
+void gameObject::inLegend(bool& needToRedraw) const
+{
+	int currX = getX(), currY = getY();
+	int LStartX = pBoard->getLx(), LStartY = pBoard->getLy();
+	if (currX >= LStartX && currX < LStartX + L_LENGTH && currY >= LStartY && currY < LStartY + L_HEIGHT)
+	{
+		needToRedraw = true;
+	}
+}
+

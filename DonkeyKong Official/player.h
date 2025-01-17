@@ -24,6 +24,7 @@ public:
 	using gameObject::setGameBoard;
 	using gameObject::draw;
 	using gameObject::erase;
+	using gameObject::inLegend;
 	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y) {}
 	void resetPlayer()
 	{

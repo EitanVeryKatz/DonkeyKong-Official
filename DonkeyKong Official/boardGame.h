@@ -14,8 +14,6 @@ class ghost;
 
 class boardGame
 {
-	static constexpr int L_LENGTH = 8;
-	static constexpr int L_HEIGHT = 2;
 	int startXMario, startYMario;
 	int monkeX, monkeY;
 	int Lx, Ly;

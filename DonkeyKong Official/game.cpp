@@ -229,6 +229,7 @@ void game::gameLoop(player& mario, boardGame& board)
 			win(mario, running, board); // handle player win
 		mario.erase(); // erase the player
 		mario.moveInBoard(); // move the player
+		mario.inLegend(needsRedraw);
 		mario.draw(); // draw the player
 		if (!debug)
 			fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
@@ -436,8 +437,13 @@ void game::printBoardOptions(int currentPage, int boardsPerPage, int totalPages)
 }
 
 
-void game::updateScore(int points) {
+void game::updateScore(int points)
+{
 	score += points;
+	if (score > MAX_SCORE)
+	{
+		score = MAX_SCORE;
+	}
 	needsRedraw = true;
 }
 
@@ -459,6 +465,7 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 		if (pNPC->isActive())
 		{
 			pNPC->update(score, needsRedraw);
+			pNPC->inLegend(needsRedraw);
 			if (pNPC->isActive())
 			{
 				++itr;
