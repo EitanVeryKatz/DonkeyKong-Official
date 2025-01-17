@@ -470,9 +470,8 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 			{
 				++itr;
 			}
-			else if (dynamic_cast<barrel*>(*itr))
+			else if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
 			{
-				barrel* pBarrel = dynamic_cast<barrel*>(pNPC);
 				if (!pBarrel->isBlastShowing())
 				{
 					delete pNPC;
@@ -488,8 +487,7 @@ void game::updateNPCs(int iterationCounter, boardGame& board)
 		}
 		else
 		{
-			barrel* pBarrel = dynamic_cast<barrel*>(pNPC);
-			if (pBarrel)
+			if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
 			{
 				pBarrel->expHandler();
 			}
