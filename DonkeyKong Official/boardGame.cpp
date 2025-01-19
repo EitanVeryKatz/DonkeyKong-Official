@@ -64,13 +64,17 @@ void boardGame::initActiveBoard()
                 startHammerY = r;
                 randomHammerLocation = false;
             }
-            else if (currChar == '@')
+			else if (currChar == '@' && r != BOARD_HEIGHT - 1 && r != 0 && c != 0 && c != BOARD_WIDTH - 1) // check if the player is not on the borders
             {
                 validPlayerPos = true;
                 startXMario = c;
                 startYMario = r;
                 activeBoard[r][c] = ' ';
             }
+            else if (currChar == '@')
+			{
+				activeBoard[r][c] = ' ';
+			}
             else if (currChar == '&')
             {
                 numOfMonkeys++;
