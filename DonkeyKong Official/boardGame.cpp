@@ -255,12 +255,12 @@ void boardGame::initBarrels()
     {
         barrel::startingXPos.clear(); // when new file is loaded clear the previous starting x positions
 
-        if (activeBoard[monkeY + 1][monkeX + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+        if (activeBoard[monkeY][monkeX + 1] == ' ' && monkeX + 1 < BOARD_WIDTH && monkeY < BOARD_HEIGHT)
         {
             barrel::startingXPos.push_back(monkeX + 1);
             validBarrelSpawningPos = true;
         }
-        if (activeBoard[monkeY + 1][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY + 1 < BOARD_HEIGHT)
+        if (activeBoard[monkeY][monkeX - 1] == ' ' && monkeX - 1 < BOARD_WIDTH && monkeY < BOARD_HEIGHT)
         {
             barrel::startingXPos.push_back(monkeX - 1);
             validBarrelSpawningPos = true;

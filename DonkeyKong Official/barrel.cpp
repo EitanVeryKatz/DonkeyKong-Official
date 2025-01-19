@@ -9,7 +9,7 @@ vector<int> barrel::startingXPos = {};
 barrel::barrel(int monkeY) : npc(ICON)
 {
 	startX = startingXPos[rand() % startingXPos.size()];
-    startY = monkeY + 1;
+    startY = monkeY;
 }
 void barrel::move()
 {
