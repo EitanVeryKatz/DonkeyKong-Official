@@ -20,6 +20,17 @@ class game
 	bool singleGame = false;
 	int level = 1;
 	bool needsRedraw = true;
+	std::string currFileName;
+
+	const std::string CausesOfFailStrings[5] = {
+		"BC", // Barrel Collision
+		"BE", // Barrel Explosion
+		"GC", // Ghost Collision
+		"FD", // Fall to Death
+		"OB"  // Out of Bounds
+	};
+
+	int iterationCounter = 0;
 	void updateScore(int points);
 	void initGame(player& mario, boardGame& board); // Initialize the game
 	void handleInput(player& mario); // Handle user input
@@ -42,6 +53,7 @@ class game
 	void drawLegend(boardGame& b) const;
 public:
 	void displayMenu(); // Display the game menu
+	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;
 	game() { getAllBoardFiles(); }
 };
 

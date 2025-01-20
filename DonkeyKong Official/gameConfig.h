@@ -13,6 +13,7 @@ constexpr int diffculty[3] = { 3, 5, 7 };
 constexpr int BARREL_SPAWN_RATE = 20;
 constexpr int GAME_SPEED = 80;
 constexpr int FALL_TO_DEATH = 5;
+constexpr int SEED = 12345;
 
 void playWinningSong();
 void playFailSong();

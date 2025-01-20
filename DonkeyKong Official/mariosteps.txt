@@ -1,0 +1,4 @@
+<seed>
+<time>:<key>
+
+23:w

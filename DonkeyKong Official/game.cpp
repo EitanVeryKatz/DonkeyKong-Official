@@ -5,7 +5,8 @@
 #include "gameConfig.h"
 #include <filesystem>
 #include <__msvc_filebuf.hpp>
-#include <algorithm> 
+#include <algorithm>
+#include <fstream>
 
 using std::string;
 
@@ -30,7 +31,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
-			
+			writeResFile(false, currFileName, 0); // write the result file
 			return;
 		}
 		else // if there are more lives
@@ -85,6 +86,7 @@ void game::displayMenu()
 			{
 				string fileName;
 				printAndChooseBoard(fileName); // print the board options
+				currFileName = fileName;
 				if (fileChosen)
 				{
 					setDifficulty(); // set the diffculty
@@ -191,7 +193,7 @@ void game::gameLoop(player& mario, boardGame& board)
 {
 	bool running = true;
 	int barrelCounter = 0; 
-	int iterationCounter = 0;
+	iterationCounter = 0;
 	while (running) // main game loop
 	{
 		if (needsRedraw)
@@ -507,4 +509,17 @@ void game::handleBarrelSpawn(boardGame& board, int iterationCounter)
 		board.getNPCVector().push_back(pBarrel);
 		activeBarrels++;
 	}
+}
+
+
+void game::writeResFile(bool won, const std::string& fileName, int cause) const
+{
+	string resFileName = fileName.substr(0, fileName.find_last_of('.')) + ".result";
+	std::ofstream resFile(resFileName);
+	resFile << "time:" << iterationCounter << " res:" << (won ? "win" : "fail") << " lives:" << lives << " score:" <<score;
+	if (!won)
+	{
+		resFile << " cause:" << CausesOfFailStrings[cause];
+	}
+	resFile.close();
 }

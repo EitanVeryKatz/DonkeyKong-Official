@@ -1,0 +1,2 @@
+<time>:<res>:<lives>:<score>:<cause>
+34:fail:0:2000:bh
