@@ -15,6 +15,17 @@ constexpr int breakTime = 2000;
 constexpr int MessageX = 30, MessageY = 12;
 
 
+//TODO: later need to be chnaged becasue of another game class
+game::game(const std::string state)
+{
+	getAllBoardFiles();
+	if (state == "-save")
+		statesFlags[SAVE] = true;
+	else if (state == "-load")
+		statesFlags[LOAD] = true;
+	else if (state == "-silent")
+		statesFlags[SILENT] = true;
+}
 
 void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
@@ -32,7 +43,8 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
-			writeResFile(false, currFileName, cause); // write the result file
+			if (statesFlags[SAVE])
+				writeResFile(false, currFileName, cause); // write the result file
 			return;
 		}
 		else // if there are more lives
@@ -67,7 +79,8 @@ void game::win(player& mario, bool& running, boardGame& board)
 
 		gotoxy(centerX, centerY + 5); // Move to the calculated position
 		std::cout << scoreMessage; // display the score
-
+		if (statesFlags[SAVE])
+			writeResFile(true, currFileName); // write the result file
 		playWinningSong();
 		Sleep(breakTime);
 		system("cls"); // clear the screen
@@ -524,3 +537,5 @@ void game::writeResFile(bool won, const std::string& fileName, int cause) const
 	}
 	resFile.close();
 }
+
+

@@ -2,10 +2,18 @@
 #include "game.h"
 #include <stdlib.h>
 #include "gameConfig.h"
-int main()
+int main(int argc, char* argv[])
 {
 	srand(SEED);
-	game g;
-	g.displayMenu();
+	if (argc > 1)
+	{
+		game g(argv[1]);
+		g.displayMenu();
+	}
+	else
+	{
+		game g;
+		g.displayMenu();
+	}
 	return 0;
 }

@@ -12,6 +12,14 @@ class game
 {
 	static constexpr int CAUSE_SIZE = 5;
 	static constexpr int MAX_SCORE = 10000;
+	enum states
+	{
+		SAVE,
+		LOAD,
+		SILENT,
+		NUM_OF_STATES
+	};
+	bool statesFlags[NUM_OF_STATES] = { false };
 	int lives = 3;
 	int score = 0;
 	int activeBarrels = 0;
@@ -55,6 +63,6 @@ class game
 public:
 	void displayMenu(); // Display the game menu
 	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;
-	game() { getAllBoardFiles(); }
+	game(const std::string state = "-");
 };
 
