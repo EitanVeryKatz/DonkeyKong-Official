@@ -9,6 +9,14 @@ class player : protected gameObject
 	static constexpr Direction directionsPlayer[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 	enum icons {WITHOUT_HAMMER, WITH_HAMMER};
 	enum directions { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3, STAY = 4 };
+	enum failCauses
+	{
+		BC, // Barrel Collision
+		BE, // Barrel Explosion
+		GC, // Ghost Collision
+		FD, // Fall to Death
+		OB  // Out of Bounds
+	};
 	static constexpr int STOP = 0, JUMPING_FARME = 2, DIR_DOWN = 1;
 	int startX, startY;
 	static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
@@ -49,7 +57,7 @@ public:
 	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY) const; // Handle vertical border
 	void handleHorizontalBorder(int currX, int currY, int dirX, int& newX, int& newY) const; // Handle horizontal border
 	void handleInsideBorders(int currX, int currY, int dirX, int dirY, int& newX, int& newY); // Handle inside borders
-	bool checkFail() const; // Check if player failed
+	bool checkFail(size_t& cause) const; // Check if player failed
 	bool checkWin() const; // Check if player won
 	bool isFalling() const; // Check if player is falling
 	int getHammerY() const { return hammerLocation.getY(); }

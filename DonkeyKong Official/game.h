@@ -10,6 +10,7 @@
 
 class game
 {
+	static constexpr int CAUSE_SIZE = 5;
 	static constexpr int MAX_SCORE = 10000;
 	int lives = 3;
 	int score = 0;
@@ -22,7 +23,7 @@ class game
 	bool needsRedraw = true;
 	std::string currFileName;
 
-	const std::string CausesOfFailStrings[5] = {
+	const std::string CausesOfFailStrings[CAUSE_SIZE] = {
 		"BC", // Barrel Collision
 		"BE", // Barrel Explosion
 		"GC", // Ghost Collision

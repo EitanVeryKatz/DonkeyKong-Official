@@ -18,7 +18,8 @@ constexpr int MessageX = 30, MessageY = 12;
 
 void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
-	if (mario.checkFail()) // if the player failed
+	size_t cause;
+	if (mario.checkFail(cause)) // if the player failed
 	{
 		lives--; // decrement the number of lives
 		if (lives == 0) // if no more lives
@@ -31,7 +32,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
-			writeResFile(false, currFileName, 0); // write the result file
+			writeResFile(false, currFileName, cause); // write the result file
 			return;
 		}
 		else // if there are more lives

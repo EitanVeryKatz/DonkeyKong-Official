@@ -136,15 +136,38 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 	}
 }
 
-bool player::checkFail() const
+bool player::checkFail(size_t& cause) const
 {
 	char failChar = getFailChart();
 	if (failChar == 'O' || failChar == '*' || failChar == 'x')//if touched barrel or explosion particale
 	{
+		switch (failChar)
+		{
+		case 'O':
+			cause = BC;
+			break;
+		case '*':
+			if (getY() == BOARD_HEIGHT - 2)
+			{
+				cause = OB;
+			}
+			else
+			{
+				cause = BE;
+			}
+			break;
+		case 'x' :
+			cause = GC;
+			break;
+		case 'X':
+			cause = GC;
+			break;
+		}
 		return true;
 	}
 	if (fallCounter >= FALL_TO_DEATH && isOnFloor() && !isOnLadder())//if fallen from hight of 5 characters and landed on floor
 	{
+		cause = FD;
 		return true;
 	}
 	return false;	
