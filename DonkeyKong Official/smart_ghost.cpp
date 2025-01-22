@@ -3,8 +3,6 @@
 
 smart_ghost::smart_ghost()
 {
-	int i = rand() % 2; // random number between 0 and 2
-	setDir(directionsSGhost[i]);
 	changeIcon(icon);
 }
 
