@@ -10,9 +10,9 @@ class ghost : public npc
 	static constexpr char icon = 'x';
 public:
 	ghost();
+	void move() override;
 	bool checkFloorEdge();
 	void changeDirection();
-	void move() override;
 	void handleGhostCollision(int x, int y) const;
 };
 

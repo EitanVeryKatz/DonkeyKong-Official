@@ -12,6 +12,7 @@ class npc;
 class barrel;
 class ghost;
 
+
 class boardGame
 {
 	int startXMario, startYMario;

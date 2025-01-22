@@ -68,7 +68,7 @@ void ghost::move()
 		setFailChart(icon);
 
 	restoreBoardChar(currX, currY);
-}
+}	
 
 /**
  * @brief Handles the collision between ghosts.

@@ -1,6 +1,7 @@
 #include "boardGame.h"
 #include <iostream>
 #include "ghost.h"
+#include "smart_ghost.h"
 #include "player.h"
 #include <algorithm>
 #include <fstream>
@@ -22,7 +23,7 @@ boardGame::~boardGame()
 
 char boardGame::getChar(int x, int y) const
 {
-	if (activeBoard[y][x] == 'x')
+	if (activeBoard[y][x] == 'x' || activeBoard[y][x] == 'X')
 		return ' ';
 	return activeBoard[y][x];
 }
@@ -55,6 +56,17 @@ void boardGame::initActiveBoard()
                 npcVector.push_back(temp);
             }
             else if (currChar == 'x' && !checkOnFloor(c, r))
+            {
+                activeBoard[r][c] = ' ';
+            }
+            if (currChar == 'X' && checkOnFloor(c, r))
+            {
+                smart_ghost* temp = new smart_ghost;
+                temp->setPosition(c, r);
+                temp->setGameBoard(this);
+                npcVector.push_back(temp);
+            }
+            else if (currChar == 'X' && !checkOnFloor(c, r))
             {
                 activeBoard[r][c] = ' ';
             }
