@@ -16,8 +16,9 @@ constexpr int MessageX = 30, MessageY = 12;
 
 
 //TODO: later need to be chnaged becasue of another game class
-game::game(const std::string state)
+game::game(int currentSeed,const std::string state)
 {
+	Seed = currentSeed;
 	getAllBoardFiles();
 	if (state == "-save")
 		statesFlags[SAVE] = true;
@@ -38,6 +39,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			running = false; // end the game
 			lost = true;
+			saveFile->close();
 			system("cls"); // clear the screen
 			printFailMessage(); // display the fail message
 			playFailSong();
@@ -66,6 +68,7 @@ void game::win(player& mario, bool& running, boardGame& board)
 {
 	updateScore(1000);
 	running = false; // end the game
+	saveFile->close();
 	if (level == static_cast<int>(boardFileNames.size()) || singleGame)
 	{
 		system("cls"); // clear the screen
@@ -165,6 +168,13 @@ void game::runGame(const std::string& fileName)
 	}
 	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
 	initGame(mario, board); // initialize the game
+
+	if (statesFlags[SAVE] == true) {//if game in save mode create/override save file for current screen
+		string saveFileName = fileName.substr(0, fileName.find_last_of('.')) + ".steps";
+		saveFile = new std::ofstream(saveFileName);
+		*saveFile << Seed << std::endl;
+	}
+
 	gameLoop(mario, board); // run the game loop
 	board.setNewBoardFile(false); // when finished the game set the flag to false
 }
@@ -193,13 +203,17 @@ void game::handleInput(player& mario)
 {
 	if (_kbhit()) // if the user pressed a key
 	{
+		bool needsSave = false;
 		char key = _getch(); // get the key
 		if (key == ESC) // if the user pressed 'esc'
 		{
 			pauseGame(); // pause the game
 		}
 		else
-			mario.keyPressed(key); // handle the key
+			mario.keyPressed(key, needsSave); // handle the key
+
+		if (needsSave)
+			saveState(key);
 	}
 }
 
@@ -539,3 +553,11 @@ void game::writeResFile(bool won, const std::string& fileName, int cause) const
 }
 
 
+void game::saveState(char key) {
+	*saveFile << iterationCounter << ':' << key << std::endl;
+}
+
+void game::closeSaveFile() {
+	saveFile->close();
+	delete saveFile;
+}

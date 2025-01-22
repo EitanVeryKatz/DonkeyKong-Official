@@ -49,7 +49,7 @@ public:
 		setHammerLocation();
 	}
 	bool isSwingingHammer() const { return midswing; }
-	void keyPressed(char key); // Handle player's key press
+	void keyPressed(char key,bool& needsSave); // Handle player's key press
 	void checkHasHmmer();
 	void move() override; // handle player's movement
 	bool isAtVerticalBorder(int currX, int dirX) const; // Check if player is at vertical border

@@ -9,7 +9,7 @@
 
 
 class game
-{
+{	
 	static constexpr int CAUSE_SIZE = 5;
 	static constexpr int MAX_SCORE = 10000;
 	enum states
@@ -20,6 +20,7 @@ class game
 		NUM_OF_STATES
 	};
 	bool statesFlags[NUM_OF_STATES] = { false };
+	int Seed;
 	int lives = 3;
 	int score = 0;
 	int activeBarrels = 0;
@@ -29,6 +30,7 @@ class game
 	bool singleGame = false;
 	int level = 1;
 	bool needsRedraw = true;
+	std::ofstream* saveFile = nullptr;
 	std::string currFileName;
 
 	const std::string CausesOfFailStrings[CAUSE_SIZE] = {
@@ -60,9 +62,11 @@ class game
 	bool fileChosen = false;
 	void printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const;
 	void drawLegend(boardGame& b) const;
+	void saveState(char key);
+	void closeSaveFile();
 public:
 	void displayMenu(); // Display the game menu
 	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;
-	game(const std::string state = "-");
+	game(int currentSeed, const std::string state = "-");
 };
 

@@ -1,14 +1,16 @@
 #include "player.h"
 
 
-void player::keyPressed(char key)
+void player::keyPressed(char key , bool& needsSave)
 {
 	if (isOnFloor() && !isOnLadder() && tolower(key) == 'w') {
 		midjump++;
+		needsSave = true;
 	}
 	if (hasHammer && getDirY() == 0) {//if mario holds hammer and looking sideways.
 		if (tolower(key) == 'p') {
 			swingHammer();
+			needsSave = true;
 		}
 	}
 	if (isOnFloor()||isOnLadder()) 
@@ -24,12 +26,14 @@ void player::keyPressed(char key)
 						if (keys[i] == 'a' || keys[i] == 'd')
 							hammerLocation.setDir(directionsPlayer[i]);
 						setDir(directionsPlayer[i]);
+						needsSave = true;
 					}
 					return;
 				}
 				else 
 				{ // if on ladder move to any direction
 					setDir(directionsPlayer[i]);
+					needsSave = true;
 					return;
 				}
 			}
