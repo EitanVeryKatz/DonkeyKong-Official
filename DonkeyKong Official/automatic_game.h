@@ -51,7 +51,12 @@ class automatic_game
 	int find_board_file_for_step_file(const std::string& stepFileName);
 	void runGame(const std::string& fileName);
 	void gameLoop(player& mario, boardGame& board);
+	void updateNPCs(int& iterationCounter, boardGame& board);
+	void handleBarrelSpawn(boardGame& board, int iterationCounter);
+	void drawLegend(boardGame& b) const;
 	~automatic_game() { resetStepsVec(); }
+public:
+	automatic_game(const std::string state);
 };
 
 

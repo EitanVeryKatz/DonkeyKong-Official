@@ -275,3 +275,10 @@ void automatic_game::gameLoop(player& mario, boardGame& board)
 		std::fflush(stdin); // clear the input buffer
 	}
 }
+
+automatic_game::automatic_game(const std::string state)
+{
+	if (state == '-silent')
+		statesFlags[SILENT] = true;
+	fileManager();
+}

@@ -14,12 +14,15 @@
  * @param score Reference to the player's score, which will be incremented if the NPC was smashed.
  * @param needToRedraw Reference to a flag indicating whether the legend needs to be redrawn.
  */
-void npc::update(int& score, bool& needToRedraw)
+void npc::update(int& score, bool& needToRedraw, bool silent)
 {
 	if (isActive())
 	{
-		erase();
-		move();
+		if (!silent)
+		{
+			erase();
+			move();
+		}
 		if (wasSmashed())
 		{
 			resetSmash();
@@ -28,7 +31,10 @@ void npc::update(int& score, bool& needToRedraw)
 		}
 		if (isActive())
 		{
-			draw();
+			if (!silent)
+			{
+				draw();
+			}
 		}
 	}
 }
