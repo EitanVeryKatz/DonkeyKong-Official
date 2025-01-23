@@ -184,6 +184,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="automatic_game.cpp" />
     <ClCompile Include="barrel.cpp" />
     <ClCompile Include="boardGame.cpp" />
     <ClCompile Include="game.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="automatic_game.h" />
     <ClInclude Include="barrel.h" />
     <ClInclude Include="boardGame.h" />
     <ClInclude Include="game.h" />

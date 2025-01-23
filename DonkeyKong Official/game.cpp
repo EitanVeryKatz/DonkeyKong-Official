@@ -173,6 +173,7 @@ void game::runGame(const std::string& fileName)
 		string saveFileName = fileName.substr(0, fileName.find_last_of('.')) + ".steps";
 		saveFile = new std::ofstream(saveFileName);
 		*saveFile << Seed << std::endl;
+		*saveFile << maxBarrels << std::endl;
 	}
 
 	gameLoop(mario, board); // run the game loop
