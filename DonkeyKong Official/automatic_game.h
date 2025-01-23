@@ -8,6 +8,12 @@ constexpr int MessageX = 30, MessageY = 12;
 constexpr int breakTime = 2000;
 class automatic_game
 {
+	enum STATES
+	{
+		LOAD,
+		SILENT
+	};
+	bool statesFlags[2] = { true, false };
 	static constexpr int MAX_SCORE = 10000;
 	int lives = 3;
 	int score = 0;
@@ -40,6 +46,11 @@ class automatic_game
 		score += points;
 		needsRedraw = true;
 	}
+	void initGame(player& mario, boardGame& board);
+	void fileManager();
+	int find_board_file_for_step_file(const std::string& stepFileName);
+	void runGame(const std::string& fileName);
+	void gameLoop(player& mario, boardGame& board);
 	~automatic_game() { resetStepsVec(); }
 };
 
