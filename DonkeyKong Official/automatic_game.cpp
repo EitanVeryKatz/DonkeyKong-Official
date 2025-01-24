@@ -76,8 +76,7 @@ void automatic_game::loadSteps(const std::string& fileName)
     std::cout << "ERROR: invalid file format" << std::endl;
     return;
     }
-	if (!gamesPlayedInOrder || level == 1)
-		srand(std::stoi(line));
+	int tseed = std::stoi(line);
 
     std::getline(stepsFile, line);
     if (line.empty()) 
@@ -99,6 +98,8 @@ void automatic_game::loadSteps(const std::string& fileName)
 		resetLives();
 		resetScore();
 	}
+	if (!gamesPlayedInOrder || level == 1)
+		srand(tseed);
 	while (!stepsFile.eof())
 	{
 		std::getline(stepsFile, line);
@@ -246,6 +247,8 @@ void automatic_game::fileManager()
 		resFile->close();
 		delete resFile;
 		resFile = nullptr;
+		if (!gamesPlayedInOrder)
+			resetLives();
 	}
 	system("cls");
 	gotoxy(0, 0);
@@ -414,7 +417,7 @@ automatic_game::automatic_game(const std::string state)
 
 void automatic_game::cmpToResFile(const int& cause) 
 {
-	int res_itr, res_lives, res_score;
+	int res_itr , res_lives , res_score ;
 	char res_cond;
 	std::string res_cause;
 	std::string resLine;
@@ -423,9 +426,9 @@ void automatic_game::cmpToResFile(const int& cause)
 	if (resLine.empty())
 	{
 		resCmp = false;
+		return;
 	}
-	else
-		getResLine(res_itr, res_cond, res_lives, res_score, res_cause, resLine);
+	getResLine(res_itr, res_cond, res_lives, res_score, res_cause, resLine);
 
 	if (cause != -1) // if cause not -1 it means the player failed
 	{
