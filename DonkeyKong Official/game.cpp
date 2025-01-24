@@ -171,10 +171,24 @@ void game::runGame(const std::string& fileName)
 		string resFileName = fileName.substr(0, fileName.find_last_of('.')) + ".result";
 		string saveFileName = fileName.substr(0, fileName.find_last_of('.')) + ".steps";
 		saveFile = new std::ofstream(saveFileName);
+		if (!saveFile->is_open())
+		{
+			save = false;
+			delete saveFile;
+			saveFile = nullptr;
+			return;
+		}
 		*saveFile << Seed << std::endl;
 		*saveFile << maxBarrels << std::endl;
 		*saveFile << !singleGame << std::endl;
 		resFile = new std::ofstream(resFileName);
+		if (!resFile->is_open())
+		{
+			save = false;
+			delete resFile;
+			resFile = nullptr;
+			return;
+		}
 	}
 
 	gameLoop(mario, board); // run the game loop
@@ -558,8 +572,17 @@ void game::saveState(char key) {
 
 void game::closeSaveFile()
 {
-	resFile->close();
-	saveFile->close();
-	delete saveFile;
-	delete resFile;
+	if (saveFile != nullptr)
+	{
+		saveFile->close();
+		delete saveFile;
+		saveFile = nullptr;
+	}
+	if (resFile != nullptr)
+	{
+		resFile->close();
+		delete resFile;
+		resFile = nullptr;
+	}
+	
 }

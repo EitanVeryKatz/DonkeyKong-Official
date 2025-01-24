@@ -62,5 +62,9 @@ public:
 	void displayMenu(); // Display the game menu
 	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;
 	game(int currentSeed, const std::string state = "-");
+	~game()
+	{
+		closeSaveFile();
+	}
 };
 
