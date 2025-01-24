@@ -76,7 +76,8 @@ void automatic_game::loadSteps(const std::string& fileName)
     std::cout << "ERROR: invalid file format" << std::endl;
     return;
     }
-    srand(std::stoi(line));
+	if (!gamesPlayedInOrder || level == 1)
+		srand(std::stoi(line));
 
     std::getline(stepsFile, line);
     if (line.empty()) 
@@ -93,7 +94,11 @@ void automatic_game::loadSteps(const std::string& fileName)
     return;
     }
     gamesPlayedInOrder = std::stoi(line);
-
+	if (!gamesPlayedInOrder)
+	{
+		resetLives();
+		resetScore();
+	}
 	while (!stepsFile.eof())
 	{
 		std::getline(stepsFile, line);
@@ -130,6 +135,7 @@ void automatic_game::win(player& mario, bool& running, boardGame& board)
 {
 	updateScore(1000);
 	running = false;
+	cmpToResFile();
 }
 
 void automatic_game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
@@ -167,6 +173,7 @@ void automatic_game::fail(player& mario, bool& running, boardGame& board, int& b
 
 void automatic_game::initGame(player& mario, boardGame& board)
 {
+	iterationCounter = 0;
 	board.initActiveBoard(); // initialize the active board
 	needsRedraw = true;
 	clear_key_buffer(); // clear the input buffer
@@ -202,7 +209,7 @@ void automatic_game::fileManager()
 		Sleep(breakTime);
 		return;
 	}
-	for (size_t i = 0; i < stepsFileNames.size(); i++)
+	for (size_t i = 0; i < stepsFileNames.size(); i++, level++)
 	{
 		std::string stepsFileName = stepsFileNames[i];
 		int boardIndex = find_board_file_for_step_file(stepsFileName);
@@ -218,19 +225,16 @@ void automatic_game::fileManager()
 				return;
 			}
 			runGame(boardFileNames[boardIndex]);
-			resetLives();
-			if (!gamesPlayedInOrder)
-				resetScore();
 			if (resCmp)
 			{
 				system("cls");
-				std::cout << "screen:" << i + 1 << " match the result file" << std::endl;
+				std::cout << "screen " << i + 1 << " match the result file" << std::endl;
 				Sleep(breakTime);
 			}
 			else
 			{
 				system("cls");
-				std::cout << "screen:" << i + 1 << "does not match the result file" << std::endl;
+				std::cout << "screen " << i + 1 << " does not match the result file" << std::endl;
 				Sleep(breakTime);
 			}
 		}
@@ -239,6 +243,9 @@ void automatic_game::fileManager()
 			std::cout << "No board file found for " << stepsFileName << std::endl;
 			Sleep(breakTime);
 		}
+		resFile->close();
+		delete resFile;
+		resFile = nullptr;
 	}
 	system("cls");
 	gotoxy(0, 0);
@@ -313,7 +320,7 @@ void automatic_game::gameLoop(player& mario, boardGame& board)
 		handleInput(mario); // handle the user input
 		updateNPCs(iterationCounter, board);
 		if (!silent)
-			Sleep(GAME_SPEED);
+			Sleep(GAME_SPEED -40);
 		iterationCounter++;
 		mario.checkHasHmmer();
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure

@@ -42,7 +42,12 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			Sleep(breakTime);
 			system("cls"); // clear the screen
 			if (save)
-				writeResFile(false, currFileName, cause); // write the result file
+				{
+					writeResFile(false, currFileName, static_cast<int>(cause)); // write the result file
+					resFile->close();
+					delete resFile;
+					resFile = nullptr;
+				}
 			return;
 		}
 		else // if there are more lives
@@ -80,12 +85,17 @@ void game::win(player& mario, bool& running, boardGame& board)
 
 		gotoxy(centerX, centerY + 5); // Move to the calculated position
 		std::cout << scoreMessage; // display the score
-		if (save)
-			writeResFile(true, currFileName); // write the result file
 		playWinningSong();
 		Sleep(breakTime);
 		system("cls"); // clear the screen
 	}
+	if (save)
+		{
+			writeResFile(true, currFileName); // write the result file
+			resFile->close();
+			delete resFile;
+			resFile = nullptr;
+		}
 }
 
 void game::displayMenu()
@@ -199,6 +209,7 @@ void game::runGame(const std::string& fileName)
 
 void game::initGame(player& mario, boardGame& board)
 {
+	iterationCounter = 0;
 	board.initActiveBoard(); // initialize the active board
 	needsRedraw = true;
 	clear_key_buffer(); // clear the input buffer
@@ -578,11 +589,4 @@ void game::closeSaveFile()
 		delete saveFile;
 		saveFile = nullptr;
 	}
-	if (resFile != nullptr)
-	{
-		resFile->close();
-		delete resFile;
-		resFile = nullptr;
-	}
-	
 }

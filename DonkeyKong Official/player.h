@@ -11,11 +11,11 @@ class player : protected gameObject
 	enum directions { UP = 0, LEFT = 1, DOWN = 2, RIGHT = 3, STAY = 4 };
 	enum failCauses
 	{
-		BC, // Barrel Collision
-		BE, // Barrel Explosion
-		GC, // Ghost Collision
-		FD, // Fall to Death
-		OB  // Out of Bounds
+		BC = 0 , // Barrel Collision
+		BE = 1, // Barrel Explosion
+		GC = 2, // Ghost Collision
+		FD = 3, // Fall to Death
+		OB = 4  // Out of Bounds
 	};
 	static constexpr int STOP = 0, JUMPING_FARME = 2, DIR_DOWN = 1;
 	int startX, startY;
