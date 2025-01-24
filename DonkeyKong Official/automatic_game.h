@@ -8,12 +8,18 @@ constexpr int MessageX = 30, MessageY = 12;
 constexpr int breakTime = 2000;
 class automatic_game
 {
-	enum STATES
-	{
-		LOAD,
-		SILENT
+	static constexpr int CAUSE_SIZE = 5;
+	const std::string CausesOfFailStrings[CAUSE_SIZE] = {
+		"BC", // Barrel Collision
+		"BE", // Barrel Explosion
+		"GC", // Ghost Collision
+		"FD", // Fall to Death
+		"OB"  // Out of Bounds
 	};
-	bool statesFlags[2] = { true, false };
+	bool gamesPlayedInOrder = false;
+	bool resCmp = true;
+	bool silent = false;
+	bool orderOfGames = false;
 	static constexpr int MAX_SCORE = 10000;
 	int lives = 3;
 	int score = 0;
@@ -34,6 +40,7 @@ class automatic_game
 	std::vector<std::string> boardFileNames;
 	std::vector<std::string> stepsFileNames;
 	std::vector<key_and_time*> steps;
+	std::ifstream* resFile = nullptr;
 	void resetStepsVec();
 	void getAllStepsFiles();
 	void getAllBoardFiles();
@@ -47,18 +54,22 @@ class automatic_game
 		needsRedraw = true;
 	}
 	void initGame(player& mario, boardGame& board);
-	void fileManager();
 	int find_board_file_for_step_file(const std::string& stepFileName);
 	void runGame(const std::string& fileName);
 	void gameLoop(player& mario, boardGame& board);
-	void updateNPCs(int& iterationCounter, boardGame& board);
+	void updateNPCs(int iterationCounter, boardGame& board);
 	void handleBarrelSpawn(boardGame& board, int iterationCounter);
 	void drawLegend(boardGame& b) const;
-	~automatic_game() { resetStepsVec(); }
+	void cmpToResFile(const int &cause = -1);
+	void getResLine(int &res_itr, char &res_cond, int &res_lives, int &res_score, std::string &res_cause, const std::string &resLine) const;
+	void displayRes() const;
+	void resetLives() { lives = 3; }
+	void resetScore() { score = 0; }
 public:
-	automatic_game(const std::string state);
+	automatic_game(const std::string state = "-");
+	~automatic_game();
+	void fileManager();
 };
-
 
 
 

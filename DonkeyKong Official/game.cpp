@@ -21,11 +21,7 @@ game::game(int currentSeed,const std::string state)
 	Seed = currentSeed;
 	getAllBoardFiles();
 	if (state == "-save")
-		statesFlags[SAVE] = true;
-	else if (state == "-load")
-		statesFlags[LOAD] = true;
-	else if (state == "-silent")
-		statesFlags[SILENT] = true;
+		save = true;
 }
 
 void game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
@@ -45,7 +41,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			playFailSong();
 			Sleep(breakTime);
 			system("cls"); // clear the screen
-			if (statesFlags[SAVE])
+			if (save)
 				writeResFile(false, currFileName, cause); // write the result file
 			return;
 		}
@@ -54,6 +50,8 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			firstGame = false;
 			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			system("cls"); // clear the screen
+			if (save)
+				writeResFile(false, currFileName, cause); // write the result file
 			gotoxy(MessageX, MessageY);
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 			Sleep(breakTime);
@@ -82,7 +80,7 @@ void game::win(player& mario, bool& running, boardGame& board)
 
 		gotoxy(centerX, centerY + 5); // Move to the calculated position
 		std::cout << scoreMessage; // display the score
-		if (statesFlags[SAVE])
+		if (save)
 			writeResFile(true, currFileName); // write the result file
 		playWinningSong();
 		Sleep(breakTime);
@@ -169,11 +167,14 @@ void game::runGame(const std::string& fileName)
 	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
 	initGame(mario, board); // initialize the game
 
-	if (statesFlags[SAVE] == true) {//if game in save mode create/override save file for current screen
+	if (save == true) {//if game in save mode create/override save file for current screen
+		string resFileName = fileName.substr(0, fileName.find_last_of('.')) + ".result";
 		string saveFileName = fileName.substr(0, fileName.find_last_of('.')) + ".steps";
 		saveFile = new std::ofstream(saveFileName);
 		*saveFile << Seed << std::endl;
 		*saveFile << maxBarrels << std::endl;
+		*saveFile << !singleGame << std::endl;
+		resFile = new std::ofstream(resFileName);
 	}
 
 	gameLoop(mario, board); // run the game loop
@@ -211,7 +212,7 @@ void game::handleInput(player& mario)
 			pauseGame(); // pause the game
 		}
 		else
-			mario.keyPressed(key, needsSave); // handle the key
+			mario.keyPressed(key, needsSave, false); // handle the key
 
 		if (needsSave)
 			saveState(key);
@@ -543,14 +544,11 @@ void game::handleBarrelSpawn(boardGame& board, int iterationCounter)
 
 void game::writeResFile(bool won, const std::string& fileName, int cause) const
 {
-	string resFileName = fileName.substr(0, fileName.find_last_of('.')) + ".result";
-	std::ofstream resFile(resFileName);
-	resFile << "time:" << iterationCounter << " res:" << (won ? "win" : "fail") << " lives:" << lives << " score:" <<score;
+	*resFile << iterationCounter << ':' << (won ? 'w' : 'f') << ':' << lives << ':' << score;
 	if (!won)
 	{
-		resFile << " cause:" << CausesOfFailStrings[cause];
+		*resFile << ':' << CausesOfFailStrings[cause] << std::endl;
 	}
-	resFile.close();
 }
 
 
@@ -558,7 +556,10 @@ void game::saveState(char key) {
 	*saveFile << iterationCounter << ':' << key << std::endl;
 }
 
-void game::closeSaveFile() {
+void game::closeSaveFile()
+{
+	resFile->close();
 	saveFile->close();
 	delete saveFile;
+	delete resFile;
 }

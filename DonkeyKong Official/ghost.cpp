@@ -36,7 +36,7 @@ void ghost::changeDirection()
  * The function also checks if the ghost is smashed and deactivates it if so.
  *
  */
-void ghost::move()
+void ghost::move(bool silent)
 {
 	int currX = getX(), currY = getY();
 	int newX = currX, newY = currY;
@@ -46,11 +46,12 @@ void ghost::move()
 	if (randChangeDir <= 5 || checkFloorEdge())  // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
 		changeDirection();
 
-	if (getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT)
-	{
-		changeDirection();
-		handleGhostCollision((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
-	}
+    if ((getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT) ||
+        (getFailChart(currX + 1, currY) == SGHOST && currDir == RIGHT || getFailChart(currX - 1, currY) == SGHOST && currDir == LEFT))
+    {
+    changeDirection();
+    handleGhostCollision((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) || (getFailChart(currX + 1, currY) == SGHOST && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
+    }
 
 	currDir = getDirX();
 
@@ -67,7 +68,8 @@ void ghost::move()
 	else
 		setFailChart(icon);
 
-	restoreBoardChar(currX, currY);
+	if (!silent)
+		restoreBoardChar(currX, currY);
 }	
 
 /**

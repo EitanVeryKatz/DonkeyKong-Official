@@ -11,7 +11,7 @@ barrel::barrel(int monkeY) : npc(ICON)
 	startX = startingXPos[rand() % startingXPos.size()];
     startY = monkeY;
 }
-void barrel::move()
+void barrel::move(bool silent)
 {
 	int currX = getX(), currY = getY(), newX = 0, newY = 0; // current and new coordinates of the barrel
     char dirChar;
@@ -39,7 +39,7 @@ void barrel::move()
     {
         handleInAir(currX, currY, newX, newY);
     }
-	updatePosition(currX, currY, newX, newY); // update the position of the barrel
+	updatePosition(currX, currY, newX, newY, silent); // update the position of the barrel
 }
 
 void barrel::handleExplosion()
@@ -80,7 +80,7 @@ void barrel::handleInAir(int currX, int currY, int &newX, int &newY)
 	newX = currX + getDirX(); // update the new X position
 }
 
-void barrel::updatePosition(int currX, int currY, int newX, int newY)
+void barrel::updatePosition(int currX, int currY, int newX, int newY, bool silent)
 {
 	if (!isBlastShowing()) // if the barrel is not exploded erase the barrel from the fail chart
     {
@@ -98,7 +98,8 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY)
 
     if (!isBlastShowing() && getBlowCount() < 2) 
     {
-		restoreBoardChar(currX, currY); // restore the board char
+        if (!silent)
+			restoreBoardChar(currX, currY); // restore the board char
     }
 }
 

@@ -30,7 +30,7 @@ void smart_ghost::changeVerticalDirection()
 		setDir(directionsSGhost[UP]);
 }
 
-void smart_ghost::move()
+void smart_ghost::move(bool silent)
 {
 	int currX = getX(), currY = getY();
 	int newX = currX, newY = currY;
@@ -84,7 +84,8 @@ void smart_ghost::move()
 	else
 		setFailChart(icon);
 
-	restoreBoardChar(currX, currY);
+	if (!silent)
+		restoreBoardChar(currX, currY);
 }
 
 void smart_ghost::handleVerCollision(int x, int y) const

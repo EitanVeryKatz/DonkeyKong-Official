@@ -1,15 +1,16 @@
 #include "player.h"
 
 
-void player::keyPressed(char key , bool& needsSave)
+void player::keyPressed(char key , bool& needsSave, bool silent)
 {
 	if (isOnFloor() && !isOnLadder() && tolower(key) == 'w') {
 		midjump++;
 		needsSave = true;
 	}
 	if (hasHammer && getDirY() == 0) {//if mario holds hammer and looking sideways.
-		if (tolower(key) == 'p') {
-			swingHammer();
+		if (tolower(key) == 'p') 
+		{
+			swingHammer(silent);
 			needsSave = true;
 		}
 	}
@@ -41,7 +42,7 @@ void player::keyPressed(char key , bool& needsSave)
 	}
 }
 
-void player::move()
+void player::move(bool silent)
 {
 	int currX = getX();
 	int currY = getY();
@@ -69,7 +70,8 @@ void player::move()
 		fallCounter = 0;
 	}
 	setPosition(newX, newY); // Update player's position
-	restoreBoardChar(currX, currY);
+	if (!silent)
+		restoreBoardChar(currX, currY);
 }
 
 bool player::isAtVerticalBorder(int currX, int dirX) const
@@ -214,20 +216,25 @@ void player::checkHasHmmer() {
 }
 
 
-void player::swingHammer() {
+void player::swingHammer(bool silent) {
 	hammerLocation.setX(getX() + hammerLocation.getDirX());
 	hammerLocation.setY(getY() + hammerLocation.getDirY());
 	setFailChart(hammerLocation.getX(), hammerLocation.getY(), hammerIcon);
-
-	gotoxy(hammerLocation.getX(), hammerLocation.getY());
-	std::cout << '#';
+	if (!silent)
+	{
+		gotoxy(hammerLocation.getX(), hammerLocation.getY());
+		std::cout << '#';
+	}
 
 	hammerLocationSecondary.setX(getX() + 2*hammerLocation.getDirX());
 	hammerLocationSecondary.setY(getY() + hammerLocation.getDirY());
 	setFailChart(hammerLocationSecondary.getX(), hammerLocationSecondary.getY(), hammerIcon);
 
-	gotoxy(hammerLocationSecondary.getX(), hammerLocationSecondary.getY());
-	std::cout << '#';
+	if (!silent)
+	{
+		gotoxy(hammerLocationSecondary.getX(), hammerLocationSecondary.getY());
+		std::cout << '#';
+	}
 
 	midswing = true;
 

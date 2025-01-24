@@ -11,7 +11,7 @@ public:
 	bool checkBelowLadder() const;
 	bool checkAboveLadder() const;
 	void changeVerticalDirection();
-	void move() override;
+	void move(bool silent = false) override;
 	void handleVerCollision(int x, int y) const;
 };
 

@@ -49,10 +49,10 @@ public:
 		setHammerLocation();
 	}
 	bool isSwingingHammer() const { return midswing; }
-	void keyPressed(char key, bool& needsSave); // Handle player's key press
-	void keyPressed(char key) { bool needsSave = false; keyPressed(key, needsSave); }
+	void keyPressed(char key, bool& needsSave, bool silent); // Handle player's key press
+	void keyPressed(char key, bool silent = false) { bool needsSave = false; keyPressed(key, needsSave, silent); }
 	void checkHasHmmer();
-	void move() override; // handle player's movement
+	void move(bool silent = false) override; // handle player's movement
 	bool isAtVerticalBorder(int currX, int dirX) const; // Check if player is at vertical border
 	bool isAtHorizontalBorder(int currY, int dirY) const; // Check if player is at horizontal border
 	void handleVerticalBorder(int currX, int currY, int dirY, int& newX, int& newY) const; // Handle vertical border
@@ -70,7 +70,7 @@ public:
 	{
 		hammerLocation.draw(hammerIcon);
 	}
-	void swingHammer();
+	void swingHammer(bool silent = false);
 	void clearHammerSwing();
 };
 

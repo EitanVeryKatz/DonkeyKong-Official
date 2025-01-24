@@ -19,10 +19,8 @@ void npc::update(int& score, bool& needToRedraw, bool silent)
 	if (isActive())
 	{
 		if (!silent)
-		{
 			erase();
-			move();
-		}
+		move(silent);
 		if (wasSmashed())
 		{
 			resetSmash();

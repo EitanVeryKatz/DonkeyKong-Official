@@ -12,14 +12,7 @@ class game
 {	
 	static constexpr int CAUSE_SIZE = 5;
 	static constexpr int MAX_SCORE = 10000;
-	enum states
-	{
-		SAVE,
-		LOAD,
-		SILENT,
-		NUM_OF_STATES
-	};
-	bool statesFlags[NUM_OF_STATES] = { false };
+	bool save = false;
 	int Seed;
 	int lives = 3;
 	int score = 0;
@@ -31,6 +24,7 @@ class game
 	int level = 1;
 	bool needsRedraw = true;
 	std::ofstream* saveFile = nullptr;
+	std::ofstream* resFile = nullptr;
 	std::string currFileName;
 
 	const std::string CausesOfFailStrings[CAUSE_SIZE] = {
