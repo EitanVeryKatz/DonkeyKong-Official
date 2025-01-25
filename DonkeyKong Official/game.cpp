@@ -16,9 +16,8 @@ constexpr int MessageX = 30, MessageY = 12;
 
 
 //TODO: later need to be chnaged becasue of another game class
-game::game(int currentSeed,const std::string state)
+game::game(const std::string state)
 {
-	Seed = currentSeed;
 	getAllBoardFiles();
 	if (state == "-save")
 		save = true;
@@ -44,9 +43,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			if (save)
 				{
 					writeResFile(false, currFileName, static_cast<int>(cause)); // write the result file
-					resFile->close();
-					delete resFile;
-					resFile = nullptr;
+					closeSaveFile();
 				}
 			return;
 		}
@@ -71,7 +68,7 @@ void game::win(player& mario, bool& running, boardGame& board)
 {
 	updateScore(1000);
 	running = false; // end the game
-	saveFile->close();
+	closeSaveFile();
 	if (level == static_cast<int>(boardFileNames.size()) || singleGame)
 	{
 		system("cls"); // clear the screen
@@ -118,11 +115,15 @@ void game::displayMenu()
 					lost = false;
 					for (int i = 0; !singleGame && !lost && i < boardFileNames.size(); i++) // if the user chose to play all the boards play all boards
 					{
+						Seed = static_cast<int>(time(nullptr));
+						srand(Seed);
 						runGame(boardFileNames[i]); // run the game
 						level++;
 					}
 					if (singleGame)
 					{
+						Seed = static_cast<int>(time(nullptr));
+						srand(Seed);
 						runGame(fileName); // run the game
 					}
 				}

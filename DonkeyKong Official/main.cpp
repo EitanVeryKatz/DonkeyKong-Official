@@ -7,17 +7,12 @@
 
 int main(int argc, char* argv[])
 {
-	int currentSeed;
-	if (argc == 1 || (argc > 1 && strcmp(argv[1], "-save") == 0)) 
-	{
-		currentSeed = static_cast<int>(time(nullptr));//generate random seed based on current time
-		srand(currentSeed);
-	}
+	
 	if (argc > 1)
 	{
 		if (strcmp(argv[1], "-save") == 0)
 		{
-			game g(currentSeed, argv[1]);
+			game g (argv[1]);
 			g.displayMenu();
 		}
 		else if (strcmp(argv[1], "-load") == 0)
@@ -36,13 +31,13 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
-			game g(currentSeed);
+			game g;
 			g.displayMenu();
 		}
 	}
 	else
 	{
-		game g(currentSeed);
+		game g;
 		g.displayMenu();
 	}
 	return 0;

@@ -76,8 +76,8 @@ void automatic_game::loadSteps(const std::string& fileName)
     std::cout << "ERROR: invalid file format" << std::endl;
     return;
     }
-	int tseed = std::stoi(line);
-
+	int seed = std::stoi(line);
+	srand(seed);
     std::getline(stepsFile, line);
     if (line.empty()) 
 	{
@@ -98,8 +98,6 @@ void automatic_game::loadSteps(const std::string& fileName)
 		resetLives();
 		resetScore();
 	}
-	if (!gamesPlayedInOrder || level == 1)
-		srand(tseed);
 	while (!stepsFile.eof())
 	{
 		std::getline(stepsFile, line);
