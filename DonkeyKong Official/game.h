@@ -58,6 +58,7 @@ class game
 	void drawLegend(boardGame& b) const;
 	void saveState(char key);
 	void closeSaveFile();
+	void initialDraw(player& mario, boardGame& board); // Draw the initial board
 public:
 	void displayMenu(); // Display the game menu
 	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;

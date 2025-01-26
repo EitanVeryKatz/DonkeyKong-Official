@@ -32,7 +32,8 @@ class masterGame
 		needsRedraw = true;
 	}
 	void initGame(player& mario, boardGame& board); // Initialize the game
-	virtual void handleInput(player& mario); // Handle user input
+	virtual void initialDraw(player& mario, boardGame& board) = 0; // Draw the initial board
+	virtual void handleInput(player& mario) = 0; // Handle user input
 	void updateNPCs(int iterationCounter, boardGame& board);
 	void handleBarrelSpawn(boardGame& board, int iterationCounter);
 	virtual void gameLoop(player& mario, boardGame& board); // Main game loop
@@ -52,6 +53,6 @@ public:
 	void displayMenu(); // Display the game menu
 	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;
 	 
-	virtual ~masterGame()
+	virtual ~masterGame();
 };
 

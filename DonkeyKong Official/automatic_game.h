@@ -16,6 +16,7 @@ class automatic_game
 		"FD", // Fall to Death
 		"OB"  // Out of Bounds
 	};
+
 	bool gamesPlayedInOrder = false;
 	bool resCmp = true;
 	bool silent = false;
@@ -65,6 +66,7 @@ class automatic_game
 	void displayRes() const;
 	void resetLives() { lives = 3; }
 	void resetScore() { score = 0; }
+	void initialDraw(player& mario, boardGame& board)
 public:
 	automatic_game(const std::string state = "-");
 	~automatic_game();

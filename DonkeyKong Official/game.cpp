@@ -227,6 +227,11 @@ void game::initGame(player& mario, boardGame& board)
 	mario.drawHammer(); // draw the hammer
 }
 
+void game::initialDraw(player& mario, boardGame& board) {
+	board.newDrawBoard(); // draw the board
+	mario.drawHammer(); // draw the hammer
+}
+
 void game::handleInput(player& mario)
 {
 	if (_kbhit()) // if the user pressed a key

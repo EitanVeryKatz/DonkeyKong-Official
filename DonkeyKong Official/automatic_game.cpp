@@ -192,6 +192,13 @@ void automatic_game::initGame(player& mario, boardGame& board)
 	}
 }
 
+void automatic_game::initialDraw(player& mario, boardGame& board) {
+	if (!silent) {
+		board.newDrawBoard(); // draw the board
+		mario.drawHammer(); // draw the hammer
+	}
+}
+
 void automatic_game::fileManager()
 {
 	getAllBoardFiles();
