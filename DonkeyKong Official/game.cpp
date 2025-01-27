@@ -11,9 +11,6 @@
 using std::string;
 
 constexpr int ESC = 27;
-constexpr int breakTime = 2000;
-constexpr int MessageX = 30, MessageY = 12;
-
 
 //TODO: later need to be chnaged becasue of another game class
 game::game(const std::string state)
@@ -152,32 +149,13 @@ void game::displayMenu()
 	}
 }
 
-void game::runGame(const std::string& fileName)
-{
-	boardGame board(fileName); // create a board
-	board.setNewBoardFile(true); // flag that new file is loading
-	if (!board.getOpen())
-	{
-		system("cls");
-		gotoxy(MessageX, MessageY);
-		std::cout << "ERROR: unable to open file";
-		Sleep(breakTime);
-		return;
-	}
-	if (!board.getValidity())
-	{
-		system("cls");
-		gotoxy(MessageX - 20, MessageY);
-		if (level != boardFileNames.size() && !singleGame)
-			std::cout << "One or more objects on board are invalid trying next board!";
-		else
-			std::cout << "One or more objects on board are invalid! returning to menu";
-		Sleep(breakTime);
-		return;
-	}
-	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
-	initGame(mario, board); // initialize the game
 
+void game::initialDraw(player& mario, boardGame& board) {
+	board.newDrawBoard(); // draw the board
+	mario.drawHammer(); // draw the hammer
+}
+
+void game::initSaveFile(const std::string& fileName) {
 	if (save == true) {//if game in save mode create/override save file for current screen
 		string resFileName = fileName.substr(0, fileName.find_last_of('.')) + ".result";
 		string saveFileName = fileName.substr(0, fileName.find_last_of('.')) + ".steps";
@@ -200,37 +178,14 @@ void game::runGame(const std::string& fileName)
 			resFile = nullptr;
 			return;
 		}
+
 	}
-
-	gameLoop(mario, board); // run the game loop
-	board.setNewBoardFile(false); // when finished the game set the flag to false
 }
 
 
 
-void game::initGame(player& mario, boardGame& board)
-{
-	iterationCounter = 0;
-	board.initActiveBoard(); // initialize the active board
-	needsRedraw = true;
-	clear_key_buffer(); // clear the input buffer
-	activeBarrels = 0; // reset the number of active barrels
-	board.initFailChart(); // initialize the fail chart
-	board.initBarrels();  // initialize the barrels
-	if (!firstGame)
-		board.resetGhosts();
-	mario.setGameBoard(&board); // set the board of the player
-	mario.resetPlayer(); // reset player's position
-	if(firstGame && board.wasHammerLocationSetInBoard())
-		mario.setHammerLocation(board.getStartHammerX(), board.getStartHammerY());
-	board.newDrawBoard(); // draw the board
-	mario.drawHammer(); // draw the hammer
-}
 
-void game::initialDraw(player& mario, boardGame& board) {
-	board.newDrawBoard(); // draw the board
-	mario.drawHammer(); // draw the hammer
-}
+
 
 void game::handleInput(player& mario)
 {
@@ -354,21 +309,7 @@ void game::setDifficulty()
 /// This function iterates through the current directory and collects all files
 /// that start with "board" and have a ".screen" extension. The collected file names
 /// are stored in the boardFileNames vector. The vector is then sorted in alphabetical order.
-void game::getAllBoardFiles()
-{
-	namespace fs = std::filesystem;
-	for (const auto& entry : fs::directory_iterator(fs::current_path()))
-	{
-		auto fileName = entry.path().filename();
-		auto fileNameStr = fileName.string();
-		if (fileNameStr.substr(0,6) == "dkong_" && fileName.extension() == ".screen")
-		{
-			boardFileNames.push_back(fileNameStr);
-		}
-		boardFileNames.shrink_to_fit();
-		std::sort(boardFileNames.begin(), boardFileNames.end());
-	}
-}
+
 
 /// @brief Displays the board selection menu and allows the user to choose a board.
 /// This function presents a paginated list of available board files to the user.
@@ -498,15 +439,7 @@ void game::drawLegend(boardGame& b) const
 }
 
 
-void game::updateScore(int points)
-{
-	score += points;
-	if (score > MAX_SCORE)
-	{
-		score = MAX_SCORE;
-	}
-	needsRedraw = true;
-}
+
 
 
 /// @brief Updates the state of all NPCs (non-player characters) in the game.
@@ -517,60 +450,7 @@ void game::updateScore(int points)
 /// The function also handles the spawning of new barrels at regular intervals.
 /// @param iterationCounter The current iteration count of the game loop.
 /// @param board Reference to the boardGame object containing the NPCs.
-void game::updateNPCs(int iterationCounter, boardGame& board)
-{
-	auto& npcVector = board.getNPCVector();
-	for (std::vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end();)
-	{
-		npc* pNPC = *itr;
-		if (pNPC->isActive())
-		{
-			pNPC->update(score, needsRedraw);
-			pNPC->inLegend(needsRedraw);
-			if (pNPC->isActive())
-			{
-				++itr;
-			}
-			else if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
-			{
-				if (!pBarrel->isBlastShowing())
-				{
-					delete pNPC;
-					itr = npcVector.erase(itr);
-				}
-				activeBarrels--;
-			}
-			else
-			{
-				delete pNPC;
-				itr = npcVector.erase(itr);
-			}
-		}
-		else
-		{
-			if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
-			{
-				pBarrel->expHandler();
-			}
-			++itr;
-		}
-	}
-	if (board.getValidBarrelSpawningPos()) // if there are not any valid position to spawn on the board it will not spawn any barrels
-		handleBarrelSpawn(board, iterationCounter);
-}
 
-void game::handleBarrelSpawn(boardGame& board, int iterationCounter)
-{
-	if (iterationCounter % BARREL_SPAWN_RATE == 0 && activeBarrels < maxBarrels)
-	{
-		barrel* pBarrel = new barrel(board.getMonkeY());
-		pBarrel->setGameBoard(&board);
-		pBarrel->resetBarrel();
-		pBarrel->draw();
-		board.getNPCVector().push_back(pBarrel);
-		activeBarrels++;
-	}
-}
 
 
 void game::writeResFile(bool won, const std::string& fileName, int cause) const

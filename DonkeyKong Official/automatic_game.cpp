@@ -42,21 +42,7 @@ void automatic_game::getAllStepsFiles()
 	}
 }
 
-void automatic_game::getAllBoardFiles()
-{
-	namespace fs = std::filesystem;
-	for (const auto& entry : fs::directory_iterator(fs::current_path()))
-	{
-		auto fileName = entry.path().filename();
-		auto fileNameStr = fileName.string();
-		if (fileNameStr.substr(0, 6) == "dkong_" && fileName.extension() == ".screen")
-		{
-			boardFileNames.push_back(fileNameStr);
-		}
-		boardFileNames.shrink_to_fit();
-		std::sort(boardFileNames.begin(), boardFileNames.end());
-	}
-}
+
 
 void automatic_game::loadSteps(const std::string& fileName)
 {
@@ -170,27 +156,7 @@ void automatic_game::fail(player& mario, bool& running, boardGame& board, int& b
 	}
 }
 
-void automatic_game::initGame(player& mario, boardGame& board)
-{
-	iterationCounter = 0;
-	board.initActiveBoard(); // initialize the active board
-	needsRedraw = true;
-	clear_key_buffer(); // clear the input buffer
-	activeBarrels = 0; // reset the number of active barrels
-	board.initFailChart(); // initialize the fail chart
-	board.initBarrels();  // initialize the barrels
-	if (!firstGame)
-		board.resetGhosts();
-	mario.setGameBoard(&board); // set the board of the player
-	mario.resetPlayer(); // reset player's position
-	if (firstGame && board.wasHammerLocationSetInBoard())
-		mario.setHammerLocation(board.getStartHammerX(), board.getStartHammerY());
-	if (!silent)
-	{
-		board.newDrawBoard(); // draw the board
-		mario.drawHammer(); // draw the hammer
-	}
-}
+
 
 void automatic_game::initialDraw(player& mario, boardGame& board) {
 	if (!silent) {
@@ -275,34 +241,7 @@ int automatic_game::find_board_file_for_step_file(const std::string& stepFileNam
 	return index;
 }
 
-void automatic_game::runGame(const std::string& fileName)
-{
-	boardGame board(fileName); // create a board
-	board.setNewBoardFile(true); // flag that new file is loading
-	if (!board.getOpen())
-	{
-		system("cls");
-		gotoxy(MessageX, MessageY);
-		std::cout << "ERROR: unable to open file";
-		Sleep(breakTime);
-		return;
-	}
-	if (!board.getValidity())
-	{
-		system("cls");
-		gotoxy(MessageX - 20, MessageY);
-		if (level != boardFileNames.size() && !singleGame)
-			std::cout << "One or more objects on board are invalid trying next board!";
-		else
-			std::cout << "One or more objects on board are invalid! returning to menu";
-		Sleep(breakTime);
-		return;
-	}
-	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
-	initGame(mario, board); // initialize the game
-	gameLoop(mario, board); // run the game loop
-	board.setNewBoardFile(false); // when finished the game set the flag to false
-}
+
 
 void automatic_game::gameLoop(player& mario, boardGame& board)
 {
@@ -348,47 +287,6 @@ void automatic_game::gameLoop(player& mario, boardGame& board)
 	}
 }
 
-void automatic_game::updateNPCs(int iterationCounter, boardGame& board)
-{
-	auto& npcVector = board.getNPCVector();
-	for (std::vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end();)
-	{
-		npc* pNPC = *itr;
-		if (pNPC->isActive())
-		{
-			pNPC->update(score, needsRedraw, silent);
-			pNPC->inLegend(needsRedraw);
-			if (pNPC->isActive())
-			{
-				++itr;
-			}
-			else if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
-			{
-				if (!pBarrel->isBlastShowing())
-				{
-					delete pNPC;
-					itr = npcVector.erase(itr);
-				}
-				activeBarrels--;
-			}
-			else
-			{
-				delete pNPC;
-				itr = npcVector.erase(itr);
-			}
-		}
-		else
-		{
-			if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
-			{
-				pBarrel->expHandler();
-			}
-			++itr;
-		}
-	}
-	if (board.getValidBarrelSpawningPos()) // if there are not any valid position to spawn on the board it will not spawn any barrels
-		handleBarrelSpawn(board, iterationCounter);
-}
 
 void automatic_game::handleBarrelSpawn(boardGame& board, int iterationCounter)
 {
@@ -404,14 +302,12 @@ void automatic_game::handleBarrelSpawn(boardGame& board, int iterationCounter)
 	}
 }
 
-void automatic_game::drawLegend(boardGame& b) const
-{
-	int lx = b.getLx(), ly = b.getLy();
-	gotoxy(lx, ly);
-	std::cout << "Lives: " << lives << std::endl;
-	gotoxy(lx, ly + 1);
-	std::cout << "Score: " << score << std::endl;
+void automatic_game::handleNPCDraw(npc* pNPC) {
+	if (!silent)
+		pNPC->draw();
 }
+
+
 
 automatic_game::automatic_game(const std::string state)
 {

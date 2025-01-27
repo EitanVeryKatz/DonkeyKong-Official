@@ -1,4 +1,11 @@
 #include "masterGame.h"
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include "player.h"
+#include "boardGame.h"
+#include "gameConfig.h"
+#include <sstream>
 
 void masterGame::initGame(player& mario, boardGame& board)
 {
@@ -17,3 +24,119 @@ void masterGame::initGame(player& mario, boardGame& board)
 		mario.setHammerLocation(board.getStartHammerX(), board.getStartHammerY());
 	initialDraw(mario, board); // draw the initial board
 }
+
+void masterGame::updateNPCs(int iterationCounter, boardGame& board)
+{
+	auto& npcVector = board.getNPCVector();
+	for (std::vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end();)
+	{
+		npc* pNPC = *itr;
+		if (pNPC->isActive())
+		{
+			updatePositionNPC(pNPC);
+			
+			pNPC->inLegend(needsRedraw);
+			if (pNPC->isActive())
+			{
+				++itr;
+			}
+			else if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
+			{
+				if (!pBarrel->isBlastShowing())
+				{
+					delete pNPC;
+					itr = npcVector.erase(itr);
+				}
+				activeBarrels--;
+			}
+			else
+			{
+				delete pNPC;
+				itr = npcVector.erase(itr);
+			}
+		}
+		else
+		{
+			if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
+			{
+				pBarrel->expHandler();
+			}
+			++itr;
+		}
+	}
+	if (board.getValidBarrelSpawningPos()) // if there are not any valid position to spawn on the board it will not spawn any barrels
+		handleBarrelSpawn(board, iterationCounter);
+}
+
+void masterGame::handleBarrelSpawn(boardGame& board, int iterationCounter)
+{
+	if (iterationCounter % BARREL_SPAWN_RATE == 0 && activeBarrels < maxBarrels)
+	{
+		barrel* pBarrel = new barrel(board.getMonkeY());
+		pBarrel->setGameBoard(&board);
+		pBarrel->resetBarrel();
+		handleNPCDraw(pBarrel);
+		board.getNPCVector().push_back(pBarrel);
+		activeBarrels++;
+	}
+}
+
+
+void masterGame::getAllBoardFiles()
+{
+	namespace fs = std::filesystem;
+	for (const auto& entry : fs::directory_iterator(fs::current_path()))
+	{
+		auto fileName = entry.path().filename();
+		auto fileNameStr = fileName.string();
+		if (fileNameStr.substr(0, 6) == "dkong_" && fileName.extension() == ".screen")
+		{
+			boardFileNames.push_back(fileNameStr);
+		}
+		boardFileNames.shrink_to_fit();
+		std::sort(boardFileNames.begin(), boardFileNames.end());
+	}
+}
+
+
+void masterGame::runGame(const std::string& fileName)
+{
+	boardGame board(fileName); // create a board
+	board.setNewBoardFile(true); // flag that new file is loading
+	if (!board.getOpen())
+	{
+		system("cls");
+		gotoxy(MessageX, MessageY);
+		std::cout << "ERROR: unable to open file";
+		Sleep(breakTime);
+		return;
+	}
+	if (!board.getValidity())
+	{
+		system("cls");
+		gotoxy(MessageX - 20, MessageY);
+		if (level != boardFileNames.size() && !singleGame)
+			std::cout << "One or more objects on board are invalid trying next board!";
+		else
+			std::cout << "One or more objects on board are invalid! returning to menu";
+		Sleep(breakTime);
+		return;
+	}
+	player mario(board.getMarioStartX(), board.getMarioStartY()); // create a player
+	initGame(mario, board); // initialize the game
+
+	initSaveFile(fileName); // initialize the save file if needed
+
+	gameLoop(mario, board); // run the game loop
+	board.setNewBoardFile(false); // when finished the game set the flag to false
+}
+
+void masterGame::drawLegend(boardGame& b) const
+{
+	int lx = b.getLx(), ly = b.getLy();
+	gotoxy(lx, ly);
+	std::cout << "Lives: " << lives << std::endl;
+	gotoxy(lx, ly + 1);
+	std::cout << "Score: " << score << std::endl;
+}
+
