@@ -226,7 +226,7 @@ void automatic_game::fileManager()
 	displayRes();
 }
 
-int automatic_game::find_board_file_for_step_file(const std::string& stepFileName)
+int automatic_game::find_board_file_for_step_file(const std::string& stepFileName) const
 {
 	int index = -1;
 	std::string boardFileName = stepFileName.substr(0, stepFileName.find_last_of('.')) + ".screen";
@@ -284,21 +284,6 @@ void automatic_game::gameLoop(player& mario, boardGame& board)
 		mario.move(silent); // move the player
 		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
 		std::fflush(stdin); // clear the input buffer
-	}
-}
-
-
-void automatic_game::handleBarrelSpawn(boardGame& board, int iterationCounter)
-{
-	if (iterationCounter % BARREL_SPAWN_RATE == 0 && activeBarrels < maxBarrels)
-	{
-		barrel* pBarrel = new barrel(board.getMonkeY());
-		pBarrel->setGameBoard(&board);
-		pBarrel->resetBarrel();
-		if (!silent)
-			pBarrel->draw();
-		board.getNPCVector().push_back(pBarrel);
-		activeBarrels++;
 	}
 }
 

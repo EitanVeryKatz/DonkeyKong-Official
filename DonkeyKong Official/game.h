@@ -25,15 +25,15 @@ class game : public masterGame
 	
 	
 	
-	void handleInput(player& mario); // Handle user input
+	void handleInput(player& mario) override; // Handle user input
 	
-	void updatePositionNPC(npc*& pNPC){ pNPC->update(score, needsRedraw); }
+	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw); }
 	
-	void handleNPCDraw(npc* pNPC) { pNPC->draw();}
-	void gameLoop(player& mario, boardGame& board); // Main game loop
+	void handleNPCDraw(npc* pNPC) override { pNPC->draw();}
+	void gameLoop(player& mario, boardGame& board) override; // Main game loop
 	void setDifficulty(); // Print the game diffculty options
-	void fail(player& mario, bool &running, boardGame& board, int & barrelCounter, int &iterationCounter); // Handle player fail
-	void win(player& mario, bool& running, boardGame& board); // Handle player win
+	void fail(player& mario, bool &running, boardGame& board, int & barrelCounter, int &iterationCounter) override; // Handle player fail
+	void win(player& mario, bool& running, boardGame& board) override; // Handle player win
 	
 	
 	
@@ -41,12 +41,11 @@ class game : public masterGame
 	void printAndChooseBoard(std::string& fileName);
 	
 	void printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const;
-	void drawLegend(boardGame& b) const;
-	void saveState(char key);
-	void initSaveFile(const std::string& fileName);
+	void saveState(char key) const;
+	void initSaveFile(const std::string& fileName) override;
 	void closeSaveFile();
-	void initialDraw(player& mario, boardGame& board); // Draw the initial board
-	void run() { displayMenu(); };
+	void initialDraw(player& mario, boardGame& board) override; // Draw the initial board
+	void run() override { displayMenu(); }
 	
 public:
 	void displayMenu(); // Display the game menu
@@ -55,7 +54,7 @@ public:
 	~game()
 	{
 		if(save)
-		closeSaveFile();
+			closeSaveFile();
 	}
 };
 

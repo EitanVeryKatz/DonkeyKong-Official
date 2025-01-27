@@ -430,18 +430,6 @@ void game::printBoardOptions(int currentPage, int boardsPerPage, int totalPages)
 	std::cout << std::string(centerX - 10, ' ') << "Page " << (currentPage + 1) << " of " << totalPages << std::endl;
 }
 
-void game::drawLegend(boardGame& b) const
-{
-	int lx = b.getLx(),ly = b.getLy();
-	gotoxy(lx, ly);
-	std::cout << "Lives: " << lives << std::endl;
-	gotoxy(lx, ly + 1);
-	std::cout << "Score: " << score << std::endl;
-}
-
-
-
-
 
 /// @brief Updates the state of all NPCs (non-player characters) in the game.
 /// This function iterates through the vector of NPCs and updates their state.
@@ -464,7 +452,7 @@ void game::writeResFile(bool won, const std::string& fileName, int cause) const
 }
 
 
-void game::saveState(char key) {
+void game::saveState(char key) const {
 	*saveFile << iterationCounter << ':' << key << std::endl;
 }
 
