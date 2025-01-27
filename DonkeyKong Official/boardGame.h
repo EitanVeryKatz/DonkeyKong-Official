@@ -16,6 +16,7 @@ class ghost;
 class boardGame
 {
 	int startXMario, startYMario;
+	int marioX, marioY;
 	int monkeX, monkeY;
 	int Lx, Ly;
 	int startHammerX, startHammerY;

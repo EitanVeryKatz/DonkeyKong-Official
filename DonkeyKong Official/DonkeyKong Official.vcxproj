@@ -194,6 +194,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="masterGame.cpp" />
     <ClCompile Include="npc.cpp" />
+    <ClCompile Include="PathFindingAssistant.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="smart_ghost.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="ghost.h" />
     <ClInclude Include="masterGame.h" />
     <ClInclude Include="npc.h" />
+    <ClInclude Include="PathFindingAssistant.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="resource.h" />

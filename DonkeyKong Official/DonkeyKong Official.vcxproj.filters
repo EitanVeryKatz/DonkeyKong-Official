@@ -54,6 +54,12 @@
     <ClCompile Include="automatic_game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="masterGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFindingAssistant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -93,6 +99,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="automatic_game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="masterGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFindingAssistant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
