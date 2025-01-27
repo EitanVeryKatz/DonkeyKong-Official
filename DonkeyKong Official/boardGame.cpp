@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <fstream>
 #include <string>
+#include "PathFindingAssistant.h"
 
 using std::vector;
 boardGame::boardGame(const std::string& fileName)
@@ -82,6 +83,7 @@ void boardGame::initActiveBoard()
                 startXMario = c;
                 startYMario = r;
                 activeBoard[r][c] = ' ';
+				PathFindingAssistant::setMarioPosition(c, r);
             }
             else if (currChar == '@')
 			{

@@ -1,10 +1,10 @@
 #pragma once
 class PathFindingAssistant
 {
-	int marioX, marioY;
-	bool hasHammer;
+	static int marioX, marioY;
 public:
-	PathFindingAssistant() { marioX = 0; marioY = 0; hasHammer = false; }
-	void setMarioPosition(int x, int y) { marioX = x; marioY = y; }
+	static void setMarioPosition(int x, int y);
+	static int getMarioX() { return marioX; }
+	static int getMarioY() { return marioY; }
 };
 

@@ -1,5 +1,5 @@
 #include "player.h"
-
+#include "PathFindingAssistant.h"
 
 void player::keyPressed(char key , bool& needsSave, bool silent)
 {
@@ -70,6 +70,7 @@ void player::move(bool silent)
 		fallCounter = 0;
 	}
 	setPosition(newX, newY); // Update player's position
+	PathFindingAssistant::setMarioPosition(newX, newY);
 	if (!silent)
 		restoreBoardChar(currX, currY);
 }
