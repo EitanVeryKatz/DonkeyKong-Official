@@ -46,6 +46,7 @@ class game : public masterGame
 	void initSaveFile(const std::string& fileName);
 	void closeSaveFile();
 	void initialDraw(player& mario, boardGame& board); // Draw the initial board
+	void run() { displayMenu(); };
 	
 public:
 	void displayMenu(); // Display the game menu
@@ -53,6 +54,7 @@ public:
 	game(const std::string state = "-");
 	~game()
 	{
+		if(save)
 		closeSaveFile();
 	}
 };

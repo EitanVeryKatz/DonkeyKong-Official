@@ -31,7 +31,8 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			running = false; // end the game
 			lost = true;
-			saveFile->close();
+			if(save)
+				saveFile->close();
 			system("cls"); // clear the screen
 			printFailMessage(); // display the fail message
 			playFailSong();
@@ -200,7 +201,7 @@ void game::handleInput(player& mario)
 		else
 			mario.keyPressed(key, needsSave, false); // handle the key
 
-		if (needsSave)
+		if (save&&needsSave)
 			saveState(key);
 	}
 }

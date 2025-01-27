@@ -59,6 +59,8 @@ protected:
 	virtual void initSaveFile(const std::string& fileName) = 0;
 	
 	void drawLegend(boardGame& b) const;
+public:
+	virtual void run() = 0;
 
 	
 };

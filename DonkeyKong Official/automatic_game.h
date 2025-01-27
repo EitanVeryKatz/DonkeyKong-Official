@@ -38,6 +38,7 @@ class automatic_game : public masterGame
 	void displayRes() const;
 	void initialDraw(player& mario, boardGame& board);
 	void initSaveFile(const std::string& fileName) { return; }
+	void run() { fileManager(); }
 public:
 	automatic_game(const std::string state = "-");
 	~automatic_game();

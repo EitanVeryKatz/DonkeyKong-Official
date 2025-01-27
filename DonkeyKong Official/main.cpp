@@ -7,38 +7,30 @@
 
 int main(int argc, char* argv[])
 {
-	
-	if (argc > 1)
-	{
-		if (strcmp(argv[1], "-save") == 0)
-		{
-			game g (argv[1]);
-			g.displayMenu();
-		}
-		else if (strcmp(argv[1], "-load") == 0)
-		{
-			if (argc > 2)
-			{
-				automatic_game ag(argv[2]);
-				ag.fileManager();
-			}
-			else
-			{
-				automatic_game ag;
-				ag.fileManager();
-			}
 
+	masterGame*pgame = nullptr;
+	
+	if (argc > 1){
+		if (strcmp(argv[1], "-save") == 0) {
+			pgame = new game(argv[1]);
 		}
-		else
-		{
-			game g;
-			g.displayMenu();
+		else if (strcmp(argv[1], "-load") == 0) {
+			if (argc > 2) {
+				pgame = new automatic_game(argv[2]);
+			}
+			else {
+				pgame = new automatic_game();
+			}
+		}
+		else {
+			pgame = new game();
 		}
 	}
 	else
 	{
-		game g;
-		g.displayMenu();
+		pgame = new game();
 	}
+	pgame->run();
+	delete pgame;
 	return 0;
 }
