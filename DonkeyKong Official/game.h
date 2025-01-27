@@ -19,7 +19,7 @@ class game : public masterGame
 	std::ofstream* saveFile = nullptr;
 	std::ofstream* resFile = nullptr;
 	std::string currFileName;
-	std::vector<std::string> boardFileNames;
+	
 	
 
 	

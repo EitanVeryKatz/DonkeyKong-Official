@@ -1,6 +1,7 @@
 #pragma once
 #include "player.h"
 #include "boardGame.h"
+#include <vector>
  constexpr int MessageX = 30, MessageY = 12;
  constexpr int breakTime = 2000;
 class masterGame
