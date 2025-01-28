@@ -67,7 +67,7 @@ void automatic_game::loadSteps(const std::string& fileName)
 	std::ifstream stepsFile(fileName);
 	if (!stepsFile.is_open())
 	{
-		std::cout << "ERROR: unable to open file" << std::endl;
+		std::cout << "ERROR: unable to open steps file" << std::endl;
 		return;
 	}
 
@@ -239,9 +239,9 @@ void automatic_game::fileManager()
             resFile = new std::ifstream(resFileName);
             if (!resFile->is_open())
             {
-                std::cout << "ERROR: unable to open result file" << std::endl;
+                std::cout << "ERROR: unable to open result file trying the next one" << std::endl;
                 Sleep(breakTime);
-                return;
+                continue;
             }
             runGame(boardFileNames[boardIndex]);
             if (resCmp)
