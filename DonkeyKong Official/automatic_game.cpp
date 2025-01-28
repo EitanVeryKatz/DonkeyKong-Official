@@ -26,6 +26,14 @@ automatic_game::~automatic_game()
 	}
 }
 
+/**
+ * @brief Retrieves all step files in the current directory.
+ * 
+ * This function iterates through the current directory and collects all files 
+ * that have a filename starting with "dkong_" and an extension of ".steps". 
+ * The collected filenames are stored in the stepsFileNames vector. 
+ * The vector is then sorted in ascending order.
+ */
 void automatic_game::getAllStepsFiles()
 {
 	namespace fs = std::filesystem;
@@ -44,6 +52,15 @@ void automatic_game::getAllStepsFiles()
 
 
 
+/**
+ * @brief Loads the steps from a given file.
+ * 
+ * This function reads a file containing steps for the game. It initializes the 
+ * random seed, maximum number of barrels, and the order of games played. It also 
+ * parses the steps and stores them in the steps vector.
+ * 
+ * @param fileName The name of the file containing the steps.
+ */
 void automatic_game::loadSteps(const std::string& fileName)
 {
 	resetStepsVec();
@@ -103,6 +120,15 @@ void automatic_game::loadSteps(const std::string& fileName)
 	stepsFile.close();
 }
 
+/**
+ * @brief Handles the input for the player in automatic mode.
+ * 
+ * This function iterates through the steps vector and checks if the current 
+ * iteration counter matches the time for the next step. If it does, it simulates 
+ * a key press for the player and removes the step from the vector.
+ * 
+ * @param mario The player object that will receive the input.
+ */
 void automatic_game::handleInput(player& mario)
 {
 	std::vector<key_and_time*>::iterator itr = steps.begin();
@@ -123,37 +149,50 @@ void automatic_game::win(player& mario, bool& running, boardGame& board)
 	cmpToResFile();
 }
 
+/**
+ * @brief Handles the player's failure in the game.
+ * 
+ * This function checks if the player has failed. If the player has failed, it decreases the number of lives.
+ * If the player has no lives left, it stops the game and compares the result with the expected result.
+ * If the player still has lives left, it reinitializes the game and displays the remaining lives.
+ * 
+ * @param mario The player object.
+ * @param running A boolean indicating if the game is running.
+ * @param board The game board object.
+ * @param barrelCounter The counter for the barrels.
+ * @param iterationCounter The counter for the iterations.
+ */
 void automatic_game::fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter)
 {
-	size_t cause;
-	if (mario.checkFail(cause))
-	{
-		lives--;
-		if (lives == 0)
-		{
-			running = false;
-			lost = true;
-			if (!silent)
-				system("cls");
-			cmpToResFile(cause);
-		}
-		else
-		{
-			firstGame = false;
-			if (!silent)
-			{
-				Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
-				system("cls"); // clear the screen
-				gotoxy(MessageX, MessageY);
-				std::cout << "You have " << lives << " lives left" << std::endl; // display the message
-				Sleep(breakTime);
-			}
-			cmpToResFile(cause);
-			barrelCounter = 0;
-			iterationCounter = 0;
-			initGame(mario, board); // initialize the game
-		}
-	}
+    size_t cause;
+    if (mario.checkFail(cause))
+    {
+        lives--;
+        if (lives == 0)
+        {
+            running = false;
+            lost = true;
+            if (!silent)
+                system("cls");
+            cmpToResFile(cause);
+        }
+        else
+        {
+            firstGame = false;
+            if (!silent)
+            {
+                Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
+                system("cls"); // clear the screen
+                gotoxy(MessageX, MessageY);
+                std::cout << "You have " << lives << " lives left" << std::endl; // display the message
+                Sleep(breakTime);
+            }
+            cmpToResFile(cause);
+            barrelCounter = 0;
+            iterationCounter = 0;
+            initGame(mario, board); // initialize the game
+        }
+    }
 }
 
 
@@ -165,65 +204,73 @@ void automatic_game::initialDraw(player& mario, boardGame& board) {
 	}
 }
 
+/**
+ * @brief Manages the game files and runs the game.
+ * 
+ * This function retrieves all board and step files, checks for their existence,
+ * and iterates through each step file to load the steps and corresponding board file.
+ * It then runs the game and compares the results with the expected results.
+ * If no board or step files are found, it displays an appropriate message and returns.
+ */
 void automatic_game::fileManager()
 {
-	getAllBoardFiles();
-	getAllStepsFiles();
-	if (boardFileNames.empty())
-	{
-		std::cout << "No board files found!" << std::endl;
-		Sleep(breakTime);
-		return;
-	}
-	if (stepsFileNames.empty())
-	{
-		std::cout << "No steps files found!" << std::endl;
-		Sleep(breakTime);
-		return;
-	}
-	for (size_t i = 0; i < stepsFileNames.size(); i++, level++)
-	{
-		std::string stepsFileName = stepsFileNames[i];
-		int boardIndex = find_board_file_for_step_file(stepsFileName);
-		if (boardIndex != -1)
-		{
-			loadSteps(stepsFileName);
-			std::string resFileName = stepsFileNames[i].substr(0, stepsFileNames[i].find_last_of('.')) + ".result";
-			resFile = new std::ifstream(resFileName);
-			if (!resFile->is_open())
-			{
-				std::cout << "ERROR: unable to open result file" << std::endl;
-				Sleep(breakTime);
-				return;
-			}
-			runGame(boardFileNames[boardIndex]);
-			if (resCmp)
-			{
-				system("cls");
-				std::cout << "screen " << i + 1 << " match the result file" << std::endl;
-				Sleep(breakTime);
-			}
-			else
-			{
-				system("cls");
-				std::cout << "screen " << i + 1 << " does not match the result file" << std::endl;
-				Sleep(breakTime);
-			}
-		}
-		else
-		{
-			std::cout << "No board file found for " << stepsFileName << std::endl;
-			Sleep(breakTime);
-		}
-		resFile->close();
-		delete resFile;
-		resFile = nullptr;
-		if (!gamesPlayedInOrder)
-			resetLives();
-	}
-	system("cls");
-	gotoxy(0, 0);
-	displayRes();
+    getAllBoardFiles();
+    getAllStepsFiles();
+    if (boardFileNames.empty())
+    {
+        std::cout << "No board files found!" << std::endl;
+        Sleep(breakTime);
+        return;
+    }
+    if (stepsFileNames.empty())
+    {
+        std::cout << "No steps files found!" << std::endl;
+        Sleep(breakTime);
+        return;
+    }
+    for (size_t i = 0; i < stepsFileNames.size(); i++, level++)
+    {
+        std::string stepsFileName = stepsFileNames[i];
+        int boardIndex = find_board_file_for_step_file(stepsFileName);
+        if (boardIndex != -1)
+        {
+            loadSteps(stepsFileName);
+            std::string resFileName = stepsFileNames[i].substr(0, stepsFileNames[i].find_last_of('.')) + ".result";
+            resFile = new std::ifstream(resFileName);
+            if (!resFile->is_open())
+            {
+                std::cout << "ERROR: unable to open result file" << std::endl;
+                Sleep(breakTime);
+                return;
+            }
+            runGame(boardFileNames[boardIndex]);
+            if (resCmp)
+            {
+                system("cls");
+                std::cout << "screen " << i + 1 << " match the result file" << std::endl;
+                Sleep(breakTime);
+            }
+            else
+            {
+                system("cls");
+                std::cout << "screen " << i + 1 << " does not match the result file" << std::endl;
+                Sleep(breakTime);
+            }
+        }
+        else
+        {
+            std::cout << "No board file found for " << stepsFileName << std::endl;
+            Sleep(breakTime);
+        }
+        resFile->close();
+        delete resFile;
+        resFile = nullptr;
+        if (!gamesPlayedInOrder)
+            resetLives();
+    }
+    system("cls");
+    gotoxy(0, 0);
+    displayRes();
 }
 
 int automatic_game::find_board_file_for_step_file(const std::string& stepFileName) const

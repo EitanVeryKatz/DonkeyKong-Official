@@ -31,19 +31,32 @@ void smart_ghost::changeVerticalDirection()
 		setDir(directionsSGhost[UP]);
 }
 
+/**
+ * @brief Moves the smart ghost on the game board.
+ * 
+ * This function handles the movement logic of the smart ghost. It decides whether the ghost should move randomly or 
+ * follow Mario based on a random logic. It also handles collisions with other ghosts and changes direction accordingly.
+ * 
+ * @param silent If true, the function will not restore the board character at the previous position of the ghost.
+ */
 void smart_ghost::move(bool silent)
 {
 	int currX = getX(), currY = getY();
 	int newX = currX, newY = currY;
 	int randChangeDir = 1 + rand() % 101; // random number between 1 and 100
 	int randChangeVerDir = 1 + rand() % 101; // random number between 1 and 100
+	int randLogic = 1 + rand() % 101; // random number between 1 and 100
 	int currDir = getDirX();
 	if (checkFloorEdge()) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
 	{
 		changeDirection();
 	}
-	smartMoveLogic(PathFindingAssistant::getMarioX(), PathFindingAssistant::getMarioY(), currX, currY);
-	//randMoveLogic(randChangeDir, randChangeVerDir);
+	if (randLogic <= 30)
+	{
+		randMoveLogic(randChangeDir, randChangeVerDir);
+	}
+	else
+		smartMoveLogic(PathFindingAssistant::getMarioX(), PathFindingAssistant::getMarioY(), currX, currY);
 
 	if (getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT)
 	{
@@ -74,6 +87,19 @@ void smart_ghost::move(bool silent)
 		restoreBoardChar(currX, currY);
 }
 
+/**
+ * @brief Implements the smart movement logic for the smart ghost.
+ * 
+ * This function determines the direction in which the smart ghost should move based on Mario's position.
+ * If Mario is on the same floor level as the ghost, the ghost will move horizontally towards Mario.
+ * If Mario is above the ghost and there is a ladder above, the ghost will move up.
+ * If Mario is below the ghost and there is a ladder below, the ghost will move down.
+ * 
+ * @param marioX The X-coordinate of Mario.
+ * @param marioY The Y-coordinate of Mario.
+ * @param currX The current X-coordinate of the smart ghost.
+ * @param currY The current Y-coordinate of the smart ghost.
+ */
 void smart_ghost::smartMoveLogic(int marioX, int marioY, int currX, int currY)
 {
 	if (currY == marioY && isOnFloor())
@@ -97,6 +123,18 @@ void smart_ghost::smartMoveLogic(int marioX, int marioY, int currX, int currY)
 	}
 }
 
+/**
+ * @brief Implements the random movement logic for the smart ghost.
+ * 
+ * This function determines the direction in which the smart ghost should move based on random logic.
+ * If the ghost is on the floor and a random number is less than or equal to 5, or if the ghost is at the edge of the floor,
+ * the ghost will change its horizontal direction. If there is a ladder below and a random number is less than or equal to 20,
+ * the ghost will move up. If there is a ladder above and a random number is less than or equal to 20, the ghost will move down.
+ * If there is a ladder above or below, the ghost will stop moving vertically and choose a random horizontal direction.
+ * 
+ * @param randChangeDir A random number used to determine if the ghost should change its horizontal direction.
+ * @param randChangeVerDir A random number used to determine if the ghost should change its vertical direction.
+ */
 void smart_ghost::randMoveLogic(int randChangeDir, int randChangeVerDir)
 {
 	if ((isOnFloor() && randChangeDir <= 5) || checkFloorEdge()) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other

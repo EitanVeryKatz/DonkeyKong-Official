@@ -24,48 +24,59 @@ void masterGame::initGame(player& mario, boardGame& board)
 		mario.setHammerLocation(board.getStartHammerX(), board.getStartHammerY());
 	initialDraw(mario, board); // draw the initial board
 }
-
+/**
+ * @brief Updates the Non-Player Characters (NPCs) in the game.
+ * 
+ * This function iterates through the vector of NPCs in the board and updates their positions.
+ * If an NPC is active, it updates its position and checks if it should remain active.
+ * If a barrel NPC is no longer active and its blast is not showing, it is deleted and removed from the vector.
+ * If a barrel NPC is no longer active but its blast is showing, it handles the explosion.
+ * If there are valid positions to spawn barrels on the board, it handles the spawning of new barrels.
+ * 
+ * @param iterationCounter The current iteration count of the game loop.
+ * @param board The game board containing the NPCs.
+ */
 void masterGame::updateNPCs(int iterationCounter, boardGame& board)
 {
-	auto& npcVector = board.getNPCVector();
-	for (std::vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end();)
-	{
-		npc* pNPC = *itr;
-		if (pNPC->isActive())
-		{
-			updatePositionNPC(pNPC);
-			
-			pNPC->inLegend(needsRedraw);
-			if (pNPC->isActive())
-			{
-				++itr;
-			}
-			else if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
-			{
-				if (!pBarrel->isBlastShowing())
-				{
-					delete pNPC;
-					itr = npcVector.erase(itr);
-				}
-				activeBarrels--;
-			}
-			else
-			{
-				delete pNPC;
-				itr = npcVector.erase(itr);
-			}
-		}
-		else
-		{
-			if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
-			{
-				pBarrel->expHandler();
-			}
-			++itr;
-		}
-	}
-	if (board.getValidBarrelSpawningPos()) // if there are not any valid position to spawn on the board it will not spawn any barrels
-		handleBarrelSpawn(board, iterationCounter);
+    auto& npcVector = board.getNPCVector();
+    for (std::vector<npc*>::iterator itr = npcVector.begin(); itr != npcVector.end();)
+    {
+        npc* pNPC = *itr;
+        if (pNPC->isActive())
+        {
+            updatePositionNPC(pNPC);
+            
+            pNPC->inLegend(needsRedraw);
+            if (pNPC->isActive())
+            {
+                ++itr;
+            }
+            else if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
+            {
+                if (!pBarrel->isBlastShowing())
+                {
+                    delete pNPC;
+                    itr = npcVector.erase(itr);
+                }
+                activeBarrels--;
+            }
+            else
+            {
+                delete pNPC;
+                itr = npcVector.erase(itr);
+            }
+        }
+        else
+        {
+            if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
+            {
+                pBarrel->expHandler();
+            }
+            ++itr;
+        }
+    }
+    if (board.getValidBarrelSpawningPos()) // if there are not any valid position to spawn on the board it will not spawn any barrels
+        handleBarrelSpawn(board, iterationCounter);
 }
 
 void masterGame::handleBarrelSpawn(boardGame& board, int iterationCounter)
