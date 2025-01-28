@@ -290,6 +290,16 @@ int automatic_game::find_board_file_for_step_file(const std::string& stepFileNam
 
 
 
+/**
+ * @brief Main game loop for automatic mode.
+ * 
+ * This function runs the main game loop for the automatic mode. It handles drawing the player,
+ * processing user input, updating NPCs, checking for player failure or win conditions, and moving the player.
+ * The loop continues running until the player either wins or fails.
+ * 
+ * @param mario The player object.
+ * @param board The game board object.
+ */
 void automatic_game::gameLoop(player& mario, boardGame& board)
 {
 	bool running = true;
@@ -348,33 +358,61 @@ automatic_game::automatic_game(const std::string state)
 		silent = true;
 }
 
+
+/**
+* @brief Compares the current game state with the expected result from the result file.
+* 
+* This function reads a line from the result file and parses it to extract the expected 
+* iteration counter, condition (win or fail), number of lives, score, and cause of failure.
+* It then compares these values with the current game state. If any of the values do not match,
+* the function sets the resCmp flag to false.
+* 
+* @param cause The cause of failure, if any. If the player failed, this parameter should be 
+*              the index of the failure cause in the CausesOfFailStrings array. If the player 
+*              won, this parameter should be -1.
+*/
 void automatic_game::cmpToResFile(const int& cause) 
 {
-	int res_itr , res_lives , res_score ;
-	char res_cond;
-	std::string res_cause;
-	std::string resLine;
-	
-	std::getline(*resFile, resLine);
-	if (resLine.empty())
-	{
-		resCmp = false;
-		return;
-	}
-	getResLine(res_itr, res_cond, res_lives, res_score, res_cause, resLine);
+int res_itr , res_lives , res_score ;
+char res_cond;
+std::string res_cause;
+std::string resLine;
 
-	if (cause != -1) // if cause not -1 it means the player failed
-	{
-		if (res_itr != iterationCounter || res_cond != 'f' || res_lives != lives || res_score != score || res_cause != CausesOfFailStrings[cause])
-			resCmp = false;
-	}
-	else // if the player won
-	{
-		if (res_itr != iterationCounter || res_cond != 'w' || res_lives != lives || res_score != score)
-			resCmp = false;
-	}
+std::getline(*resFile, resLine);
+if (resLine.empty())
+{
+	resCmp = false;
+	return;
+}
+getResLine(res_itr, res_cond, res_lives, res_score, res_cause, resLine);
+
+if (cause != -1) // if cause not -1 it means the player failed
+{
+	if (res_itr != iterationCounter || res_cond != 'f' || res_lives != lives || res_score != score || res_cause != CausesOfFailStrings[cause])
+		resCmp = false;
+}
+else // if the player won
+{
+	if (res_itr != iterationCounter || res_cond != 'w' || res_lives != lives || res_score != score)
+		resCmp = false;
+}
 }
 
+
+/**
+ * @brief Parses a result line from the result file.
+ * 
+ * This function takes a result line from the result file and extracts the iteration counter,
+ * condition (win or fail), number of lives, score, and cause of failure. It uses a stringstream
+ * to split the line by colons and convert the segments to the appropriate data types.
+ * 
+ * @param res_itr Reference to an integer to store the iteration counter.
+ * @param res_cond Reference to a char to store the condition (win or fail).
+ * @param res_lives Reference to an integer to store the number of lives.
+ * @param res_score Reference to an integer to store the score.
+ * @param res_cause Reference to a string to store the cause of failure.
+ * @param resLine The result line from the result file.
+ */
 void automatic_game::getResLine(int& res_itr, char& res_cond, int& res_lives, int& res_score,
 	std::string& res_cause, const std::string& resLine) const
 {
