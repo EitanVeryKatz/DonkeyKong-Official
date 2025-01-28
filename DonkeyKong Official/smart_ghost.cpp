@@ -70,7 +70,11 @@ void smart_ghost::move(bool silent)
 	}
 
 	newX = currX + getDirX(); // update the new X position
-	newY = currY + getDirY(); // update the new Y position
+	int dirY = getDirY();
+	if ((getChar(currX, currY + 2) != 'H' || dirY == -1) && !isOnLadder())
+		dirY = 0;
+	else
+		newY = currY + getDirY(); // update the new Y position
 	setFailChart(' '); // erase the ghost from the fail chart	
 	setPosition(newX, newY); // update the position of the ghost
 	if (checkSmash())
@@ -115,7 +119,8 @@ void smart_ghost::smartMoveLogic(int marioX, int marioY, int currX, int currY)
 	}
 	if (currY < marioY && checkAboveLadder())
 	{
-		setDir(directionsSGhost[DOWN]);
+		if ((isOnLadder() || getChar(currX, currY + 2) == 'H') && !isOnFloor())
+			setDir(directionsSGhost[DOWN]);
 	}
 	if (currY > marioY && checkBelowLadder())
 	{
