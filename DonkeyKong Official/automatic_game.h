@@ -28,7 +28,7 @@ class automatic_game : public masterGame
 	void handleInput(player& mario) override;
 	void win(player& mario, bool& running, boardGame& board) override;
 	void fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter) override;
-	int find_board_file_for_step_file(const std::string& stepFileName) const;
+	int findBoardFile(const std::string& stepFileName) const;
 	void gameLoop(player& mario, boardGame& board) override;
 	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw, silent); }
 	void handleNPCDraw(npc* pNPC) override;

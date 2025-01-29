@@ -231,7 +231,7 @@ void automatic_game::fileManager()
     for (size_t i = 0; i < stepsFileNames.size(); i++, level++)
     {
         std::string stepsFileName = stepsFileNames[i];
-        int boardIndex = find_board_file_for_step_file(stepsFileName);
+        int boardIndex = findBoardFile(stepsFileName);
         if (boardIndex != -1)
         {
             loadSteps(stepsFileName);
@@ -273,7 +273,7 @@ void automatic_game::fileManager()
     displayRes();
 }
 
-int automatic_game::find_board_file_for_step_file(const std::string& stepFileName) const
+int automatic_game::findBoardFile(const std::string& stepFileName) const
 {
 	int index = -1;
 	std::string boardFileName = stepFileName.substr(0, stepFileName.find_last_of('.')) + ".screen";
