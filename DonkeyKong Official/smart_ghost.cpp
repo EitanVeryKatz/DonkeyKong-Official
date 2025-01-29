@@ -7,7 +7,7 @@ smart_ghost::smart_ghost()
 	changeIcon(icon);
 }
 
-bool smart_ghost::checkBelowLadder() const
+bool smart_ghost::checkBelowLadder() const // can up
 {
 	int currX = getX(), currY = getY();
 	if (isOnLadder() && isOnFloor())
@@ -15,7 +15,7 @@ bool smart_ghost::checkBelowLadder() const
 	return false;
 }
 
-bool smart_ghost::checkAboveLadder() const
+bool smart_ghost::checkAboveLadder() const // can down
 {
 	int currX = getX(), currY = getY();
 	if (isOnFloor() && getChar(currX, currY + 2) == 'H')
@@ -51,12 +51,7 @@ void smart_ghost::move(bool silent)
 	{
 		changeDirection();
 	}
-	if (randLogic <= 30)
-	{
-		randMoveLogic(randChangeDir, randChangeVerDir);
-	}
-	else
-		smartMoveLogic(PathFindingAssistant::getMarioX(), PathFindingAssistant::getMarioY(), currX, currY);
+	smartMoveLogic(PathFindingAssistant::getMarioX(), PathFindingAssistant::getMarioY(), currX, currY);
 
 	if (getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT)
 	{
@@ -70,11 +65,7 @@ void smart_ghost::move(bool silent)
 	}
 
 	newX = currX + getDirX(); // update the new X position
-	int dirY = getDirY();
-	if ((getChar(currX, currY + 2) != 'H' || dirY == -1) && !isOnLadder())
-		dirY = 0;
-	else
-		newY = currY + getDirY(); // update the new Y position
+	newY = currY + getDirY(); // update the new Y position
 	setFailChart(' '); // erase the ghost from the fail chart	
 	setPosition(newX, newY); // update the position of the ghost
 	if (checkSmash())
@@ -119,12 +110,29 @@ void smart_ghost::smartMoveLogic(int marioX, int marioY, int currX, int currY)
 	}
 	if (currY < marioY && checkAboveLadder())
 	{
-		if ((isOnLadder() || getChar(currX, currY + 2) == 'H') && !isOnFloor())
-			setDir(directionsSGhost[DOWN]);
+		setDir(directionsSGhost[DOWN]);
+		down = true;
 	}
 	if (currY > marioY && checkBelowLadder())
 	{
 		setDir(directionsSGhost[UP]);
+		climb = true;
+	}
+
+	if (down || climb)
+	{
+		if (down && checkBelowLadder())
+		{
+			setDirY(0); // stop the ghost from moving vertically
+			setDir(directionsSGhost[rand() % 2]); // random between the first 2 places in the array
+			down = false;
+		}
+		else if (climb && checkAboveLadder())
+		{
+			setDirY(0); // stop the ghost from moving vertically
+			setDir(directionsSGhost[rand() % 2]); // random between the
+			climb = false;
+		}
 	}
 }
 
