@@ -6,8 +6,8 @@ class smart_ghost : public ghost
 	enum directions { LEFT, RIGHT, UP , DOWN };
 	static constexpr Direction directionsSGhost[] = { {-1,0}, {1, 0}, {0, -1}, {0, 1} };
 	static constexpr char icon = 'X';
-	bool climb;
-	bool down;
+	bool climb = false;
+	bool down = false;
 public:
 	smart_ghost();
 	bool checkBelowLadder() const; // can up
