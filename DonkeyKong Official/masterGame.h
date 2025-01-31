@@ -20,6 +20,7 @@ protected:
 	bool needsRedraw = true;
 	int activeBarrels = 0;
 	bool firstGame = true;
+	bool silent = false;
 	std::vector<std::string> boardFileNames;
 
 	const std::string CausesOfFailStrings[CAUSE_SIZE] = {
@@ -46,8 +47,8 @@ protected:
 	virtual void updatePositionNPC(npc*& pNPC) = 0;
 	void handleBarrelSpawn(boardGame& board, int iterationCounter);
 	virtual void handleNPCDraw(npc* pNPC) = 0;
-	virtual void gameLoop(player& mario, boardGame& board) = 0; // Main game loop
-
+	virtual void gameLoop(player& mario, boardGame& board); // Main game loop
+	virtual void initiateSleep() const = 0;
 	void resetLives() { lives = 3; } // Reset the number of lives
 	void resetScore() { score = 0; }
 	virtual void fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter) =0; // Handle player fail

@@ -206,44 +206,7 @@ void game::handleInput(player& mario)
 	}
 }
 
-void game::gameLoop(player& mario, boardGame& board)
-{
-	bool running = true;
-	int barrelCounter = 0; 
-	iterationCounter = 0;
-	while (running) // main game loop
-	{
-		if (needsRedraw)
-		{
-			drawLegend(board);
-		}
-		mario.draw(); // draw the player
-		if (!mario.doeshasHammer()) {
-			gotoxy(mario.getHammerX(), mario.getHammerY());
-			std::cout << 'p';
-		}
 
-		if(mario.isSwingingHammer())
-			mario.clearHammerSwing();
-
-		handleInput(mario); // handle the user input
-		updateNPCs(iterationCounter, board);
-		Sleep(GAME_SPEED);
-		iterationCounter++;
-		mario.checkHasHmmer();
-		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
-		if (!running) // after fail break the loop if player failed
-			break;
-		if (mario.checkWin()) // if the player won
-			win(mario, running, board); // handle player win
-		mario.erase(); // erase the player
-		mario.move(); // move the player
-		mario.inLegend(needsRedraw);
-		mario.draw(); // draw the player
-		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
-		std::fflush(stdin); // clear the input buffer
-	}
-}
 
 void game::pauseGame()
 {

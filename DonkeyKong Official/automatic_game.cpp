@@ -300,49 +300,7 @@ int automatic_game::findBoardFile(const std::string& stepFileName) const
  * @param mario The player object.
  * @param board The game board object.
  */
-void automatic_game::gameLoop(player& mario, boardGame& board)
-{
-	bool running = true;
-	int barrelCounter = 0;
-	iterationCounter = 0;
-	while (running) // main game loop
-	{
-		if (needsRedraw && !silent)
-		{
-			drawLegend(board);
-		}
-		if (!silent)
-			mario.draw(); // draw the player
-		if (!mario.doeshasHammer() && !silent) {
-			gotoxy(mario.getHammerX(), mario.getHammerY());
-			std::cout << 'p';
-		}
 
-		if (mario.isSwingingHammer())
-			mario.clearHammerSwing();
-
-		handleInput(mario); // handle the user input
-		updateNPCs(iterationCounter, board);
-		if (!silent)
-			Sleep(GAME_SPEED -40);
-		iterationCounter++;
-		mario.checkHasHmmer();
-		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure
-		if (!running) // after fail break the loop if player failed
-			break;
-		if (mario.checkWin()) // if the player won
-			win(mario, running, board); // handle player win
-		if (!silent)
-		{
-			mario.erase(); // erase the player
-			mario.inLegend(needsRedraw);
-			mario.draw(); // draw the player
-		}
-		mario.move(silent); // move the player
-		fail(mario, running, board, barrelCounter, iterationCounter); // handle player failure after movement
-		std::fflush(stdin); // clear the input buffer
-	}
-}
 
 void automatic_game::handleNPCDraw(npc* pNPC) {
 	if (!silent)

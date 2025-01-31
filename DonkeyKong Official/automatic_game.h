@@ -11,7 +11,6 @@ class automatic_game : public masterGame
 	
 	bool gamesPlayedInOrder = false;
 	bool resCmp = true;
-	bool silent = false;
 	bool orderOfGames = false;
 	
 	struct key_and_time
@@ -29,7 +28,6 @@ class automatic_game : public masterGame
 	void win(player& mario, bool& running, boardGame& board) override;
 	void fail(player& mario, bool& running, boardGame& board, int& barrelCounter, int& iterationCounter) override;
 	int findBoardFile(const std::string& stepFileName) const;
-	void gameLoop(player& mario, boardGame& board) override;
 	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw, silent); }
 	void handleNPCDraw(npc* pNPC) override;
 	void cmpToResFile(const int &cause = -1);
@@ -38,6 +36,7 @@ class automatic_game : public masterGame
 	void initialDraw(player& mario, boardGame& board) override;
 	void initSaveFile(const std::string& fileName) override { return; }
 	void run() override { fileManager(); }
+	void initiateSleep() const override { Sleep(GAME_SPEED - 40); }
 public:
 	automatic_game(const std::string state = "-");
 	~automatic_game();

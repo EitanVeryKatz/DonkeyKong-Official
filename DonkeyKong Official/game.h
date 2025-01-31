@@ -30,7 +30,6 @@ class game : public masterGame
 	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw); }
 	
 	void handleNPCDraw(npc* pNPC) override { pNPC->draw();}
-	void gameLoop(player& mario, boardGame& board) override; // Main game loop
 	void setDifficulty(); // Print the game diffculty options
 	void fail(player& mario, bool &running, boardGame& board, int & barrelCounter, int &iterationCounter) override; // Handle player fail
 	void win(player& mario, bool& running, boardGame& board) override; // Handle player win
@@ -39,7 +38,7 @@ class game : public masterGame
 	
 	void pauseGame(); // Pause the game
 	void printAndChooseBoard(std::string& fileName);
-	
+	void initiateSleep() const override { Sleep(GAME_SPEED); }
 	void printBoardOptions(int currentPage, int boardsPerPage, int totalPages) const;
 	void saveState(char key) const;
 	void initSaveFile(const std::string& fileName) override;
