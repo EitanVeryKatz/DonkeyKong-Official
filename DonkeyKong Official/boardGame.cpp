@@ -24,7 +24,7 @@ boardGame::~boardGame()
 
 char boardGame::getChar(int x, int y) const
 {
-	if (activeBoard[y][x] == 'x' || activeBoard[y][x] == 'X')
+	if (activeBoard[y][x] == GHOST || activeBoard[y][x] == SMART_GHOST)
 		return ' ';
 	return activeBoard[y][x];
 }
@@ -49,35 +49,35 @@ void boardGame::initActiveBoard()
         for (int c = 0; c < BOARD_WIDTH; c++)
         {
             char currChar = activeBoard[r][c];
-            if (currChar == 'x' && checkOnFloor(c, r))
+            if (currChar == GHOST && checkOnFloor(c, r))
             {
                 ghost* temp = new ghost();
                 temp->setPosition(c, r);
                 temp->setGameBoard(this);
                 npcVector.push_back(temp);
             }
-            else if (currChar == 'x' && !checkOnFloor(c, r))
+            else if (currChar == GHOST && !checkOnFloor(c, r))
             {
                 activeBoard[r][c] = ' ';
             }
-            if (currChar == 'X' && checkOnFloor(c, r))
+            if (currChar == SMART_GHOST && checkOnFloor(c, r))
             {
                 smart_ghost* temp = new smart_ghost;
                 temp->setPosition(c, r);
                 temp->setGameBoard(this);
                 npcVector.push_back(temp);
             }
-            else if (currChar == 'X' && !checkOnFloor(c, r))
+            else if (currChar == SMART_GHOST && !checkOnFloor(c, r))
             {
                 activeBoard[r][c] = ' ';
             }
-            else if (currChar == 'p') {
+            else if (currChar == HAMMER) {
                 activeBoard[r][c] = ' ';
                 startHammerX = c;
                 startHammerY = r;
                 randomHammerLocation = false;
             }
-			else if (currChar == '@' && r != BOARD_HEIGHT - 1 && r != 0 && c != 0 && c != BOARD_WIDTH - 1) // check if the player is not on the borders
+			else if (currChar == MARIO && r != BOARD_HEIGHT - 1 && r != 0 && c != 0 && c != BOARD_WIDTH - 1) // check if the player is not on the borders
             {
                 validPlayerPos = true;
                 startXMario = c;
@@ -85,11 +85,11 @@ void boardGame::initActiveBoard()
                 activeBoard[r][c] = ' ';
 				PathFindingAssistant::setMarioPosition(c, r);
             }
-            else if (currChar == '@')
+            else if (currChar == MARIO)
 			{
 				activeBoard[r][c] = ' ';
 			}
-            else if (currChar == '&')
+            else if (currChar == DONKEY_KONG)
             {
                 numOfMonkeys++;
 				if (numOfMonkeys > 1)
@@ -113,7 +113,7 @@ void boardGame::initActiveBoard()
                 Ly = r;
                 checkLegendValidity(Lx, Ly);
             }
-            else if (currChar == '$' && checkOnFloor(c, r))
+            else if (currChar == PRINCESS && checkOnFloor(c, r))
             {
 				numOfPrincesses++;
                 if (numOfPrincesses > 1)
@@ -180,6 +180,15 @@ bool boardGame::checkOnFloor(int x, int y) const
 	if (activeBoard[y + 1][x] == '=' || activeBoard[y + 1][x] == '>' || activeBoard[y + 1][x] == '<')
 		return true;
 	return false;
+}
+
+barrel* boardGame::createBarrel()
+{
+	barrel* pBarrel = new barrel(monkeY);
+	pBarrel->setGameBoard(this);
+	pBarrel->resetBarrel();
+	npcVector.push_back(pBarrel);
+    return pBarrel;
 }
 
 void boardGame::resetNPCVector()

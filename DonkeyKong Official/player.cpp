@@ -8,7 +8,7 @@ void player::keyPressed(char key , bool& needsSave, bool silent)
 		needsSave = true;
 	}
 	if (hasHammer && getDirY() == 0) {//if mario holds hammer and looking sideways.
-		if (tolower(key) == 'p') 
+		if (tolower(key) == HAMMER) 
 		{
 			swingHammer(silent);
 			needsSave = true;
@@ -146,13 +146,13 @@ void player::handleInsideBorders(int currX, int currY, int dirX, int dirY, int &
 bool player::checkFail(size_t& cause) const
 {
 	char failChar = getFailChart();
-	if (failChar == 'O' || failChar == '*' || failChar == 'x' || failChar == 'X') // if touched barrel or explosion particle
+	if (failChar == BARREL || failChar == EXP_PARTICLE || failChar == GHOST || failChar == SMART_GHOST) // if touched barrel or explosion particle
 	{
-		if (failChar == 'O')
+		if (failChar == BARREL)
 		{
 			cause = BC;
 		}
-		else if (failChar == '*')
+		else if (failChar == EXP_PARTICLE)
 		{
 			if (getY() == BOARD_HEIGHT - 2)
 			{
@@ -163,7 +163,7 @@ bool player::checkFail(size_t& cause) const
 				cause = BE;
 			}
 		}
-		else if (failChar == 'x' || failChar == 'X')
+		else if (failChar == GHOST || failChar == SMART_GHOST)
 		{
 			cause = GC;
 		}
@@ -180,7 +180,7 @@ bool player::checkFail(size_t& cause) const
 
 bool player::checkWin() const
 {
-	if (getChar() == '$')//if reached the princess
+	if (getChar() == PRINCESS)//if reached the princess
 	{
 		return true;
 	}

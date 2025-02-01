@@ -18,6 +18,8 @@ protected:
 	void setFailChart(char c) const;
 	void setFailChart(int x, int y, char c) const;
 public:
+	gameObject(const gameObject&) = delete;
+	gameObject& operator=(const gameObject&) = delete;
 	gameObject(int x, int y, char icon) : position(x, y), icon(icon) {}
 	gameObject(char icon) : icon(icon) {}
 	void draw() const { position.draw(icon); }

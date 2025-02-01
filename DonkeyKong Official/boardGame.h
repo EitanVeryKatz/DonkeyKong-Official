@@ -59,6 +59,7 @@ public :
 	bool getOpen() const { return succOpen; }
 	bool getNewBoardFile() const { return newBoardFile; }
 	void setNewBoardFile(bool b) { newBoardFile = b; }
+	barrel* createBarrel();
 	void resetNPCVector();
 	vector<npc*>& getNPCVector() { return npcVector; }
 	vector<npc*>::iterator getNPCVectorBegin() { return npcVector.begin(); }

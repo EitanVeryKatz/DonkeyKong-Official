@@ -83,11 +83,8 @@ void masterGame::handleBarrelSpawn(boardGame& board, int iterationCounter)
 {
 	if (iterationCounter % BARREL_SPAWN_RATE == 0 && activeBarrels < maxBarrels)
 	{
-		barrel* pBarrel = new barrel(board.getMonkeY());
-		pBarrel->setGameBoard(&board);
-		pBarrel->resetBarrel();
+		barrel* pBarrel = board.createBarrel();
 		handleNPCDraw(pBarrel);
-		board.getNPCVector().push_back(pBarrel);
 		activeBarrels++;
 	}
 }
