@@ -31,6 +31,14 @@ void smart_ghost::changeVerticalDirection()
 		setDir(directionsSGhost[UP]);
 }
 
+void smart_ghost::changeDirection()
+{
+	if (getDirX() == directionsSGhost[LEFT].x)
+		setDir(directionsSGhost[RIGHT]);
+	else
+		setDir(directionsSGhost[LEFT]);
+}
+
 /**
  * @brief Moves the smart ghost on the game board.
  * 
@@ -51,13 +59,19 @@ void smart_ghost::move(bool silent)
 	{
 		changeDirection();
 	}
+
 	smartMoveLogic(PathFindingAssistant::getMarioX(), PathFindingAssistant::getMarioY(), currX, currY);
 
-	if (getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT)
-	{
-		changeDirection();
-		handleGhostCollision((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
-	}
+    if (getFailChart(currX + 1, currY) == icon && currDir == RIGHT || getFailChart(currX - 1, currY) == icon && currDir == LEFT)
+    {
+        changeDirection();
+        handleGhostCollision((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
+    }
+	if (getFailChart(currX + 1, currY) == GHOST && currDir == RIGHT || getFailChart(currX - 1, currY) == GHOST && currDir == LEFT)
+    {
+        changeDirection();
+        handleGhostCollision((getFailChart(currX + 1, currY) == GHOST && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
+    }
 	if (getFailChart(currX, currY + 1) == icon && getDirY() == DOWN || getFailChart(currX, currY - 1) == icon && getDirY() == UP)
 	{
 		changeVerticalDirection();

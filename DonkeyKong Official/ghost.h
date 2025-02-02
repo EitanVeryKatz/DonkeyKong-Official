@@ -13,7 +13,7 @@ public:
 	ghost();
 	void move(bool silent = false) override;
 	bool checkFloorEdge();
-	void changeDirection();
+	virtual void changeDirection();
 	void handleGhostCollision(int x, int y) const;
 };
 
