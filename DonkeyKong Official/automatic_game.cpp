@@ -280,7 +280,7 @@ int automatic_game::findBoardFile(const std::string& stepFileName) const
 	for (size_t i = 0; i < boardFileNames.size(); i++)
 	{
 		if (boardFileNames[i] == boardFileName)
-			return i;
+			return static_cast<int>(i);
 	}
 	return notFound;
 }

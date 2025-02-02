@@ -51,7 +51,7 @@ void game::fail(player& mario, bool& running, boardGame& board, int& barrelCount
 			Sleep(100); // wait for 100 ms to see failing cause of the player otherwise it will be too fast
 			system("cls"); // clear the screen
 			if (save)
-				writeResFile(false, currFileName, cause); // write the result file
+				writeResFile(false, currFileName, static_cast<int>(cause)); // write the result file
 			gotoxy(MessageX, MessageY);
 			std::cout << "You have " << lives << " lives left" << std::endl; // display the message
 			Sleep(breakTime);

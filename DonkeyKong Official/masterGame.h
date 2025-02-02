@@ -9,10 +9,10 @@ class masterGame
 protected:
 	static constexpr int CAUSE_SIZE = 5;
 	static constexpr int MAX_SCORE = 10000;
-	int Seed;
+	int Seed = 0;
 	int lives = 3;
 	int score = 0;
-	int maxBarrels;
+	int maxBarrels = 3;
 	int firstScreen = 0;
 	bool lost = false;
 	bool singleGame = false;
