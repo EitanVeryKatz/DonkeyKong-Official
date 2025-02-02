@@ -30,7 +30,7 @@ class automatic_game : public masterGame
 	int findBoardFile(const std::string& stepFileName) const;
 	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw, silent); }
 	void handleNPCDraw(npc* pNPC) override;
-	void cmpToResFile(const int &cause = -1);
+	void cmpToResFile(const size_t &cause = -1);
 	void getResLine(int &res_itr, char &res_cond, int &res_lives, int &res_score, std::string &res_cause, const std::string &resLine) const;
 	void displayRes() const;
 	void initialDraw(player& mario, boardGame& board) override;

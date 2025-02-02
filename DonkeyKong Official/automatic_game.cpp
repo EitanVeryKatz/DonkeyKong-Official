@@ -275,17 +275,14 @@ void automatic_game::fileManager()
 
 int automatic_game::findBoardFile(const std::string& stepFileName) const
 {
-	int index = -1;
+	int notFound = -1;
 	std::string boardFileName = stepFileName.substr(0, stepFileName.find_last_of('.')) + ".screen";
 	for (size_t i = 0; i < boardFileNames.size(); i++)
 	{
 		if (boardFileNames[i] == boardFileName)
-		{
-			index = i;
-			break;
-		}
+			return i;
 	}
-	return index;
+	return notFound;
 }
 
 
@@ -329,7 +326,7 @@ automatic_game::automatic_game(const std::string state)
 *              the index of the failure cause in the CausesOfFailStrings array. If the player 
 *              won, this parameter should be -1.
 */
-void automatic_game::cmpToResFile(const int& cause) 
+void automatic_game::cmpToResFile(const size_t& cause) 
 {
 int res_itr , res_lives , res_score ;
 char res_cond;
