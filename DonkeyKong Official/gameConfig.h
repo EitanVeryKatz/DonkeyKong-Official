@@ -18,7 +18,7 @@ enum BOARDOBJECTS { BARREL = 'O', MARIO = '@', GHOST = 'x', SMART_GHOST = 'X', P
 void playWinningSong();
 void playFailSong();
 void printWinningMessage(); // Print the winning message
-void printFailMessage(); // Print the fail message
+void printFailMessage(); // Print the fail messagegi
 void printInstructions(); // Print the game instructions
 void printMenu(); // Print the game menu
 void printGoodbyeMessage(); // Print the goodbye message

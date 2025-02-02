@@ -136,40 +136,6 @@ void smart_ghost::smartMoveLogic(int marioX, int marioY, int currX, int currY)
 	}
 }
 
-/**
- * @brief Implements the random movement logic for the smart ghost.
- * 
- * This function determines the direction in which the smart ghost should move based on random logic.
- * If the ghost is on the floor and a random number is less than or equal to 5, or if the ghost is at the edge of the floor,
- * the ghost will change its horizontal direction. If there is a ladder below and a random number is less than or equal to 20,
- * the ghost will move up. If there is a ladder above and a random number is less than or equal to 20, the ghost will move down.
- * If there is a ladder above or below, the ghost will stop moving vertically and choose a random horizontal direction.
- * 
- * @param randChangeDir A random number used to determine if the ghost should change its horizontal direction.
- * @param randChangeVerDir A random number used to determine if the ghost should change its vertical direction.
- */
-void smart_ghost::randMoveLogic(int randChangeDir, int randChangeVerDir)
-{
-	if ((isOnFloor() && randChangeDir <= 5) || checkFloorEdge()) // if the random number is less than 5 or the ghost is at the edge of the floor or ghost moves to each other
-	{
-		changeDirection();
-	}
-
-	if (checkBelowLadder() && randChangeVerDir <= 20)
-	{
-		setDir(directionsSGhost[UP]);
-	}
-	else if (checkAboveLadder() && randChangeVerDir <= 20)
-	{
-		setDir(directionsSGhost[DOWN]);
-	}
-	else if (checkAboveLadder() || checkBelowLadder())
-	{
-		setDirY(0); // stop the ghost from moving vertically
-		setDir(directionsSGhost[rand() % 2]); // random between the first 2 places in the array
-	}
-}
-
 void smart_ghost::handleVerCollision(int x, int y) const
 {
 	for (auto itr = pBoard->getNPCVectorBegin(); itr != pBoard->getNPCVectorEnd(); ++itr)

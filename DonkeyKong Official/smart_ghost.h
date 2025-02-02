@@ -15,7 +15,6 @@ public:
 	void changeVerticalDirection();
 	void move(bool silent = false) override;
 	void smartMoveLogic(int marioX, int marioY, int currX, int currY);
-	void randMoveLogic(int randChangeDir, int randChangeVerDir);
 	void handleVerCollision(int x, int y) const;
 };
 
