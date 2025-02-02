@@ -67,8 +67,9 @@ void smart_ghost::move(bool silent)
         changeDirection();
         handleGhostCollision((getFailChart(currX + 1, currY) == icon && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
     }
-	if (getFailChart(currX + 1, currY) == GHOST && currDir == RIGHT || getFailChart(currX - 1, currY) == GHOST && currDir == LEFT)
+	else if (getFailChart(currX + 1, currY) == GHOST && currDir == RIGHT || getFailChart(currX - 1, currY) == GHOST && currDir == LEFT)
     {
+		setDirY(0);
         changeDirection();
         handleGhostCollision((getFailChart(currX + 1, currY) == GHOST && currDir == RIGHT) ? currX + 1 : currX - 1, currY);
     }
