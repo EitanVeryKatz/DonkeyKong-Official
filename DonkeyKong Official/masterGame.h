@@ -63,6 +63,7 @@ protected:
 public:
 	virtual void run() = 0;
 
+	virtual ~masterGame() = default;
 	
 };
 
