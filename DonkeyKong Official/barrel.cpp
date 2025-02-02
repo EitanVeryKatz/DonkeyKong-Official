@@ -19,7 +19,7 @@ void barrel::move(bool silent)
     updateFallCount();
 	if (exploaded) // if the barrel has exploded clear the explosion and set the explosion flag to false
     {
-        clearBlast();
+        clearBlast(silent);
         exploaded = false;
     }
 
@@ -42,9 +42,9 @@ void barrel::move(bool silent)
 	updatePosition(currX, currY, newX, newY, silent); // update the position of the barrel
 }
 
-void barrel::handleExplosion()
+void barrel::handleExplosion(bool silent)
 {
-    explode();
+    explode(silent);
     exploaded = true;
 }
 
@@ -103,7 +103,7 @@ void barrel::updatePosition(int currX, int currY, int newX, int newY, bool silen
     }
 }
 
-void barrel::explode()
+void barrel::explode(bool silent)
 {
     int x = getX(), y = getY();
     if (blastCounter == 0)//first frame of exlposion:
@@ -118,8 +118,10 @@ void barrel::explode()
                 if (y + blowRadiusY < 1 || y + blowRadiusY > BOARD_HEIGHT - 2)//if reached border - skip
                     continue;
                 setFailChart(x + blowRadiusX, y + blowRadiusY, '*');//update fail chart for explosion particals
-                gotoxy(x + blowRadiusX, y + blowRadiusY);
-                std::cout << '*';
+                if (!silent) {
+                    gotoxy(x + blowRadiusX, y + blowRadiusY);
+                    std::cout << '*';
+                }
             }
         }
         
@@ -142,13 +144,14 @@ void barrel::explode()
                 if (y + blowRadiusY < 1 || y + blowRadiusY > BOARD_HEIGHT - 2)//if reached border - skip
                     continue;
                 setFailChart(x + blowRadiusX, y + blowRadiusY, '*');
-
-                gotoxy(x + blowRadiusX, y + blowRadiusY);
-                if (blowRadiusX == -2 || blowRadiusX == 2 || blowRadiusY == -2 || blowRadiusY == 2) {
-                    std::cout << '*';
-                }
-                else {
-                    std::cout << ' ';
+                if (!silent) {
+                    gotoxy(x + blowRadiusX, y + blowRadiusY);
+                    if (blowRadiusX == -2 || blowRadiusX == 2 || blowRadiusY == -2 || blowRadiusY == 2) {
+                        std::cout << '*';
+                    }
+                    else {
+                        std::cout << ' ';
+                    }
                 }
             }
         }
@@ -157,7 +160,7 @@ void barrel::explode()
 
 }
 
-void barrel::clearBlast() 
+void barrel::clearBlast(bool silent) 
 {
 	for (int blowRadiusX = -2; blowRadiusX <= 2; blowRadiusX++) 
     {
@@ -171,7 +174,9 @@ void barrel::clearBlast()
             //update fail chart
 			setFailChart(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY, ' ');
             //restore erased parts of game map
-            restoreBoardChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+            if (!silent) {
+                restoreBoardChar(blastCenterX + blowRadiusX, blastCenterY + blowRadiusY);
+            }
 		}
 	}
 
@@ -208,17 +213,17 @@ void barrel::updateFallCount()
 	}
 }
 
-void barrel::expHandler()
+void barrel::expHandler(bool silent)
 {
     if (isBlastShowing())
     {
     	if (getBlowCount() == 2)
     	{
-    		clearBlast();
+    		clearBlast(silent);
     	}
     	else if (getBlowCount() == 1)
     	{
-    		explode();
+    		explode(silent);
     		updateBlowCounter();
     	}
     	else

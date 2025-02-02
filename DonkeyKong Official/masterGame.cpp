@@ -19,7 +19,7 @@ void masterGame::initGame(player& mario, boardGame& board)
 	if (!firstGame)
 		board.resetGhosts();
 	mario.setGameBoard(&board); // set the board of the player
-	mario.resetPlayer(); // reset player's position
+	mario.resetPlayer(firstGame); // reset player's position
 	if (firstGame && board.wasHammerLocationSetInBoard())
 		mario.setHammerLocation(board.getStartHammerX(), board.getStartHammerY());
 	initialDraw(mario, board); // draw the initial board
@@ -70,7 +70,7 @@ void masterGame::updateNPCs(int iterationCounter, boardGame& board)
         {
             if (barrel* pBarrel = dynamic_cast<barrel*>(pNPC))
             {
-                pBarrel->expHandler();
+                pBarrel->expHandler(silent);
             }
             ++itr;
         }

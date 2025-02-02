@@ -128,6 +128,7 @@ void game::displayMenu()
 				resetLives(); // reset the number of lives after the game ends
 				resetScore();
 				level = 1;
+				firstGame = true;
 				printMenu(); // print the menu
 			}
 			else if (key == '8')

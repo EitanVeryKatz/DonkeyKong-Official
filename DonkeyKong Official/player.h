@@ -3,6 +3,7 @@
 #include "gameConfig.h"
 #include "point.h"
 #include "gameObject.h"
+#include "boardGame.h"
 
 class player : protected gameObject
 {
@@ -36,7 +37,7 @@ public:
 	using gameObject::erase;
 	using gameObject::inLegend;
 	player(int x, int y) : gameObject(x, y, iconArr[0]), startX(x), startY(y) {}
-	void resetPlayer()
+	void resetPlayer(bool firstGame)
 	{
 		changeIcon(iconArr[WITHOUT_HAMMER]);
 		currIcon = iconArr[WITHOUT_HAMMER];
@@ -46,7 +47,12 @@ public:
 		setDir(directionsPlayer[STAY]);
 		hasHammer = false;
 		midswing = 0;
-		setHammerLocation();
+		if (firstGame) {
+			setHammerLocation(pBoard->getStartHammerX(), pBoard->getStartHammerY());
+		}
+		else {
+			setHammerLocation();
+		}
 	}
 	bool isSwingingHammer() const { return midswing; }
 	void keyPressed(char key, bool& needsSave, bool silent); // Handle player's key press

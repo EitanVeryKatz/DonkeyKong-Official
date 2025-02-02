@@ -24,16 +24,17 @@ class barrel:public npc
 	bool exploaded = false;
 	int fallCounter = 0;
 	
+
 public:
 	barrel(int monkeY);
 	static vector<int> startingXPos;
 	void move(bool silent = false) override; // handles barrel movement
-	void handleExplosion();
+	void handleExplosion(bool silent = false);
 	void handleOnFloor(int currX, int currY, int& newX, int& newY, char& dirChar); // handles barrel movement on floor
 	void handleInAir(int currX, int currY, int& newX, int& newY); // handles barrel movement in air
 	void updatePosition(int currX, int currY, int newX, int newY, bool silent); // updates the position of the barrel
-	void explode();
-	void clearBlast();
+	void explode(bool silent);
+	void clearBlast(bool silent);
 	bool isBlastShowing() const { return blastParticlesVisable; }
 	int getBlowCount() const { return blastCounter; }
 	void updateBlowCounter();
@@ -41,6 +42,6 @@ public:
 	void resetBarrel();
 	void updateFallCount();
 	int genStartX() const { return startingXPos[rand() % startingXPos.size()]; }
-	void expHandler();
+	void expHandler(bool silent);
 };
 
