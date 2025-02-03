@@ -27,7 +27,7 @@ class game : public masterGame
 	
 	void handleInput(player& mario) override; // Handle user input
 	
-	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw); }
+	void updatePositionNPC(npc*& pNPC) override { pNPC->update(score, needsRedraw, silent); }
 	
 	void handleNPCDraw(npc* pNPC) override { pNPC->draw();}
 	void setDifficulty(); // Print the game diffculty options
@@ -50,7 +50,7 @@ public:
 	void displayMenu(); // Display the game menu
 	void writeResFile(bool won, const std::string& fileName, int cause = -1) const;
 	game(const std::string state = "-");
-	~game()
+	~game() override
 	{
 		if(save)
 			closeSaveFile();

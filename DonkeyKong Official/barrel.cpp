@@ -25,7 +25,7 @@ void barrel::move(bool silent)
 
 	if (onFloor && fallCounter >= 8) // if the barrel is on floor and passed more than 8 Y postions from the last floor position explode the barrel
     {
-        handleExplosion();
+        handleExplosion(silent);
     }
 	else if (currY >= BOARD_HEIGHT - 2 || currX <= 2 || currX >= BOARD_WIDTH - 2) // if the barrel reached the bottom of the board deactivate the barrel
     {

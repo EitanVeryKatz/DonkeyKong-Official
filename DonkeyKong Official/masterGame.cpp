@@ -167,7 +167,7 @@ void masterGame::gameLoop(player& mario, boardGame& board)
 		}
 
 		if (mario.isSwingingHammer())
-			mario.clearHammerSwing();
+			mario.clearHammerSwing(silent);
 
 		handleInput(mario); // handle the user input
 		updateNPCs(iterationCounter, board);

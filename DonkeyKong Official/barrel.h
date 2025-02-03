@@ -28,8 +28,8 @@ class barrel:public npc
 public:
 	barrel(int monkeY);
 	static vector<int> startingXPos;
-	void move(bool silent = false) override; // handles barrel movement
-	void handleExplosion(bool silent = false);
+	void move(bool silent) override; // handles barrel movement
+	void handleExplosion(bool silent);
 	void handleOnFloor(int currX, int currY, int& newX, int& newY, char& dirChar); // handles barrel movement on floor
 	void handleInAir(int currX, int currY, int& newX, int& newY); // handles barrel movement in air
 	void updatePosition(int currX, int currY, int newX, int newY, bool silent); // updates the position of the barrel

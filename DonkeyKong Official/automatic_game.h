@@ -39,7 +39,7 @@ class automatic_game : public masterGame
 	void initiateSleep() const override { Sleep(GAME_SPEED - 40); }
 public:
 	automatic_game(const std::string state = "-");
-	~automatic_game();
+	~automatic_game() override;
 	void fileManager();
 };
 

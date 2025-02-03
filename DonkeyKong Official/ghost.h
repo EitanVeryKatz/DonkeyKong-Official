@@ -11,7 +11,7 @@ class ghost : public npc
 	static constexpr char SGHOST = 'X';
 public:
 	ghost();
-	void move(bool silent = false) override;
+	void move(bool silent) override;
 	bool checkFloorEdge();
 	virtual void changeDirection();
 	void handleGhostCollision(int x, int y) const;

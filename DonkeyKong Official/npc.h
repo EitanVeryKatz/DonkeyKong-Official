@@ -20,7 +20,7 @@ public:
 	void makeActive() { active = true; }
 	void deactivate() { active = false; }
 	bool checkSmash() const {return getFailChart() == 'p';}
-	void update(int &score, bool& needToRedraw, bool silent = false);
+	void update(int &score, bool& needToRedraw, bool silent);
 	virtual ~npc() = default;
 
 };

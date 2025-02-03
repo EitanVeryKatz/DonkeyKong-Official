@@ -241,14 +241,18 @@ void player::swingHammer(bool silent) {
 
 }
 
-void player::clearHammerSwing() {
-	gotoxy(hammerLocation.getX(), hammerLocation.getY());
+void player::clearHammerSwing(bool silent)
+{
+	if (!silent)
+	{
+		gotoxy(hammerLocation.getX(), hammerLocation.getY());
 	
-	if (hammerLocation.getX() == getX() && hammerLocation.getY() == getY()) {
-		std::cout << currIcon;
-	}
-	else {
-		std::cout << getChar(hammerLocation.getX(), hammerLocation.getY());
+		if (hammerLocation.getX() == getX() && hammerLocation.getY() == getY()) {
+			std::cout << currIcon;
+		}
+		else {
+			std::cout << getChar(hammerLocation.getX(), hammerLocation.getY());
+		}
 	}
 
 	gotoxy(hammerLocationSecondary.getX(), hammerLocationSecondary.getY());
