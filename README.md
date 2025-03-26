@@ -1,5 +1,5 @@
-the following repository contains my mpeer's and mine final project for the c++ oop course in the degree.
-I append the task specifications below.
+The following repository contains my peer's and my final project for the C++ OOP course in my degree.
+I have appended the task specifications below.
 
 Requirements and Guidelines
 
